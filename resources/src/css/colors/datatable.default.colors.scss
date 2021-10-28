@@ -1,0 +1,17 @@
+@import "../variables";
+$tableContentBg: white;
+$tableBodyTrBg: #f6f6f6;
+$tableBodyTrBgHover: #e7e7e7;
+$tableBodyTrShadow: rgba(0,0,0,.1);
+$tableBorderColor: #e3e3e3;
+$searchPlaceholderBorderColor: #d2d2d2;
+$searchInputBorderColor: #eeeeee;
+$searchInputBorderColorFocus: #868686;
+$longtextMoreBg: white;
+$datatableCheckboxVisibilityColumn: 13px;
+$datatableCheckboxVisibilityColumnBorderColor: $searchPlaceholderBorderColor;
+$datatableCheckboxActiveColor: $bgBase;
+$datatableCountLingBg: $tableBodyTrBg;
+$datatableCountLingHover: $tableBodyTrBgHover;
+$datatableFontSize: 12px;
+$dropdownBgHover: $tableBodyTrBg;

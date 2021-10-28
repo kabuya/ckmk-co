@@ -1,0 +1,58 @@
+@import "../colors/loader.default.colors";
+
+.loader-content {
+
+  width: 100%;
+  height: auto;
+
+
+  .loader-title {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 10px;
+    color: $loaderText;
+
+    @include empty {
+      display: none;
+    }
+  }
+
+  .loader-bound {
+    width: max-content;
+    white-space: nowrap;
+    margin: auto;
+    cursor: progress;
+  }
+
+  .loader-rotate-circle {
+    margin: auto;
+    border: solid 3px transparent;
+    border-radius: 1000000000000px;
+    animation: rotate 1s infinite ease-in-out;
+    cursor: progress;
+  }
+
+  .loader-bound-item {
+    margin-right: 7px;
+    display: inline-block;
+    transition: .3s;
+
+    &.to-up {
+      transform: translateY(-5px);
+    }
+
+    &.type-circle {
+      border-radius: 1000000000000px;
+    }
+
+    &.type-triangle {
+      background-color: transparent;
+      border: solid 1px transparent;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+}

@@ -1,0 +1,149 @@
+@import "variables"
+  , "mixin"
+;
+.admin-view-content {
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  &.admin-view-content-login {
+    overflow: auto;
+  }
+
+  /******* LOGIN ********/
+  .admin-login-form {
+    width: 90%;
+    max-width: 650px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+
+    .form-login-item {
+      width: 50%;
+      padding: 40px;
+
+      form {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      ul {
+        text-align: left;
+        list-style: inside;
+        margin-top: 15px;
+        list-style: none;
+      }
+
+      li {
+        margin-bottom: 2px;
+
+        &::before {
+          content: "\2022";
+          color: $successColorText;
+          font-weight: bold;
+          font-size: 20px;
+          display: inline-block;
+          width: 15px;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .back-to-front-home {
+      color: $contentColor;
+      outline: none;
+      text-decoration: none;
+      position: relative;
+
+      i {
+        top: 1px;
+        left: 0;
+        position: relative;
+        transition: .3s;
+      }
+
+      &:hover {
+        outline: none;
+        text-decoration: none;
+
+        i {
+          left: -5px;
+        }
+      }
+    }
+
+    .form-login-body {
+      width: 100%;
+      background-color: white;
+      border-radius: $radius;
+      box-shadow: 0px 0px 8px $shadowColor;
+      overflow: hidden;
+      display: inline-flex;
+    }
+
+    .bg-login-flat-design {
+      background: no-repeat center url(~@co/img/dashboard_login_background.png);
+      background-size: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+      opacity: .25;
+    }
+
+    .login-info-text {
+      position: relative;
+      z-index: 1;
+    }
+
+    .bg-login-info {
+      color: $successColorText;
+      color: $txtBgBase;
+      position: relative;
+      background-color: $bgBase08;
+      background-color: $bgBase;
+    }
+  }
+  /******* LOGIN ********/
+
+  &.theme-base {
+
+    background-color: $contentBg;
+    color: $contentColor;
+
+    @import "colors/form.admin.colors";
+    @import "colors/datatable.admin.colors";
+    @import "colors/loader.admin.colors";
+    @import "themes/app";
+  }
+
+  &.theme-base-dark {
+
+    $bgBase: #6ac8b5;
+    $txtBgBase: white;
+    $contentBg: #f7f6fb;
+    $contentColor: #514f4f;
+
+    background-color: $contentBg;
+    color: $contentColor;
+
+    @import "colors/form.default.colors";
+    @import "colors/datatable.default.colors";
+    @import "colors/loader.default.colors";
+    @import "themes/app";
+
+  }
+
+
+}

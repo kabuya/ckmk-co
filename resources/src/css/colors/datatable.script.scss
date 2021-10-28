@@ -1,0 +1,302 @@
+
+.datatable-confirm-delete-items {
+  div {
+    &:nth-child(2n+1) {
+      background-color: $tableBodyTrBg;
+    }
+  }
+}
+
+.datatable-content,
+.datatable-popup-content {
+
+  background-color: $tableContentBg;
+
+  .datatable-table {
+    background-color: $tableContentBg;
+  }
+
+  .datatable-pagination-page-input {
+    border-color: $datatableCheckboxVisibilityColumnBorderColor;
+
+    &:focus {
+      border-color: $bgBase;
+    }
+  }
+
+  .datatable-alert-message {
+    background-color: $infoAlertBg;
+    color: $infoText;
+
+    &._success {
+      background-color: $successAlertBg;
+      color: $successText;
+    }
+
+    &._warning {
+      background-color: $warningAlertBg;
+      color: $warningText;
+    }
+
+    &._danger {
+      background-color: $dangerAlertBg;
+      color: $dangerText;
+    }
+  }
+
+  .datatable-body-row {
+    //box-shadow: 0px 0px 8px $tableBodyTrShadow;
+
+    &:nth-child(2n+2) {
+      .datatable-body-column {
+        background-color: $tableBodyTrBg;
+      }
+    }
+
+    &:hover {
+      .datatable-body-column {
+        background-color: $tableBodyTrBgHover;
+      }
+    }
+  }
+
+  .datatable-body-column-longtext-more {
+    color: $contentColor;
+    border-color: $contentColor;
+    background-color: $longtextMoreBg;
+  }
+
+
+
+  .datatable-column-core-actions {
+    display: flex;
+
+
+    .datatable-column-action-icon {
+      background-color: $_success;
+      color: white;
+
+      &.datatable-action-deletable {
+        background-color: $_danger;
+      }
+
+      &.datatable-action-copyable {
+        background-color: $_warning;
+      }
+
+      &.datatable-action-visible {
+        background-color: $_info;
+      }
+
+      &:hover {
+        background-color: $successDark;
+
+        &.datatable-action-deletable {
+          background-color: $dangerDark;
+        }
+
+        &.datatable-action-copyable {
+          background-color: $warningDark;
+        }
+
+        &.datatable-action-visible {
+          background-color: $infoDark;
+        }
+      }
+
+    }
+  }
+
+  .datatable-header-row {
+    &:first-child {
+      .datatable-header-column {
+        border-top-color: $tableBorderColor;
+      }
+    }
+  }
+
+  .datatable-header-column {
+    border-bottom-color: $tableBorderColor;
+
+  }
+
+  .datatable-header-column-search-input {
+    @include inputFormColor(
+      $searchInputBorderColor,
+      $contentColor,
+      $searchPlaceholderBorderColor,
+      $bgBase,
+      $_danger
+    );
+  }
+
+  .datatable-global-search {
+    input {
+      @include inputFormColor(
+        $searchInputBorderColor,
+        $contentColor,
+        $searchPlaceholderBorderColor,
+        $bgBase,
+        $_danger
+      );
+
+      font-size: 11px;
+
+      &:focus {
+        + i {
+          color: red;
+        }
+      }
+    }
+
+    i.fa-search {
+      color: $bgBase;
+    }
+  }
+
+  .datatable-columns-visibility-list-item-checkbox {
+    border-color: $datatableCheckboxVisibilityColumnBorderColor;
+
+    span {
+      border-bottom-color: white;
+      border-left-color: white;
+    }
+
+    &.column-checked {
+      border-color: $datatableCheckboxActiveColor;
+      background-color: $datatableCheckboxActiveColor;
+    }
+  }
+
+  .datatable-columns-visibility-list
+  , .datatable-count-lines-list {
+    background-color: white;
+    box-shadow: 0px 0px 8px rgba(0,0,0,.2);
+  }
+
+  .datatable-count-lines-list-item {
+    &:nth-child(2n+1) {
+      background-color: $datatableCountLingBg;
+    }
+
+
+    &:hover {
+      background-color: $datatableCountLingHover;
+    }
+  }
+
+  .datatable-global-manage-item {
+    background-color: $bgBase;
+    color: white;
+    cursor: pointer;
+    transition: .3s;
+
+    &:hover {
+      background-color: $bgBaseDark;
+    }
+
+    &.datatable-global-delete {
+      background-color: $_danger;
+
+      &:hover {
+        background-color: $dangerDark;
+      }
+    }
+  }
+
+  .datatable-count-lines-result {
+    border-color: $searchInputBorderColor;
+
+    &:hover, &.item-active {
+      background-color: $dropdownBgHover;
+    }
+  }
+
+  .datatable-columns-visibility-title {
+    @extend .datatable-count-lines-result;
+  }
+
+  .datatable-types-item {
+    @extend .datatable-count-lines-result;
+
+    &.active {
+      background-color: $bgBase;
+      border-color: $bgBase;
+      color: white;
+    }
+  }
+
+  .datatable-boolean {
+
+    .datatable-circle {
+      background-color: $_success;
+      border-color: $successBorder;
+    }
+
+
+    &.datatable-boolean-disable {
+      .datatable-circle {
+        background-color: $_danger;
+        border-color: $dangerDark;
+      }
+    }
+
+    &.datatable-boolean-enable {
+      .datatable-circle {
+        background-color: $_success;
+        border-color: $successBorder;
+      }
+    }
+
+    &.datatable-editable-boolean {
+      background-color: $dangerAlertBg;
+      border-color: $dangerBorder;
+
+      &.datatable-boolean-enable {
+        background-color: $successAlertBg;
+        border-color: $successBorder;
+      }
+
+      &.datatable-boolean-disable {
+        background-color: $dangerAlertBg;
+        border-color: $dangerBorder;
+      }
+    }
+
+  }
+
+  .datatable-pagination-page-prev
+  , .datatable-pagination-page-next {
+    &:hover {
+      color: $bgBase;
+    }
+  }
+
+  .datatable-body-column-longtext-more-content {
+    background-color: white;
+    .datatable-body-column-longtext-more-close {
+      background-color: white;
+    }
+  }
+
+  .datatable-row-selected {
+    background-color: $tableBodyTrBgHover;
+
+
+    div {
+      border-color: transparent;
+    }
+
+    &.datatable-row-selected-checked {
+      background-color: $_success;
+
+      div {
+        border-color: white;
+      }
+    }
+
+  }
+
+
+}
+

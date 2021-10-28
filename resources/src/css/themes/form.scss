@@ -1,0 +1,982 @@
+@import "../colors/form.default.colors";
+
+.form-body {
+  width: 100%;
+  padding: 15px;
+  background-color: white;
+  border-radius: $formRadius;
+}
+
+div.kphc {
+  display: none !important;
+}
+
+form.form-container {
+
+  img {
+    width: 100%;
+  }
+
+  label {
+    width: 100%;
+    transition: .3s;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: left;
+    padding: 8px;
+    padding-top: 14px;
+    font-size: 15px;
+    z-index: 10;
+
+    &.checked {
+      .button-draw {
+
+        div {
+          border: solid 5px transparent;
+          border-right: none;
+          border-top: none;
+          width: 25px;
+          height: 15px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          transform: rotate(-45deg) translate(1px, -15%);
+        }
+      }
+    }
+
+    @include empty {
+      display: none;
+    }
+
+  }
+
+  select, input, textarea {
+    border: none;
+    outline: none;
+    appearance: none;
+    width: 100%;
+    padding: 8px;
+    padding-top: 0;
+    margin-top: 20px;
+    font-size: 14px;
+    &:focus, &:hover, &:active {
+      border: none;
+      outline: none;
+      appearance: none;
+    }
+  }
+
+  textarea {
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 250px;
+    max-height: 500px;
+  }
+
+  input[type=submit], button {
+    padding: 8px;
+    text-align: center;
+    border-radius: $formRadius;
+    transition: .3s;
+  }
+
+  .field-un-editable {
+    cursor: no-drop;
+    select, input, textarea, .fr-element, .fr-command {
+      pointer-events: none;
+    }
+  }
+
+  .field-fixed-content {
+    cursor: no-drop;
+    select, input, textarea, .fr-element, .fr-command {
+      pointer-events: none;
+    }
+  }
+
+  .field-no-editable {
+    cursor: no-drop;
+    select, input, textarea, .fr-element, .fr-command {
+      pointer-events: none;
+    }
+  }
+
+  .loader-content {
+    margin-bottom: 10px;
+  }
+
+  .field-disabled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 15;
+  }
+
+  .field-label-title {
+    max-width: 80%;
+    display: inline-block;
+    padding-right: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    float: left;
+  }
+
+  .textarea-wysiwyg {
+    .field-item {
+      padding-top: 20px;
+      overflow: initial;
+    }
+  }
+
+  .button-draw {
+    float: right;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    border-radius: 3px;
+    background-color: white;
+
+    &.button-draw-radio {
+      border-radius: 100%;
+    }
+  }
+
+  .field-eye {
+    position: absolute;
+    width: auto;
+    top: 7px;
+    right: 0;
+    cursor: pointer;
+    padding: 5px 8px;
+  }
+
+  .field-container {
+    margin-bottom: 20px;
+
+    &.type-password {
+      .field-item {
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    &.type-files {
+      .file-label {
+        position: sticky;
+        top: 0;
+        left: 0;
+      }
+
+      .field-file {
+        padding: 0;
+      }
+
+      .file-item {
+        width: 97%;
+      }
+
+      .file-label {
+        padding: 5px 0 !important;
+      }
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &.active, &.error {
+      label {
+        right: initial;
+        bottom: initial;
+        display: inline-block;
+        font-size: 10px;
+        padding: 4px 8px;
+      }
+      .field-confirm {
+        label {
+          right: 0;
+          bottom: 0;
+          font-size: 15px;
+          padding: 8px;
+          padding-top: 14px;
+          display: initial;
+        }
+      }
+
+    }
+
+    .field-confirm {
+      margin-top: 8px;
+      &.active, &.error {
+        label {
+          right: initial;
+          bottom: initial;
+          display: inline-block;
+          font-size: 10px;
+          padding: 4px 8px;
+        }
+      }
+    }
+
+    .password-level {
+      position: relative;
+      text-align: left;
+      margin-top: 2px;
+
+      &.hide {
+        display: none;
+      }
+
+      span {
+        font-size: 10px;
+        display: block;
+      }
+
+      > div {
+        width: 100%;
+        display: flex;
+        flex-wrap: nowrap;
+
+        div {
+          width: 20%;
+          height: 5px;
+          margin-right: 5px;
+          border: 1px solid $formBorder;
+          border-radius: 100px;
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+
+    &.type-checkbox,
+    &.type-radio,
+    &.type-datetime-local,
+    &.type-date,
+    &.type-time,
+    &.type-select,
+    //&.type-number,
+    &.type-schedule,
+    &.type-files,
+    &.type-file,
+    &.textarea-wysiwyg
+    {
+
+      label {
+        right: initial;
+        bottom: initial;
+        display: inline-block;
+        font-size: 10px;
+        padding: 4px 8px;
+      }
+    }
+
+    &.type-select {
+      select {
+        display: none;
+      }
+    }
+  }
+
+  .field-hidden {
+    display: none;
+  }
+
+  .field-item, .field-confirm {
+    border: 1px solid transparent;
+    border-radius: $formRadius;
+    overflow: hidden;
+    position: relative;
+    transition: .3s;
+
+    .field-checkboxes, .field-radios, .field-schedules {
+      margin-top: 20px;
+    }
+
+    .field-checkbox, .field-radio {
+      width: 100%;
+      height: auto;
+      padding: 5px;
+
+      label {
+        position: initial;
+        width: 100%;
+        font-size: 14px;
+        border-radius: $formRadius;
+        cursor: pointer;
+        padding-left: 10px;
+      }
+
+      input {
+        margin: 0;
+        display: none;
+      }
+    }
+
+
+  }
+
+  .field-schedules {
+    padding: 7px;
+  }
+
+  .field-schedule {
+    margin-bottom: 15px;
+    overflow: hidden;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .schedule-day {
+    border: 1px solid transparent;
+    border-top-right-radius: $formRadius;
+    border-top-left-radius: $formRadius;
+    padding: 5px 0;
+    font-size: 13px;
+    cursor: context-menu;
+  }
+
+  .schedule-step, .schedule-type {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+
+  .schedule-step {
+    border: 1px solid transparent;
+    border-top: none;
+    border-bottom-right-radius: $formRadius;
+    border-bottom-left-radius: $formRadius;
+    width: 100%;
+  }
+
+  .schedule-type {
+    border-right: 1px solid transparent;
+    font-size: 12px;
+    width: 50%;
+
+    &:last-child {
+      border-right: none;
+    }
+
+    div, input {
+      margin: 0;
+      padding: 3px;
+      display: block;
+    }
+
+    input {
+      width: 100%;
+      padding-left: 6px;
+    }
+
+    div {
+      width: 60px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: context-menu;
+    }
+  }
+
+  .field-radio {
+    label {
+      border-radius: 1000px !important;
+    }
+  }
+
+  .field-help {
+    font-size: 10px;
+    padding: 2px 5px;
+    font-style: italic;
+    text-align: left;
+    transition: .3s;
+
+    @include empty {
+      display: none;
+    }
+
+    p {
+      margin: 0;
+    }
+
+  }
+
+  .field-error, .form-error {
+    padding: 5px;
+    border-radius: $formRadius;
+    font-size: 12px;
+    text-align: left;
+    margin-top: 5px;
+    transition: .3s;
+
+    @include empty {
+      display: none;
+    }
+
+    p {
+      margin: 0;
+    }
+
+  }
+
+  .field-error {
+    > div {
+      display: flex;
+      flex-wrap: nowrap;
+      margin-bottom: 8px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      i, span {
+        display: inline-block;
+      }
+
+      span {
+        line-height: 12px;
+        padding-left: 3px;
+      }
+    }
+  }
+
+  .form-error {
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+
+  .field-translator {
+    label {
+      right: initial;
+      bottom: initial;
+      display: inline-block;
+      font-size: 10px;
+      padding: 4px 8px;
+    }
+
+    input, textarea {
+      padding-top: 0 !important;
+    }
+  }
+
+  .field-languages {
+
+    margin-top: 22px;
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+
+    div {
+      width: 100%;
+    }
+
+    .lang-item {
+      font-size: 14px !important;
+      top: initial;
+      left: initial;
+      display: inline-block;
+      position: relative;
+      width: 32px;
+      height: 29px;
+      padding: 2px 5px;
+      transition: .3s;
+      cursor: pointer;
+      margin-right: 5px;
+      border-radius: 120px;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    .lang-container {
+      text-align: left;
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+      transition: .3s;
+    }
+
+    .lang-list {
+      padding: 4px;
+      white-space: nowrap;
+      position: relative;
+      transition: .3s;
+    }
+
+    .lang-arrow {
+      width: 30px;
+      cursor: pointer;
+      position: relative;
+
+      div {
+        border: 3px solid transparent;
+        border-top: none;
+        border-right: none;
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+
+      &.lang-arrow-right {
+        div {
+          transform: translate(-50%, -50%) rotate(-135deg);
+        }
+      }
+    }
+  }
+
+  .field-languages-inputs {
+
+    .lang-input-content {
+      display: none;
+
+      &.active {
+        display: block;
+      }
+    }
+
+    input, textarea {
+      margin: 0;
+      padding: 10px 8px;
+    }
+
+  }
+
+  .field-file {
+    padding: 5px;
+    margin-top: 20px;
+    min-height: 45px;
+    max-height: 60px;
+    overflow-y: auto;
+  }
+
+  .type-files {
+    .field-file {
+      min-height: 255px;
+      max-height: 300px;
+    }
+  }
+
+  .file-label {
+    position: relative;
+    width: 100%;
+    top: initial;
+    left: initial;
+    right: initial;
+    bottom: initial;
+    text-align: center;
+    font-size: 20px !important;
+    cursor: pointer;
+    padding: 0 !important;
+    background-color: white;
+    transition: .3s;
+  }
+
+  .file-accept {
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  .file-item-download {
+    width: 20px;
+    height: 20px;
+    border: solid 1px transparent;
+    margin: 4px auto;
+    border-radius: 100%;
+    animation: rotate 1s infinite ease-in-out;
+  }
+
+  .file-item {
+    width: 100%;
+    display: inline-flex;
+    padding: 4px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    border-radius: 5px;
+
+    .file-item-info {
+      width: 12.5%;
+      white-space: nowrap;
+
+      &.file-item-icon {
+        overflow: hidden;
+        border-radius: 1000px;
+      }
+
+      &.file-item-name {
+        width: 75%;
+        padding-left:5px;
+        padding-right:5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      &.file-item-remove {
+        div {
+          width: 25px;
+          height: 25px;
+          margin-left: auto;
+          border-radius: 100px;
+        }
+
+        i {
+          color: white;
+        }
+      }
+    }
+
+    &.file-item-load {
+
+      opacity: .5;
+
+      .file-item-info {
+
+        &.file-item-remove {
+          div {
+            border: solid 1px transparent;
+            animation: rotate 1s infinite ease-in-out;
+          }
+        }
+      }
+
+    }
+  }
+
+  .super-select {
+    margin-top: 25px;
+
+    &.super-select-single {
+      margin-top: 20px;
+    }
+  }
+
+  .super-input {
+    text-align: left;
+    padding: 4px;
+    padding-right: 16px;
+    border-radius: $formRadius;
+    margin: 0;
+    height: 35px;
+
+    &:focus {
+      outline: none;
+    }
+
+  }
+
+  .super-search {
+    position: sticky;
+    top: 0;
+    left: 0;
+    padding: 0 7px;
+  }
+
+  .super-options {
+    overflow: hidden auto;
+    height: 0;
+    transition: .3s;
+  }
+
+  .super-option {
+    margin: 7px;
+    margin-bottom: 5px;
+    border-radius: $formRadius;
+    padding: 2px;
+    cursor: pointer;
+    min-height: 28px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .super-select-single {
+    .super-options {
+      &.super-options-open {
+        height: 251px;
+      }
+    }
+  }
+
+  .super-select-multiple {
+    .super-options {
+      height: 251px;
+    }
+  }
+
+  .search-icon {
+    display: inline-block;
+    position: absolute;
+    top: 4px;
+    right: 12px;
+    cursor: pointer;
+
+    i {
+      font-size: 12px;
+    }
+  }
+
+  .super-selected {
+    width: 100%;
+    height: 30px;
+    padding: 5px;
+    padding-top: 0;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+  }
+
+  .super-arrow {
+    border: solid 5px;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    position: absolute;
+    top: 25px;
+    right: 4px;
+    cursor: pointer;
+
+    &.super-arrow-open {
+      top: 20px;
+      border-top-color: transparent;
+    }
+  }
+
+  .super-remove {
+    font-size: 12px;
+    position: absolute;
+    top: 18px;
+    right: 16px;
+    cursor: pointer;
+    display: none;
+
+    &.super-remove-show {
+      display: inline-block;
+    }
+  }
+
+  .super-search-found {
+    padding: 0 2px;
+    border-radius: 3px;
+  }
+
+  .textarea-count-char {
+    width: 95%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    font-size: 10px;
+    text-align: right;
+  }
+
+  .textarea-wysiwyg-hidden {
+    .wysiwyg-textarea {
+      opacity: 0;
+    }
+  }
+
+  .wysiwyg-textarea {
+
+    .fr-command {
+      transition: none !important;
+
+      svg {
+        transition: none !important;
+      }
+
+      path {
+        transition: none !important;
+      }
+    }
+
+    .fr-more-toolbar {
+      padding: 0 !important;
+    }
+  }
+
+  .form-tabs {
+    width: 100%;
+    height: auto;
+    position: relative;
+
+    .form-tab-arrow {
+      width: 20px;
+      height: 34px;
+      background-color: white;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 5;
+      cursor: pointer;
+      border-top-left-radius: $formRadius;
+      transition: .3s;
+      overflow: hidden;
+      opacity: 0;
+
+      > div {
+        width: 10px;
+        height: 10px;
+        border: solid 3px $formText;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        position: absolute;
+        top: 50%;
+        left: 65%;
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+
+
+      &.form-tab-arrow-right {
+        left: initial;
+        right: 0;
+        border-top-left-radius: 0;
+        border-top-right-radius: $formRadius;
+
+        > div {
+          left: 40%;
+          transform: translate(-50%, -50%) rotate(-135deg);
+
+        }
+      }
+
+      &:hover {
+        opacity: .5;
+      }
+    }
+
+    .form-tabs-head {
+      width: 100%;
+      white-space: nowrap;
+      background-color: $formEmpty;
+      border-top-left-radius: $formRadius;
+      border-top-right-radius: $formRadius;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .form-tab-head {
+      width: auto;
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: $formRadius $formRadius 0 0;
+      cursor: pointer;
+
+      &:hover, &.form-tab-active {
+        background-color: white;
+
+        &.form-tab-error {
+          background-color: white;
+          color: $formError;
+        }
+      }
+
+      &.form-tab-error {
+        background-color: $formErrorLight;
+        color: $formError;
+      }
+
+    }
+
+    .form-tabs-body {
+      background-color: white;
+      position: relative;
+    }
+
+    .form-tab-body {
+      width: 100%;
+      height: auto;
+      padding: 20px;
+      border-bottom-left-radius: $formRadius;
+      border-bottom-right-radius: $formRadius;
+      display: none;
+
+      &.form-tab-active {
+        display: block;
+      }
+    }
+  }
+
+  .label-undefined {
+
+    select, input, textarea {
+      margin-top: 0;
+    }
+
+    .field-item, .field-confirm {
+      .field-checkboxes, .field-radios, .field-schedules {
+        margin-top: 0;
+      }
+    }
+
+    .field-file {
+      margin-top: 0;
+    }
+
+    .super-select {
+      margin-top: 0;
+
+      &.super-select-single {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .wysiwyg-save-plain-text {
+    width: 40px;
+    height: 15px;
+    border-radius: 100px;
+    display: inline-block;
+    position: relative;
+    margin: 12px 10px {
+      top: 16px;
+    };
+    cursor: pointer;
+    transition: .3s;
+
+    span {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 100px;
+      border: solid 1px;
+      left: -1px;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: .3s;
+    }
+
+
+    &.wysiwyg-save-plain-text-active {
+      span {
+        left: 21px;
+      }
+    }
+  }
+
+}
+
+@import "../colors/form.script";

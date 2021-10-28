@@ -1,0 +1,550 @@
+$contentRadius: 10px;
+
+.admin-content-view-body {
+
+  background-color: $bgBase;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: inline-flex;
+
+  .admin-card-body {
+    @include cardBody;
+
+    &.admin-card-title {
+      padding: 10px;
+      border-left: 5px solid $bgBase;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+
+      h1 {
+        font-size: 16px;
+        margin: 0;
+      }
+    }
+  }
+
+  .icon-menu-notification {
+    font-size: 10px;
+    margin-left: 5px;
+  }
+
+  .menu-hidden {
+    display: none;
+  }
+
+  .admin-content-view-menu { // START MENU ----------------------------------------------------------------------------
+    color: white;
+    transition: .3s;
+    white-space: nowrap;
+    max-width: max-content;
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+
+    > ul {
+      width: 100%;
+      height: 90%;
+      overflow: hidden auto;
+    }
+
+    .menu-item {
+
+      &.menu-active {
+
+        > .menu-title-hover {
+          background-color: $contentBg;
+          text-decoration: none;
+          padding-right: 10px;
+          margin-left: 5px;
+          border-top-left-radius: 100px;
+          border-bottom-left-radius: 100px;
+          color: $contentColor;
+          z-index: 1;
+
+          i {
+            color: $bgBase;
+          }
+
+          .menu-element-radius {
+            display: initial;
+          }
+        }
+      }
+    }
+
+    .menu-title-hover {
+      &:hover {
+        background-color: $contentBg;
+        text-decoration: none;
+        padding-right: 10px;
+        margin-left: 5px;
+        border-top-left-radius: 100px;
+        border-bottom-left-radius: 100px;
+        color: $contentColor;
+        z-index: 1;
+
+        i {
+          color: $bgBase;
+        }
+
+        .menu-element-radius {
+          display: initial;
+        }
+      }
+    }
+
+    .menu-title-content {
+      padding: 5px 15px;
+      cursor: pointer;
+      white-space: nowrap;
+      display: block;
+      position: relative;
+      font-size: 14px;
+      //transition: .1s;
+    }
+
+    .admin-project-logo {
+      height: 10%;
+      padding: 15px;
+
+      img {
+        width: auto;
+        height: 100%;
+        margin: auto;
+      }
+
+    }
+
+    .menu-group-title {
+      text-align: center;
+      font-size: 12px;
+      margin-top: 15px;
+      display: inline-flex;
+      width: 100%;
+      cursor: context-menu;
+
+      div {
+        width: 100%;
+
+        &:first-child, &:last-child {
+          position: relative;
+
+          div {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 1px;
+            background-color: white;
+            transform: translateY(-50%);
+            width: 75%;
+            z-index: 2;
+          }
+        }
+
+        &:last-child {
+
+          div {
+            left: initial;
+            right: 0;
+          }
+        }
+      }
+    }
+
+    .menu-group {
+      &:first-child {
+        .menu-group-title {
+          margin-top: 0;
+        }
+      }
+    }
+
+    .menu-icon-sub-menu {
+      position: absolute;
+      top: 5px;
+      right: 15px;
+      z-index: 2;
+    }
+
+    .menu-item-items {
+      overflow: hidden;
+      transition: .3s;
+    }
+
+    .menu-items-child-close {
+      height: 0 !important;
+      min-height: 0 !important;
+      overflow: hidden !important;
+    }
+
+    .menu-items-child {
+      background-color: rgba(0,0,0,.1);
+    }
+
+    .menu-element-radius {
+      position: absolute;
+      top: -25px;
+      right: 0;
+      width: 25px;
+      height: 25px;
+      display: none;
+      transition: .3s;
+      overflow: hidden;
+      pointer-events: none;
+
+      &:before {
+        content: "";
+        display: block;
+        width: 200%;
+        height: 200%;
+        position: absolute;
+        border-radius: 50%;
+        bottom: 0;
+        right: 0;
+        box-shadow: 10px 20px 0 0 $contentBg;
+      }
+
+      &.menu-element-radius-bottom {
+        top: initial;
+        bottom: -25px;
+
+        &:before {
+          top: 0;
+          bottom: initial;
+          box-shadow: 10px -20px 0 0 $contentBg;
+        }
+      }
+    }
+
+  }// END MENU ----------------------------------------------------------------------------------------
+
+  .admin-content-view-content {
+    width: 100%;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    background-color: $contentBg;
+    height: 100vh;
+    overflow: hidden auto;
+  }
+
+  .admin-content-view-header {
+    background-color: $contentBg;
+    width: 100%;
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 25;
+  }
+
+  .admin-title-view {
+    padding: 10px 20px 20px;
+    background-color: $contentBg;
+    position: sticky;
+    top: 56px;
+    z-index: 20;
+
+  }
+
+  .admin-project-logo > a, .menu-title, .menu-icon-sub-menu {
+    transition: .05s;
+  }
+
+  .menu-hidden-text-hide {
+    opacity: 0 !important;
+  }
+
+  .admin-burger-menu {
+    width: 30px;
+    float: left;
+    cursor: pointer;
+    margin-top: 7px;
+
+    div {
+      width: 100%;
+      height: 4px;
+      border-radius: 100px;
+      margin-bottom: 5px;
+      background-color: $successColor;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .admin-action-header {
+    width: max-content;
+    display: block;
+    margin-left: auto;
+
+
+    i {
+      color: $bgBase;
+    }
+
+    span {
+      margin-right: 5px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    .admin-reload {
+      cursor: pointer;
+
+      i {
+        &.rotation {
+          animation: rotate 1s infinite ease-in-out;
+        }
+      }
+    }
+
+    .admin-search {
+      display: inline-block;
+      border: solid 1px $borderCard;
+      border-radius: 80px;
+      position: relative;
+      transition: .3s;
+
+      .admin-search-result-count {
+        position: sticky;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        font-size: 12px;
+        text-align: right;
+        padding: 5px 25px;
+        color: $contentColorLight;
+        z-index: 1;
+        background-color: white;
+      }
+
+      .admin-search-found {
+        @include searchFound;
+      }
+
+      .admin-search-noresult {
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        padding: 15px 0;
+      }
+
+      input {
+        display: inline-block;
+        width: 200px;
+        border-radius: 80px;
+        padding: 5px {
+          left: 40px;
+          right: 10px;
+        };
+        border: none;
+        background-color: transparent;
+        transition: .3s;
+        color: $contentColor;
+        opacity: 0;
+
+        &:hover, &:focus {
+          border: none;
+          outline: none;
+        }
+
+        &.admin-focus-search {
+          width: 500px;
+          box-shadow: 0px 0px 8px rgba(0,0,0,.1);
+          background-color: white;
+          opacity: 1;
+        }
+      }
+
+      span {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        transform: translateY(-50%);
+      }
+
+      .admin-search-result {
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        margin-top: 5px;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0px 0px 8px rgba(0,0,0,.1);
+        height: 250px;
+        overflow: hidden auto;
+      }
+
+      .admin-search-item {
+        padding: 0 25px;
+
+        a {
+          outline: none;
+          text-decoration: none;
+          color: $contentColor;
+          font-size: 18px;
+          display: inline-block;
+          width: 100%;
+          padding: 15px 0;
+          border-bottom: solid 1px $borderCard;
+
+          &:hover {
+            outline: none;
+          }
+        }
+
+        .admin-search-title {
+          font-weight: bold;
+        }
+
+        .admin-search-description {
+          color: $contentColorLight;
+          font-size: 14px;
+        }
+
+        &:hover {
+          background-color: $contentBg;
+        }
+
+        &:last-child {
+          margin-bottom: 28px;
+          a {
+            text-decoration: none;
+            border-bottom: none;
+          }
+        }
+      }
+
+      .admin-search-load {
+        width: 70px;
+        height: 70px;
+        margin: auto {
+          top: 90px;
+        };
+        position: relative;
+        border-radius: 200px;
+        border: solid 1px $successColor {
+          left-color: transparent;
+        };
+        animation: rotate 1s infinite ease-in-out;
+      }
+
+    }
+
+    .admin-user { // USER HEADER NAME ---------------------------------------------------------------------------------------------
+      width: max-content;
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: $radius;
+      cursor: pointer;
+      border: solid 1px transparent;
+
+      &:hover {
+        border-color: $borderCard;
+      }
+    } // USER HEADER NAME ---------------------------------------------------------------------------------------------
+
+  }
+
+  .admin-user-menu-content { // USER MENU -------------------------------------------------------------------------------------------
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,.3);
+    z-index: 30;
+    transition: .3s;
+    overflow: hidden;
+    display: none;
+
+    &.admin-user-menu-open {
+      .menu-container {
+        right: 0;
+      }
+    }
+
+    &.admin-user-menu-show {
+      opacity: 1;
+    }
+
+    &.admin-user-menu-block {
+      display: initial;
+    }
+
+    .menu-container {
+      position: absolute;
+      width: max-content;
+      top: 0;
+      right: -250px;
+      height: 100%;
+      display: block;
+      background-color: $contentBg;
+      overflow: hidden;
+      transition: .3s;
+      border-top-left-radius: 15px;
+      border-bottom-left-radius: 15px;
+      box-shadow: 0px 0px 8px rgba(0,0,0,.1);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    a {
+      text-align: center;
+      color: $contentColor;
+      padding: 10px;
+      display: block;
+      border-bottom: solid 1px $borderCard;
+      width: 250px;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: none;
+        background-color: $contentBgHover;
+      }
+    }
+
+    i {
+      color: $bgBase;
+
+      &.fa-sign-out {
+        color: $_danger;
+      }
+    }
+
+
+  } // USER MENU -------------------------------------------------------------------------------------------
+
+  .admin-content-view-core {// ADMIN CORE ---------------------------------------------------------------------------------
+    padding: 10px 20px 20px;
+    position: relative;
+
+    .loader-rotate-circle {
+      width: 130px !important;
+      height: 130px !important;
+      margin-top: 20%;
+    }
+  }// ADMIN CORE ---------------------------------------------------------------------------------
+
+}

@@ -1,0 +1,20 @@
+.loader-content {
+
+  .loader-title {
+    color: $loaderText;
+  }
+
+  .loader-rotate-circle {
+    border-color: $loaderColor;
+    border-top-color: transparent;
+  }
+
+  .loader-bound-item {
+    background-color: $loaderColor;
+
+    &.type-triangle {
+      border-bottom-color: $loaderColor;
+    }
+  }
+
+}

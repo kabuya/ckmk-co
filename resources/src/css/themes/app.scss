@@ -1,0 +1,35 @@
+
+/******* SCROLL ********/
+
+
+@include selectionText(
+  $selectionBg,
+  $selectionColor
+);
+
+@include scrollBar(
+  $scrollScrollbarThumbBg,
+  $scrollScrollbarTrackBg
+);
+
+/******* SCROLL ********/
+
+/******* FORM ********/
+@import "../colors/form.script";
+/******* FORM ********/
+
+/******* FORM ********/
+@import "../colors/datatable.script";
+/******* FORM ********/
+
+/******* LOADER ********/
+@import "../colors/loader.script";
+/******* LOADER ********/
+
+/******* DEFAULT PAGES ********/
+
+/******* PAGE TEXT ********/
+@import "../colors/loader.script";
+/******* PAGE TEXT ********/
+
+/******* DEFAULT PAGES ********/

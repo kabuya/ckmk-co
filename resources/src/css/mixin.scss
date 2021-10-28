@@ -1,0 +1,161 @@
+@mixin bgCover {
+  background: no-repeat center fixed !important;
+  background-size: cover !important;
+}
+
+@mixin scrollY {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+@mixin scrollX {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+}
+
+@mixin scroll {
+  overflow: auto !important;
+}
+
+@mixin threePoint {
+  padding-left:10px !important;
+  padding-right:10px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+@mixin inputForm {
+  border-radius: 5px;
+  width: 100%;
+  display: block;
+  padding: 5px {
+    right: 20px;
+  };
+  border: solid 2px;
+  outline: none;
+
+
+  &:focus {
+    outline: none;
+  }
+
+  @include inputNumberWithoutArrows;
+}
+
+@mixin inputNumberWithoutArrows {
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  &[type=number] {
+    -moz-appearance: textfield;
+  }
+}
+
+@mixin empty {
+  &:empty {
+    @content
+  }
+  &:blank {
+    @content
+  }
+  &:-moz-only-whitespace {
+    @content
+  }
+}
+
+@mixin respond($breakpoint) {
+  @if $breakpoint == mobile {
+    @content
+  } @else if $breakpoint == tablet {
+    @media only screen and (min-width: 620px) {
+      @content
+    }
+  } @else {
+    @media only screen and (min-width: 998px) {
+      @content
+    }
+  }
+}
+
+@mixin inputFormColor(
+  $borderColor,
+  $textColor,
+  $placeholderColor,
+  $borderFocusColor,
+  $borderErrorColor
+) {
+  border-color: $borderColor;
+
+  color: $textColor;
+
+  &::placeholder {
+    color: $placeholderColor;
+  }
+
+  &:focus, &.input-active {
+    border-color: $borderFocusColor;
+  }
+
+  &.input-error {
+    border-color: $borderErrorColor !important;
+  }
+}
+
+@mixin cardBody {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 8px $cardShadow;
+  padding: 15px;
+}
+
+@mixin searchFound {
+  //background-color: $successColor;
+  display: inline-block;
+  color: $successColor;
+  font-weight: bold;
+  position: relative;
+  left: initial;
+  right: initial;
+  transform: none;
+  //padding: 0 2px;
+}
+
+@mixin selectionText(
+  $bg, $color
+) {
+  ::selection {
+    background-color: $bg;
+    color: $color;
+  }
+}
+
+@mixin scrollBar(
+  $scrollScrollbarThumb,
+  $scrollScrollbarTrack,
+  $width: 10px,
+  $height: 5px,
+  $radius: 50px
+) {
+
+  ::-webkit-scrollbar {
+    width: $width;
+    height: $height;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: $scrollScrollbarThumb;
+    border-radius: $radius;
+    cursor: pointer;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: $scrollScrollbarTrack;
+    border-radius: $radius;
+    cursor: pointer;
+  }
+}

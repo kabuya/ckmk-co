@@ -1,0 +1,24 @@
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes showSlow {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+
+  50% {
+    display: initial;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
