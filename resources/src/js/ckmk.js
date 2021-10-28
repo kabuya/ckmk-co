@@ -2,6 +2,7 @@ const SPACE_HASH = "@@space@@";
 const SPACE_VALUE = " ";
 const BACKSPACE_HASH = "@@backspace@@";
 const BACKSPACE_VALUE_SIMPLE = "\n";
+
 const BACKSPACE_VALUE = "\r\n";
 const DOUBLE_QUOTE_HASH = "@@double-quote@@";
 const DOUBLE_QUOTE_VALUE = "\"";
