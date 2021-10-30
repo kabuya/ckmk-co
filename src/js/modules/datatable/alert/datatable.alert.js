@@ -65,7 +65,7 @@ class DatatableAlert {
      */
     openNewMessage(type, message) {
         this.reset();
-        if(!message) return this.close();
+        if(!(("" + message).trim())) return this.close();
         if(type.in("success")) {
             this.dom.addClass(HTML_CLASS_ALERT_SUCCESS);
         } else if( type.in("warning")) {
@@ -77,7 +77,8 @@ class DatatableAlert {
         let
             content = this.dom.find(".datatable-alert-message-content")
         ;
-        message.forEach((_msg) => {
+        for(let i in message) {
+            let _msg = message[i];
             content.append([
                 "<div class='datatable-alert-message-item'>",
                     HTML_ICONS[type],
@@ -86,7 +87,7 @@ class DatatableAlert {
                     "</span>",
                 "</div>"
             ].join(""));
-        });
+        }
         return this.open();
     }
 

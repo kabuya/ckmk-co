@@ -6,37 +6,28 @@ const BACKSPACE_VALUE = "\r\n";
 const DOUBLE_QUOTE_HASH = "@@double-quote@@";
 const DOUBLE_QUOTE_VALUE = "\"";
 
-const STRING_SPECIAL_CHAR = [
-//        " ", ".", "'", "\"", "/", "$",
-//        "!", "(", ")", "#", "&", "?",
-    "à", "â", "ä", "á", "ã", "å",
-    "î", "ï", "ì", "í",
-    "ô", "ö", "ò", "ó", "õ", "ø",
-    "ù", "û", "ü", "ú",
-    "é", "è", "ê", "ë",
-    "ç", "ÿ", "ñ",
-    "Â", "Ê", "Î", "Ô", "Û", "Ä", "Ë", "Ï", "Ö", "Ü",
-    "À", "Æ", "æ", "Ç", "É", "È", "Œ", "œ", "Ù",
+const TYPE_UNDEFINED = "undefined";
+const TYPE_OBJECT = "object";
+const TYPE_BOOLEAN = "boolean";
+const TYPE_NUMBER = "number";
+const TYPE_STRING = "string";
+const TYPE_FUNCTION = "function";
+const TYPE_SYMBOL = "symbol";
+const TYPE_BIGINT = "bigint";
+const TYPES = [
+    TYPE_UNDEFINED,
+    TYPE_OBJECT,
+    TYPE_BOOLEAN,
+    TYPE_NUMBER,
+    TYPE_STRING,
+    TYPE_FUNCTION,
+    TYPE_SYMBOL,
+    TYPE_BIGINT,
 ];
-const STRING_REPLACE_CHAR = [
-//    "-", "-", "-", "-", "-", "-",
-//    "-", "-", "-", "-", "-", "-",
-    "a", "a", "a", "a", "a", "a",
-    "i", "i", "i", "i",
-    "o", "o", "o", "o", "o", "o",
-    "u", "u", "u", "u",
-    "e", "e", "e", "e",
-    "c", "y", "n",
-    "A", "E", "I", "O", "U", "A", "E", "I", "O", "U",
-    "A", "AE", "ae", "C", "E", "E", "OE", "oe", "U",
-];
-const GENERATED_UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const GENERATED_LOWER = "abcdefghijklmnopqrstuvwxyz";
-const GENERATED_NUMBER = "0123456789";
-const GENERATED_SPEC_CHAR = "$&_-=+/%&@#~=<>";
 
 const FROALA_EDITOR_DEFAULT_OPTIONS = {
     focus : true,
+    toolbarBottom: false,
     toolbarInline : false,
     toolbarSticky : false,
     charCounterCount: true,
@@ -151,219 +142,17 @@ const FROALA_EDITOR_DEFAULT_OPTIONS = {
 };
 
 let
-    /**
-     * @param {array} args
-     * @param {function} func
-     * @return {boolean}
-     */
-    eachArg = function (args, func) {
-        if(!args.length) return false;
-        let response = true;
-        args.forEach(function (value, key) {
-            let res = func(value, key);
-            if((typeof res === "boolean") && response) {
-                response = res;
-                return false;
-            }
-        });
-        return response;
-    }
-    , initialized = false, executed = false,
+    initialized = false,
+    /** @type {CO_JAVASCRIPT_PROJECT_INSTANCE} _thisCo */
+    _thisCo,
     outputString, environment, version, projectName
 ;
 
-// TYPE SETTINGS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-if(!Date.format) {
-    /**
-     * @param {string} format
-     * @param {number|string} time
-     * @return {string}
-     */
-    Date.format = function (format = "Y-m-d H:i:s", time= undefined) {
-        return (new Date(time || Date.now())).format(format);
-    }
-}
-
-if(!RegExp.searchSpecChar) {
-    RegExp.searchSpecChar = [
-        "\\?", "\\\\", "\\/", "\\(", "\\)", "\\*", "\\.", "\\^", "\\$"
-    ];
-}
-
-if(!RegExp.searchBuild) {
-    /**
-     * @param {RegExp|string} rg
-     * @param {string} flags
-     * @return {RegExp}
-     */
-    RegExp.searchBuild = (rg, flags) => {
-        return new RegExp(RegExp.searchParse(rg), flags);
-    };
-}
-
-if(!RegExp.searchParse) {
-    /**
-     * @param {string} rg
-     * @return {string}
-     */
-    RegExp.searchParse = (rg) => {
-        return rg
-            .replace(new RegExp(RegExp.searchSpecChar.join("|"), "g"), (str) => {
-                if(str.match(/[ ]+/)) return str;
-                return "\\" + str;
-            })
-        ;
-    };
-}
-
-if(!Array.compact) {
-    /**
-     * @param {[][]} arrays
-     * @return {*[]}
-     */
-    Array.compact = function compact (...arrays) {
-        let mergeList = [];
-        arrays.forEach((_array) => {
-            if(co.isArray(_array)) {
-                _array.forEach((_arrValue) => {
-                    mergeList.push(_arrValue);
-                });
-            }
-        });
-        return mergeList;
-    }
-}
-
-Object.assign(Date.prototype, {
-    format(format = "Y-m-d H:i:s") {
-        this.setFormatValues();
-        let value = format;
-        $.each(this.formatData, function (k, v) {
-            let regexp = new RegExp(k, "gi");
-            if(regexp.test(value)) {
-                value = value.replace(regexp, v);
-            }
-        });
-        return value;
-    },
-
-    setFormatValues() {
-        if(!this.formatData || this.getTime() !== this.formatData.time) {
-            this.formatData = {
-                time : this.getTime(),
-                Y : this.getFullYear(),
-                m : co.timeNumber(this.getMonth() + 1),
-                d : co.timeNumber(this.getDate()),
-                H : co.timeNumber(this.getHours()),
-                i : co.timeNumber(this.getMinutes()),
-                s : co.timeNumber(this.getSeconds()),
-                ms : co.timeNumber(this.getMilliseconds()),
-            };
-        }
-    },
-});
-
-Object.assign(String.prototype, {
-    lower() {
-        return this.toLowerCase();
-    },
-
-    upper() {
-        return this.toUpperCase();
-    },
-
-    ucfirst() {
-        let
-            first = this.substr(0,1),
-            last = this.substr(1, this.length)
-        ;
-        return first.upper() + last;
-    },
-
-    /**
-     * @param {string} delimiter
-     * @return {string}
-     */
-    camel(delimiter = " ") {
-        let
-            exploded = this.split(delimiter),
-            value = ""
-        ;
-        exploded.forEach(function (v) {
-            if(value !== "") {
-                value += delimiter;
-            }
-            value += v.ucfirst();
-        });
-        return value;
-    },
-
-    kebab() {
-        return this.noAccent().replace(/[A-Z ]/g, function (str, i) {
-            let concat = i ? "-" : "";
-            if(str !== " ") {
-                return concat + str.lower();
-            }
-            return concat;
-        })
-            .replace(/[-]{2,}/g, "-");
-    },
-
-    /**
-     * @param {string} strings
-     * @return {boolean}
-     */
-    in(...strings) {
-        let
-            regexp = new RegExp("^"+ this +"$", "mgi"),
-            found = false
-        ;
-        $.each(strings, function (i, string) {
-            if(regexp.test(string) && !found) {
-                found = true;
-                return false;
-            }
-        });
-        return found;
-    },
-
-    noAccent() {
-        return this.replace(new RegExp(STRING_SPECIAL_CHAR.join("|"), "g"), function (str) {
-            return STRING_REPLACE_CHAR[STRING_SPECIAL_CHAR.indexOf(str)];
-        });
-    },
-
-    removeAccent() {
-        return this.noAccent();
-    },
-
-    /**
-     * @param {string} values
-     * @return {string|void}
-     */
-    replaceVar(...values) {
-        let
-            this_o = this,
-            variables = this.match(new RegExp("\\{[a-z0-9\\_\\-\\:\\.]+\\}", "gi"))
-        ;
-        if(co.isList(variables)) {
-            $.each(variables, (k, variable) => {
-                let
-                    value = values[k]
-                ;
-                if((typeof value) !== "undefined") {
-                    this_o = this_o.replace(variable, value).toString();
-                }
-            });
-            return this_o.toString();
-        }
-    }
-
-});
-
-// TYPE SETTINGS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
 class CO_JAVASCRIPT_PROJECT_INSTANCE {
+
+    constructor() {
+        _thisCo = this;
+    }
 
     toString() {
         return "C.K.M.K Script";
@@ -460,144 +249,150 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
      */
     log(...values) {
         if(this.isDev()) {
-            eachArg(values, (value) => {
+            values.forEach((value) => {
                 console.log(value);
             });
         }
     }
 
     /**
-     * @param {boolean} boolValues
-     * @return {boolean}
+     * @param {*} element
+     * @return {"undefined"|"object"|"boolean"|"number"|"string"|"function"|"symbol"|"bigint"}
      */
-    isBool(...boolValues) {
-        return eachArg(boolValues, (boolValue) => {
-            if(typeof boolValue !== "boolean") {
-                return false;
-            }
-        });
+    getType(element) {
+        return (typeof element);
     }
 
     /**
-     * @param {array} arrays
+     * @param {*} element
+     * @param {string} type
+     * @return {boolean}
+     */
+    isType(element, type) {
+        return this.getType(element).in(type);
+    }
+
+    /**
+     * @param {boolean|*} booleans
+     * @return {boolean}
+     */
+    isBool(...booleans) {
+        return (booleans.filter((_bool) => {
+            return !this.isType(_bool, TYPE_BOOLEAN);
+        }).length === 0);
+    }
+
+    /**
+     * @param {array|*} arrays
      * @return {boolean}
      */
     isArray(...arrays) {
-        return eachArg(arrays, (array) => {
-            if(!Array.isArray(array)) {
-                return false;
-            }
-        });
+        return (arrays.filter((_array) => {
+            return !Array.isArray(_array);
+        }).length === 0);
     }
 
     /**
-     * @param {object} objects
+     * @param {object|*} objects
      * @return {boolean}
      */
     isObject(...objects) {
-        return eachArg(objects, (object) => {
-            if(typeof object !== "object" || this.isArray(object)) {
-                return false;
-            }
-        });
+        return (objects.filter((object) => {
+            return (!this.isType(object, TYPE_OBJECT) || this.isArray(object));
+        }).length === 0);
     }
 
     /**
-     * @param {array|object} lists
-     */
-    isList(...lists) {
-        return eachArg(lists, (list) => {
-            if(!this.isArray(list) && !this.isObject(list)) {
-                return false;
-            }
-        });
-    }
-
-    /**
-     * @param args
+     * @param {array|object|*} lists
      * @return {boolean}
      */
-    isEmpty(...args) {
-        return eachArg(args, (value) => {
-            if(this.isList(value) && !$.isEmptyObject(value)) {
-                return false;
-            }
-        });
+    isList(...lists) {
+        return (lists.filter((list) => {
+            return (!this.isArray(list) && !this.isObject(list));
+        }).length === 0);
     }
 
     /**
-     * @param {function} functions
+     * @param {array|object|*} lists
+     * @return {boolean}
+     */
+    isEmpty(...lists) {
+        return (lists.filter((list) => {
+            return (this.isList(list) && !$.isEmptyObject(list));
+        }).length === 0);
+    }
+
+    /**
+     * @param {function|[object,string]|*} functions
+     * @return {boolean}
      */
     isFunction(...functions) {
-        return eachArg(functions, (func) => {
-            if(co.isArray(func)) {
-                return $.isFunction(func[0][func[1]]);
-            } else if(!$.isFunction(func)) {
-                return false;
-            }
-        });
+        return (functions.filter((func) => {
+            if(this.isArray(func)) func = func[0][func[1]];
+            return (!$.isFunction(func));
+        }).length === 0);
     }
 
     /**
-     * @param {string} strings
+     * @param {function|[object,string]|*} callbacks
+     * @return {boolean}
+     */
+    isCallable(...callbacks) {
+        return this.isFunction(...callbacks);
+    }
+
+    /**
+     * @param {string|*} strings
      * @return {boolean}
      */
     isString(...strings) {
-        return eachArg(strings, (string) => {
-            if(typeof string !== "string" && typeof string !== "number") {
-                return false;
-            }
-        });
+        return (strings.filter((string) => {
+            return (!this.isType(string, TYPE_STRING) && !this.isType(string, TYPE_NUMBER));
+        }).length === 0);
     }
 
     /**
-     * @param {string} jsons
+     * @param {string|*} jsons
      * @return {boolean}
      */
     isJsonString(...jsons) {
-        return eachArg(jsons, (json) => {
+        return (jsons.filter((_json) => {
             try {
-                JSON.parse(json);
+                JSON.parse(_json);
             } catch (error) {
-                return false;
+                return true;
             }
-        });
+        }).length === 0);
     }
 
     /**
-     * @param {number} numbers
+     * @param {number|*} numbers
      * @return {boolean}
      */
     isNumber(...numbers) {
-        return eachArg(numbers, (number) => {
-            if(!$.isNumeric(number)) {
-                return false;
-            }
-        });
+        return (numbers.filter((number) => {
+            return !$.isNumeric(number);
+        }).length === 0);
     }
 
     /**
-     * @param {number|int} integers
+     * @param {number|*} integers
      * @return {boolean}
      */
     isInt(...integers) {
-        return eachArg(integers, (int) => {
-            if($.isNumeric(int) && !int.toString().match(/^[0-9]+$/) || !$.isNumeric(int)) {
-                return false;
-            }
-        });
+        return (integers.filter((int) => {
+            return (($.isNumeric(int) && !int.toString().match(/^[0-9]+$/)) || !$.isNumeric(int));
+        }).length === 0);
     }
 
     /**
-     * @param {number|float} floats
+     * @param {number|*} floats
      * @return {boolean}
      */
     isFloat(...floats) {
-        return eachArg(floats, (float) => {
-            if($.isNumeric(float) && !float.toString().match(/^[0-9]+[,|.]+[ ]?[0-9]+$/) || !$.isNumeric(float)) {
-                return false;
-            }
-        });
+        return (floats.filter((float) => {
+            return (($.isNumeric(float) && !float.toString().match(/^[0-9]+[,|.]+[ ]?[0-9]+$/)) || !$.isNumeric(float));
+        }).length === 0);
     }
 
     /**
@@ -625,44 +420,34 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
     }
 
     /**
-     * @param values
+     * @param {*} values
      * @return {boolean}
      */
     isSet(...values) {
-        return eachArg(values, (value) => {
-            if(value === undefined || value === null) {
-                return false;
-            } else if(co.isString(value) && value.match(/^[ ]{0,}$/)) {
-                return false;
-            }
-        });
+        return (values.filter((value) => {
+            return ((value === undefined || value === null) || (this.isString(value) && (value === "" || value.match(/^[ ]*$/))));
+        }).length === 0);
     }
 
     /**
      * @param {RegExp} regexp
-     * @param {string[]} values
+     * @param {string} values
      * @return {boolean}
      */
     match(regexp, ...values) {
-        if(!this.isObject(regexp) || !this.isFunction(regexp.test)) {
-            return false;
-        }
-        return eachArg(values, (value) => {
-            if(!regexp.test(value)) {
-                return false;
-            }
-        });
+        if(!this.instanceOf(regexp, RegExp)) return false;
+        return (values.filter((value) => {
+            return (!this.isString(value) || !(!!value.match(regexp)));
+        }).length === 0);
     }
 
     /**
      * @param {number|string} number
-     * @return {string}
+     * @return {string|undefined}
      */
     timeNumber(number) {
         if(this.isNumber(number)) {
-            if(number<10) {
-                return "0" + number;
-            }
+            if(number<10) return "0" + number;
             return number;
         }
     }
@@ -737,23 +522,7 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
         intChar = true,
         specChar = true
     ) {
-        let
-            value = "",
-            characters = ""
-        ;
-
-        if(!!upperChar) characters += GENERATED_UPPER;
-        if(!!lowerChar) characters += GENERATED_LOWER;
-        if(!!intChar) characters += GENERATED_NUMBER;
-        if(!!specChar) characters += GENERATED_SPEC_CHAR;
-
-        if(characters !== "") {
-            if(!this.isInt(length)) length = 5;
-            for (let i = 0; i < length; i++) {
-                value += characters.charAt(Math.floor(Math.random() * characters.length))
-            }
-        }
-        return value;
+        return String.generate(length, upperChar, lowerChar, intChar, specChar);
     }
 
     /**
@@ -802,22 +571,9 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
      * @return {boolean}
      */
     instanceOf(object, ...classes) {
-        let
-            success = false
-        ;
-        $.each(classes,
-            /**
-             * @param {int} key
-             * @param {function} cls
-             */
-            (key, cls) => {
-                if((object instanceof cls) && !success) {
-                    success = true;
-                    return false;
-                }
-            }
-        );
-        return success;
+        return (classes.filter((cls) => {
+            return (object instanceof cls);
+        }).length > 0);
     }
 
     /**
@@ -860,7 +616,6 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
         sel.addRange(range);
         target.focus();
         range.detach(); // optimization
-
         // set scroll to the end if multiline
         target.scrollTop = target.scrollHeight;
     }
@@ -960,13 +715,14 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
         return ( mobile.test(userAgent) || tablet.test(userAgent.substr(0, 4)) )
     }
 
+    /**
+     * @param {string|*} strings
+     * @return {string}
+     */
     concat(...strings) {
-        let
-            this_o = this,
-            value = ""
-        ;
-        $.each(strings, function (k, str) {
-            if(this_o.isString(str)) {
+        let value = "";
+        strings.forEach((str) => {
+            if(this.isString(str)) {
                 value += str;
             }
         });
@@ -1007,9 +763,7 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
                 dataValue = dom.attr(name)
             ;
             if(dataValue) {
-                if(remove) {
-                    dom.removeAttr(name);
-                }
+                if(remove) dom.removeAttr(name);
                 return dataValue;
             }
         }
@@ -1033,15 +787,15 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
 
     /**
      * @param {number} time
-     * @param {Function[]} args
+     * @param {Function} callbacks
      */
-    timeOutChain(time, ...args) {
+    timeOutChain(time, ...callbacks) {
         time = this.isInt(time) ? time : 500;
         let
             this_o = this,
-            __time = ((args.length === 1) ? time : 0)
+            __time = ((callbacks.length === 1) ? time : 0)
         ;
-        $.each(args, (i, cb) => {
+        callbacks.forEach((cb) => {
             setTimeout(() => {
                 this_o.runCb(cb);
             }, __time);
@@ -1131,15 +885,9 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
         CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.loader = require("./modules/loading/loader");
         CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.datatable = require("./modules/datatable/datatable");
         CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.admin = require("./modules/admin/admin");
-        CO_JAVASCRIPT_PROJECT_INSTANCE.#runWhenDocumentHtmlAndHisCssAndJsScriptsAreReady();
-    }
-
-    static #runWhenDocumentHtmlAndHisCssAndJsScriptsAreReady() {
-        if(executed) return false;
-        executed = true;
-        co.form.init($("form"));
-        co.datatable.init($(".datatable-content"));
-        co.infos();
+        _thisCo.form.init($("form"));
+        _thisCo.datatable.init($(".datatable-content"));
+        _thisCo.infos();
     }
 
 }

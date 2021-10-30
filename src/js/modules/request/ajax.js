@@ -25,9 +25,7 @@ class Ajax {
                     return false;
                 }
             });
-            if(RequestTarget) {
-                return this.executeRequest(RequestTarget);
-            }
+            if(RequestTarget) return this.executeRequest(RequestTarget);
         }
     }
 
@@ -69,5 +67,5 @@ Ajax.prototype.METHOD_PUT = AjaxRequest.METHOD_PUT;
 Ajax.prototype.METHOD_DELETE = AjaxRequest.METHOD_DELETE;
 Ajax.prototype.METHOD_PATCH = AjaxRequest.METHOD_PATCH;
 
-module.exports = new Ajax();
+module.exports = new Ajax;
 

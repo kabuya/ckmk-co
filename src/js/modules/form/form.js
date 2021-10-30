@@ -60,6 +60,8 @@ const EVENTS = [
     EVENT_ENABLED
 ];
 
+const SECURITY_TOKEN_NAME = "__token";
+
 /**
  * @type {object}
  */
@@ -75,6 +77,7 @@ let
  * @property {jQuery|HTMLElement} dom
  * @property {(Field|TextField|LongtextField|PasswordField|FileField|ButtonField|ScheduleField|EmailField|SelectField)[]} fields
  * @property {string} ID
+ * @property {string} name
  * @property {string} method
  * @property {string} action
  * @property {boolean} xmlHttpRequest
@@ -105,6 +108,8 @@ class Form extends EventTypes {
 
     static EVENTS = EVENTS;
 
+    static SECURITY_TOKEN_NAME = SECURITY_TOKEN_NAME;
+
     /**
      * @param {jQuery|HTMLElement} dom
      */
@@ -118,6 +123,7 @@ class Form extends EventTypes {
             style = this.dom.find("style")
         ;
         this.ID = this.dom.attr("id");
+        this.name = this.ID;
         this.method = this.dom.attr("method") || "get";
         this.action = this.dom.attr("action") || window.location.href;
         this.errors = {};
@@ -183,14 +189,8 @@ class Form extends EventTypes {
         let
             success = true
         ;
-        $.each(this.fields,
-        /**
-         * @param {int} k
-         * @param {Field|TextField|LongtextField|PasswordField|FileField|ButtonField|ScheduleField|EmailField|SelectField} field
-         * @return {boolean}
-         */
-        (k, field) => {
-            if(!field.isValid() && success) {
+        this.fields.forEach((_field) => {
+            if(!_field.isValid() && success) {
                 success = false;
             }
         });
@@ -230,6 +230,7 @@ class Form extends EventTypes {
                     .setSuccess((response, status, xhr) => {
                         if(!response.success) {
                             this_o.setErrors(response.messages || this_o.getDefaultsErrorsMessages());
+                            this_o.changeTokenValueFromRequestFailed(response[SECURITY_TOKEN_NAME]);
                         }
                         this_o.requested = false;
                         load.destroy();
@@ -363,15 +364,35 @@ class Form extends EventTypes {
         return "An error has occurred.";
     }
 
+    /**
+     * @param {string|undefined} token
+     */
+    changeTokenValueFromRequestFailed(token) {
+        if(token) {
+            let fieldName = co.concat(
+                    this.name,
+                    "[",
+                    SECURITY_TOKEN_NAME,
+                    "]"
+                ),
+                fieldToken = this.dom.find("input[name='"+ fieldName +"']")
+            ;
+            if(fieldToken.val() !== token) {
+                fieldToken
+                    .attr("value", token)
+                    .val(token)
+                ;
+            }
+        }
+    }
+
     setEvents() {
         let
             this_o = this
         ;
-
         this.dom.on("submit", function (e) {
             return this_o.formOnSubmit(e);
         });
-
         this.fields.forEach(function (fieldO) {
             fieldO.setEvents();
         });

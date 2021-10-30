@@ -255,14 +255,15 @@ class DatatableRow {
      * @param {object} data
      */
     static createFromData(datatable, data) {
-        if(data[datatable.rowsID]) {
+        if(data && data[datatable.rowsID]) {
             let
                 append = true,
                 row = $("<tr></tr>")
                     .addClass("datatable-body-row")
                     .attr("data-id", data[datatable.rowsID])
                     .attr("data-title", data.title || data[datatable.rowsID])
-                    .attr("data-position", datatable.rows.length + 1),
+                    .attr("data-position", datatable.rows.length + 1)
+                    .attr("data-visibility", co.objectToJson(data.visibility, true)),
                 actionColumn,
                 visibility = data.visibility || VISIBILITIES_DEFAULT
             ;

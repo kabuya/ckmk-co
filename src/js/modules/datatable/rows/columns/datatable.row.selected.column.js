@@ -18,6 +18,7 @@ class DatatableRowSelectedColumn extends DatatableSelected {
         this.dom = $(row.datatable.HTML_SELECTE_DOM);
         /** @type {boolean} */
         this.appended = false;
+        if(!this.isDisplayAble()) this.dom.html("");
     }
 
     /**
@@ -30,10 +31,12 @@ class DatatableRowSelectedColumn extends DatatableSelected {
             .prepend(this.dom)
             .addClass("datatable-body-row")
         ;
-        let this_o = this;
-        this.dom.on("click", (e) => {
-            return this_o.toggleCheck(e);
-        });
+        if(this.isDisplayAble()) {
+            let this_o = this;
+            this.dom.on("click", (e) => {
+                return this_o.toggleCheck(e);
+            });
+        }
         return true;
     }
 
@@ -48,6 +51,7 @@ class DatatableRowSelectedColumn extends DatatableSelected {
     }
 
     check() {
+        if(!this.isDisplayAble()) return false;
         if(super.check()) {
             this.row.datatable.run(
                 this.row.datatable.EVENT_ON_SELECTED_ROW_ADD,
@@ -59,6 +63,7 @@ class DatatableRowSelectedColumn extends DatatableSelected {
     }
 
     uncheck() {
+        if(!this.isDisplayAble()) return false;
         if(super.uncheck()) {
             this.row.datatable.run(
                 this.row.datatable.EVENT_ON_SELECTED_ROW_REMOVE,
@@ -73,12 +78,20 @@ class DatatableRowSelectedColumn extends DatatableSelected {
      * @param {Event} e
      */
     toggleCheck(e) {
+        if(!this.isDisplayAble()) return false;
         if(this.isChecked()) {
             this.uncheck();
         } else {
             this.check();
         }
         return this.row.datatable.selected.toggleCheckByRowClick();
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isDisplayAble() {
+        return this.row.isVisible(this.row.VISIBILITY_DELETABLE);
     }
 
 }

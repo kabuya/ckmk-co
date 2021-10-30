@@ -11,10 +11,10 @@ const CARDS = [
 ];
 
 let
-    dom = [
+    dom = $([
         "<div class='popup-container'>",
         "</div>",
-    ].join(""),
+    ].join("")),
     /** @type {(
      * PopUpCard
      * |PopUpConfirmCard
@@ -119,7 +119,6 @@ class PopUp {
     show() {
         if(!appended) {
             appended = true;
-            if(co.isString(dom)) dom = $(dom);
             container.prepend(dom);
         }
         return false;
@@ -287,4 +286,4 @@ class PopUp {
     }
 }
 
-module.exports = new PopUp();
+module.exports = new PopUp;

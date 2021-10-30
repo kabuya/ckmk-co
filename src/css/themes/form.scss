@@ -286,6 +286,10 @@ form.form-container {
         display: none;
       }
     }
+
+    &.field-container-last {
+      margin-bottom: 0;
+    }
   }
 
   .field-hidden {

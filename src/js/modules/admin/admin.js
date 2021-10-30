@@ -101,4 +101,4 @@ Admin.prototype.EVENT_VIEW_RELOAD_START = EVENT_VIEW_RELOAD_START;
 Admin.prototype.EVENT_MENU_ACTIVE = EVENT_MENU_ACTIVE;
 Admin.prototype.EVENT_SEARCH_RESULT_DISPLAY = EVENT_SEARCH_RESULT_DISPLAY;
 
-module.exports = new Admin();
+module.exports = new Admin;

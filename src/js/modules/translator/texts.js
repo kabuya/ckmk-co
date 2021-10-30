@@ -159,4 +159,4 @@ class Translator {
 
 }
 
-module.exports = new Translator();
+module.exports = new Translator;
