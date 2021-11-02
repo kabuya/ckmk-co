@@ -1,4 +1,5 @@
 const HASH_JOIN = "###########################################################";
+const HTML_CLASS_HIDDEN = "datatable-item-hidden";
 
 /**
  * @property {DatatableRow} row
@@ -47,6 +48,7 @@ class DatatableRowColumn {
         this.formTemplate = this.getFormTemplate();
         if(this.column) this.column.addColumn(this);
         this.action = this.column.type.getAction(this);
+        if(this.isHidden()) this.dom.remove();
     }
 
     /**
@@ -82,8 +84,21 @@ class DatatableRowColumn {
             });
             this.dom.html(_html.replace(_text, _textMatched));
             return true;
-        } else if(!!(this.compareValue && this.compareValue.match(rg))) {
+        } else if(this.checkMatchFromCompareValue(rg)) {
             return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param {RegExp} regexp
+     * @return {boolean}
+     */
+    checkMatchFromCompareValue(regexp) {
+        if(co.instanceOf(regexp, RegExp)) {
+            if(co.isString(this.compareValue) && !co.isNumber(this.compareValue)) {
+                return !!this.compareValue.match(regexp);
+            }
         }
         return false;
     }
@@ -190,11 +205,31 @@ class DatatableRowColumn {
         return true;
     }
 
+    show() {
+        if(this.isVisible()) return false;
+        this.dom.removeClass(HTML_CLASS_HIDDEN);
+        return true;
+    }
+
+    hide() {
+        if(!this.isVisible()) return false;
+        this.dom.addClass(HTML_CLASS_HIDDEN);
+        return true;
+    }
+
+    isVisible() {
+        return !this.dom.hasClass(HTML_CLASS_HIDDEN);
+    }
+
     /**
      * @return {boolean}
      */
     isOrdered() {
         return this.column.isOrdered();
+    }
+
+    isHidden() {
+        return this.column.isHidden();
     }
 
     /**
@@ -219,7 +254,7 @@ class DatatableRowColumn {
                     .attr("data-raw-value", value)
                     .attr("data-compare-value", column.type.getCompareValue(_value, value))
                 ;
-                if(column.isHidden()) columnTd.addClass(column.HTML_CLASS_HIDDEN);
+                if(!column.isVisible()) columnTd.addClass(column.HTML_CLASS_HIDDEN);
                 return columnTd;
             }
         }
@@ -244,7 +279,7 @@ class DatatableRowColumn {
             coreActions = $("<div></div>")
             .addClass("datatable-column-core-actions")
         ;
-        if(column.isHidden()) columnTd.addClass(column.HTML_CLASS_HIDDEN);
+        if(!column.isVisible()) columnTd.addClass(column.HTML_CLASS_HIDDEN);
 
         if(column.datatable.visible && visibility.visible) {
             coreActions.append(DatatableRowColumn

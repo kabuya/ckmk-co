@@ -17,7 +17,8 @@ const DatatableColumnActionsAction = require("../actions/datatable.column.action
  * @property {boolean} visible
  * @property {Route|undefined} editable
  * @property {Route|boolean|undefined} searchable
- * @property {boolean|undefined} order
+ * @property {boolean} order
+ * @property {boolean} hidden
  */
 class DatatableColumnType {
 
@@ -53,6 +54,8 @@ class DatatableColumnType {
         this.searchable = column.datatable.getActionRouteOrBoolean(data.searchable);
         /** @type {boolean} order */
         this.order = !!data.order;
+        /** @type {boolean} hidden */
+        this.hidden = !!data.hidden;
     }
 
     /**
@@ -182,6 +185,13 @@ class DatatableColumnType {
      */
     isVoid() {
         return this.name.in(DatatableColumnType.TYPE_VOID);
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isHidden() {
+        return this.hidden;
     }
 
     checkValue(value) {

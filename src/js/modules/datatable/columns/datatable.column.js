@@ -94,7 +94,10 @@ class DatatableColumn {
             .find("th[data-search-column-target="+ this.name +"]")
             .removeAttr("data-search-column-target")
         ;
-
+        if(this.isHidden()) {
+            this.dom.remove();
+            if(this.searchROW) this.searchROW.remove();
+        }
         this.setEvents();
     }
 
@@ -145,11 +148,11 @@ class DatatableColumn {
      * @return {boolean}
      */
     show() {
-        if(this.isShowed()) return false;
+        if(this.isVisible()) return false;
         this.dom.removeClass(HTML_CLASS_HIDDEN);
         if(this.searchROW) this.searchROW.removeClass(HTML_CLASS_HIDDEN);
         this.columns.forEach((_column) => {
-            _column.dom.removeClass(HTML_CLASS_HIDDEN);
+            _column.show();
         });
         this.resetColspanByGroup();
         return true;
@@ -159,11 +162,11 @@ class DatatableColumn {
      * @return {boolean}
      */
     hide() {
-        if(this.isHidden()) return false;
+        if(!this.isVisible()) return false;
         this.dom.addClass(HTML_CLASS_HIDDEN);
         if(this.searchROW) this.searchROW.addClass(HTML_CLASS_HIDDEN);
         this.columns.forEach((_column) => {
-            _column.dom.addClass(HTML_CLASS_HIDDEN);
+            _column.hide();
         });
         this.resetColspanByGroup();
         return true;
@@ -172,15 +175,15 @@ class DatatableColumn {
     /**
      * @return {boolean}
      */
-    isShowed() {
-        return !this.isHidden();
+    isVisible() {
+        return !this.dom.hasClass(HTML_CLASS_HIDDEN);
     }
 
     /**
      * @return {boolean}
      */
     isHidden() {
-        return this.dom.hasClass(HTML_CLASS_HIDDEN);
+        return this.type.hidden;
     }
 
     /**

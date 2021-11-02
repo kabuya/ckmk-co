@@ -108,11 +108,15 @@
     padding-left: 16px;
   }
 
+  .datatable-data-empty {
+    text-align: center;
+  }
+
   .datatable-column-ordered {
     cursor: pointer;
   }
 
-  .datatable-item-hidden {
+  .datatable-item-hidden, .datatable-header-removed-dom {
     display: none !important;
   }
 

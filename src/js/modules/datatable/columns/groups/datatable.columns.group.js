@@ -59,7 +59,7 @@ class DatatableColumnsGroup {
         let
             newList = this.columns.filter((_column) => {
                 _column.removeColspan();
-                return !_column.isHidden();
+                return _column.isVisible();
             }),
             colspan = newList.length,
             moreCount = this.columns.length + 1

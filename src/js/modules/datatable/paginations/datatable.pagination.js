@@ -66,7 +66,7 @@ class DatatablePagination {
         total = this.items / countLine;
         if(co.isFloat(total)) total = parseInt(total + 1);
         if(total < 1) total = 1;
-        this.total = total;
+        this.total = ((isNaN(total)) ? 1 : total);
 
         // Define current
         this.current = this.getCurrentView();
