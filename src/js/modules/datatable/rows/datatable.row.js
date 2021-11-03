@@ -113,7 +113,7 @@ class DatatableRow {
         ;
         values.forEach((_item) => {
             _column = this_o.getColumn(_item.column);
-            if(_column) {
+            if(_column && _column.isVisible()) {
                 if(_column.match(_item.value)) {
                     _item.result++;
                     if(!_matched) _matched = true;

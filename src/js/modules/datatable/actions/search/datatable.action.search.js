@@ -63,6 +63,9 @@ class DatatableActionSearch {
         this.search(values, method);
     }
 
+    /**
+     * @param {boolean} success
+     */
     buildSearchAgain(success) {
         if(success) this.buildSearch();
     }
@@ -97,11 +100,11 @@ class DatatableActionSearch {
         this.resultCount += count;
         if(!this.resultAppended) {
             this.resultAppended = true;
+            this.forceRemove = false;
             this.actions.datatable.dom.find("tbody").prepend(this.resultRow);
         }
         this.resultRow.find("td").text(this.getResultMatch());
     }
-
 
     /**
      * @param {({
@@ -113,11 +116,13 @@ class DatatableActionSearch {
     removeResultCount(values, _hasValue) {
         if(!_hasValue && this.resultAppended) {
             this.resultAppended = false;
-            this.resultRow.find("td").text("");
-            this.resultRow.remove();
+            this.#removeResultShow();
         }
     }
 
+    /**
+     * @return {string}
+     */
     getResultMatch() {
         if(co.texts.has("datatable:search:count:item:title")) {
             return co.texts.get("datatable:search:count:item:title", this.resultCount).getValue();
@@ -135,6 +140,11 @@ class DatatableActionSearch {
         });
     }
 
+    #removeResultShow() {
+        this.resultRow.find("td").text("");
+        this.resultRow.remove();
+    }
+
     setEvents() {
         this.actions.datatable.on(
             this.actions.datatable.EVENT_ON_SEARCH_RESULT_COUNT,
@@ -148,6 +158,16 @@ class DatatableActionSearch {
 
         this.actions.datatable.onAfter(
             this.actions.datatable.EVENT_ON_AFTER_ADDING_ITEM,
+            [this, "buildSearchAgain"]
+        );
+
+        this.actions.datatable.onAfter(
+            this.actions.datatable.EVENT_ON_TOGGLE_COLUMN_DISPLAY,
+            [this, "buildSearch"]
+        );
+
+        this.actions.datatable.onAfter(
+            this.actions.datatable.EVENT_ON_TOGGLE_ACTIVE_ALL_COLUMN,
             [this, "buildSearchAgain"]
         );
     }

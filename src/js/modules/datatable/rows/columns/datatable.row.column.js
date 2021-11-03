@@ -112,7 +112,7 @@ class DatatableRowColumn {
      */
     getFormTemplate() {
         if(co.isString(this.column.formTemplate) && this.column.formTemplate) {
-            return this.column.formTemplate
+            let template = this.column.formTemplate
                 .replace(
                     new RegExp("___rowID___", "g"),
                     this.row.ID
@@ -123,13 +123,25 @@ class DatatableRowColumn {
                 )
                 .replace(
                     new RegExp("___rawValue___", "g"),
-                    this.rawValue
+                    (this.rawValue || "")
                 )
                 .replace("</form>", co.concat(
                     this.getFormName(),
                     "</form>"
                 ))
             ;
+            if(this.column.type.isEntity()) {
+                let rg = this.column.type.getSelectedRegexp(this.rawValue);
+                template = template.replace(rg, (str) => {
+                    if(str.match(/selected/)) {
+                        return str.replace("false", "true");
+                    }
+                    return co.concat(str, " ", "selected=\"selected\"");
+                });
+
+                window.__ZZZ = template;
+            }
+            return template;
         }
     }
 

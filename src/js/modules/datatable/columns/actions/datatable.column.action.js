@@ -73,7 +73,11 @@ class DatatableColumnAction {
 
     getPopupTitle() {
         return co.concat(
-            "Edit value off column ",
+            "Edit value ",
+            "<b class='three-point' style='max-width: 300px;'>",
+            this.column.value,
+            "</b>",
+            " off column ",
             "<b>",
             this.column.column.title,
             "</b>",

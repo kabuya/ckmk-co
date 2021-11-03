@@ -23,6 +23,8 @@
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
+  display: inline-block !important;
+  vertical-align: bottom !important;
 }
 
 @mixin inputForm {

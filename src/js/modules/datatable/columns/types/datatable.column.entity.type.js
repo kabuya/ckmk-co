@@ -7,7 +7,6 @@ const DatatableColumnType = require("./datatable.column.type");
  * @property {Route|boolean|undefined} searchable
  * @property {string} class
  * @property {string} property
- * @property {object[]} items
  */
 class DatatableColumnEntityType extends DatatableColumnType {
 
@@ -25,11 +24,16 @@ class DatatableColumnEntityType extends DatatableColumnType {
         this.class = data.class;
         /** @type {string} property */
         this.property = data.property;
-        /** @type {object[]} items */
-        this.items = data.items;
     }
 
 
+    /**
+     * @param {number} value
+     * @return {RegExp}
+     */
+    getSelectedRegexp(value) {
+        return new RegExp("((data\-)|option[ ]+)value\=(\'|\")"+ value +"(\'|\")( data\-selected\=(\'|\")(false|true)(\'|\"))?", "gi");
+    }
 
 
 }
