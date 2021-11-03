@@ -45,7 +45,7 @@ class DatatableColumnType {
         /** @type {DatatableColumn} column */
         this.column = column;
         /** @type {string} name */
-        this.name = data.name;
+        this.name = (this.name || data.name);
         /** @type {boolean} visible */
         this.visible = !!column.datatable.getActionRouteOrBoolean(data.visible);
         /** @type {Route|undefined} editable */

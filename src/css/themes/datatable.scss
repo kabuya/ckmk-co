@@ -20,6 +20,10 @@
 
   //user-select: none;
 
+  .datatable-column-force-min-size {
+    width: 20px;
+  }
+
   &.datatable-content-empty {
     padding: 0 !important;
     box-shadow: none !important;
@@ -463,42 +467,73 @@
     cursor: pointer;
   }
 
+
   .datatable-boolean {
-    width: 15px;
+
+    $circleSize: 20px;
+    $circleCoreSize: 10px;
+
+    width: max-content;
     margin: auto;
     cursor: pointer;
     position: relative;
 
+
     .datatable-circle {
-      width: 15px;
-      height: 15px;
-      border-radius: 100px;
+      width: $circleSize;
+      height: $circleSize;
+      border-radius: 100%;
       background-color: $searchInputBorderColorFocus;
-      border: solid 3px;
       transition: .3s;
     }
 
+    .datatable-circle-core {
+      width: $circleCoreSize;
+      height: $circleCoreSize;
+      border-radius: 100%;
+      position: relative;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
     &.datatable-editable-boolean {
-      width: 35%;
-      height: 12px;
-      border-radius: 100px;
-      border: solid 3px;
+
+      $circlePositionY: 2.5px;
+      $circlePositionX: 3px;
+      $circleEditableSize: 15px;
+
+      width: 40px;
+      height: $circleSize;
+      border-radius: 200px;
 
       .datatable-circle {
+        width: $circleEditableSize;
+        height: $circleEditableSize;
         position: absolute;
-        top: 50%;
-        right: -5px;
-        left: auto;
-        transform: translateY(-50%) scale(1.05);
+        top: $circlePositionY;
+        left: 22px;
+      }
+
+      .datatable-circle-core {
+        display: none;
+      }
+
+      .datatable-circle-ligth {
+        display: none;
       }
 
       &.datatable-boolean-disable {
         .datatable-circle {
-          left: -5px;
-          right: auto;
+          left: 3px;
         }
       }
     }
+
+    &.datatable-loading-editable {
+      cursor: progress !important;
+    }
+
   }
 
   .datatable-search-found {

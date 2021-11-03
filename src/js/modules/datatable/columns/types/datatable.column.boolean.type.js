@@ -20,7 +20,6 @@ class DatatableColumnBooleanType extends DatatableColumnType {
         super(column, data);
     }
 
-
     getCompareValue(value, rawValue) {
         return rawValue ? 1 : 0;
     }

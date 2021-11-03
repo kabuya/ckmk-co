@@ -9,6 +9,8 @@ const DatatableColumnIntegerType = require("./types/datatable.column.integer.typ
 const DatatableColumnLongtextType = require("./types/datatable.column.longtext.type");
 const DatatableColumnTextType = require("./types/datatable.column.text.type");
 const DatatableColumnTimeType = require("./types/datatable.column.time.type");
+const DatatableColumnActionType = require("./types/datatable.column.action.type");
+const DatatableColumnVoidType = require("./types/datatable.column.void.type");
 
 const COLUMNS_TYPES = [
     DatatableColumnType,
@@ -21,7 +23,9 @@ const COLUMNS_TYPES = [
     DatatableColumnIntegerType,
     DatatableColumnLongtextType,
     DatatableColumnTextType,
-    DatatableColumnTimeType
+    DatatableColumnTimeType,
+    DatatableColumnActionType,
+    DatatableColumnVoidType,
 ];
 
 const HTML_CLASS_HIDDEN = "datatable-item-hidden";
@@ -190,7 +194,7 @@ class DatatableColumn {
      * @return {boolean}
      */
     isColumnAction() {
-        return (!!this.name.match(new RegExp(DatatableColumnType.TYPE_ACTION, "i")));
+        return this.type.isAction();
     }
 
     /**
@@ -390,12 +394,7 @@ class DatatableColumn {
             });
             return type;
         }
-        return new DatatableColumnType(column, {
-            name: column.isColumnAction()
-                ? DatatableColumnType.TYPE_ACTION
-                : DatatableColumnType.TYPE_VOID
-            ,
-        });
+        return new DatatableColumnVoidType(column, {});
     }
 
 }

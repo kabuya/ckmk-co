@@ -230,36 +230,38 @@
 
     .datatable-circle {
       background-color: $_success;
-      border-color: $successBorder;
     }
 
+    .datatable-circle-core {
+      background-color: white;
+    }
 
     &.datatable-boolean-disable {
       .datatable-circle {
         background-color: $_danger;
-        border-color: $dangerDark;
       }
     }
 
     &.datatable-boolean-enable {
       .datatable-circle {
         background-color: $_success;
-        border-color: $successBorder;
       }
     }
 
     &.datatable-editable-boolean {
-      background-color: $dangerAlertBg;
-      border-color: $dangerBorder;
+
+      background-color: $_danger;
+
+      .datatable-circle {
+        background-color: white;
+      }
 
       &.datatable-boolean-enable {
-        background-color: $successAlertBg;
-        border-color: $successBorder;
+        background-color: $_success;
       }
 
       &.datatable-boolean-disable {
-        background-color: $dangerAlertBg;
-        border-color: $dangerBorder;
+        background-color: $_danger;
       }
     }
 
