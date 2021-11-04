@@ -93,6 +93,13 @@ class DatatableRowColumn {
     }
 
     /**
+     * @return {string}
+     */
+    getName() {
+        return this.column.name;
+    }
+
+    /**
      * @param {RegExp} regexp
      * @return {boolean}
      */
@@ -116,21 +123,21 @@ class DatatableRowColumn {
         if(this.hasFormTemplate()) {
             let template = this.column.formTemplate
                 .replace(
-                    new RegExp("___rowID___", "g"),
+                    new RegExp(this.column.DEFAULT_VALUE_ID, "g"),
                     this.row.ID
                 )
                 .replace(
-                    new RegExp("___rowPosition___", "g"),
+                    new RegExp(this.column.DEFAULT_VALUE_POSITION, "g"),
                     this.row.position.toString()
                 )
                 .replace(
-                    new RegExp("___rawValue___", "g"),
+                    new RegExp(this.column.DEFAULT_VALUE_VALUE, "g"),
                     (this.rawValue || "")
                 )
-                .replace("</form>", co.concat(
-                    this.getFormName(),
-                    "</form>"
-                ))
+                .replace(
+                    new RegExp(this.column.getFormDefaultValue(), "g"),
+                    (this.rawValue || "")
+                )
             ;
             if(this.column.type.isEntity()) {
                 let rg = this.column.type.getSelectedRegexp(this.rawValue);
@@ -191,8 +198,20 @@ class DatatableRowColumn {
                 alert.warning(response.messages);
             }
         }
-        if(response.item && response.item.value) {
-            this.updateValue(response.item.value);
+        if(response[this.column.datatable.ROW_MODEL_KEY]) {
+            let
+                this_o = this,
+                data = response[this.column.datatable.ROW_MODEL_KEY]
+            ;
+            this.updateValue(data[this.getName()]);
+            $.each(data, (_name, _value) => {
+                if(_name !== this_o.getName()) {
+                    let _column = this_o.row.getColumn(_name);
+                    if(_column) {
+                        _column.updateValue(_value);
+                    }
+                }
+            });
         }
     }
 
@@ -200,17 +219,19 @@ class DatatableRowColumn {
      * @param {string|number} value
      */
     updateValue(value) {
-        let
-            parseValue = this.column.type.checkValue(value)
-        ;
-        if(parseValue) {
-            this.rawValue = value;
-            this.value = parseValue;
-            this.formTemplate = this.getFormTemplate();
-            this.dom.html(this.value);
-            if(this.column.type.isLongText()) {
-                this.action.updateShowMore();
-                this.action.setEventReadMore();
+        if(co.isSet(value) && value !== this.rawValue) {
+            let
+                parseValue = this.column.type.checkValue(value)
+            ;
+            if(parseValue) {
+                this.rawValue = value;
+                this.value = parseValue;
+                this.formTemplate = this.getFormTemplate();
+                this.dom.html(this.value);
+                if(this.column.type.isLongText()) {
+                    this.action.updateShowMore();
+                    this.action.setEventReadMore();
+                }
             }
         }
     }
@@ -247,8 +268,46 @@ class DatatableRowColumn {
         return this.column.isOrdered();
     }
 
+    /**
+     * @return {boolean}
+     */
     isHidden() {
         return this.column.isHidden();
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isSearchable() {
+        return this.column.isSearchable();
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isColumnAction() {
+        return this.column.isColumnAction();
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isColumnRowsCount() {
+        return this.column.isColumnRowsCount();
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isGeneratedColumn() {
+        return this.column.isGeneratedColumn();
+    }
+
+    /**
+     * @return {string}
+     */
+    getFormDefaultValue() {
+        return this.column.getFormDefaultValue();
     }
 
     /**
@@ -259,23 +318,24 @@ class DatatableRowColumn {
      */
     static createFromData(row, column, value) {
         if(!column.isColumnAction()) {
-            let _value = column.isColumnRowsCount()
+            value = column.unsetFormDefaultValue(value);
+            let
+                _value = column.isColumnRowsCount()
                 ? (column.datatable.rows.length + 1)
                 : column.type.checkValue(value)
             ;
-            if(_value) {
-                let columnTd = $("<td></td>")
+            let
+                columnTd = $("<td></td>")
                     .html(_value)
                     .addClass("datatable-body-column")
                     .attr("data-column", column.name)
                     .attr("data-position", column.position)
                     .attr("data-value", _value)
-                    .attr("data-raw-value", value)
+                    .attr("data-raw-value", column.type.getRawValue(value))
                     .attr("data-compare-value", column.type.getCompareValue(_value, value))
-                ;
-                if(!column.isVisible()) columnTd.addClass(column.HTML_CLASS_HIDDEN);
-                return columnTd;
-            }
+            ;
+            if(!column.isVisible()) columnTd.addClass(column.HTML_CLASS_HIDDEN);
+            return columnTd;
         }
     }
 

@@ -145,7 +145,9 @@ class DatatableColumnType {
         } else if(this.isAction()) {
             return new DatatableColumnActionsAction(this, column);
         } else {
-            return new DatatableColumnAction(this, column);
+            co.log(column);
+            console.error("Ici quelque chose");
+            //return new DatatableColumnAction(this, column);
         }
     }
 
@@ -270,6 +272,10 @@ class DatatableColumnType {
 
     checkValue(value) {
         if(co.isString(value) || co.isNumber(value)) return value;
+    }
+
+    getRawValue(value) {
+        return value;
     }
 
     getCompareValue(value, rawValue) {

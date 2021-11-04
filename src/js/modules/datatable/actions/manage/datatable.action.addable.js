@@ -25,11 +25,15 @@ class DatatableActionAddable {
      * @param {Event} e
      */
     addNewItem(e) {
+        let
+            data = {datatable: this.actions.datatable.name}
+        ;
+        data[this.actions.datatable.ROW_MODEL_KEY] = this.actions.datatable.modelRow;
         co.popup.form("Add new item")
             .setCb([this, "updateRowAfterAdd"])
             .load(
                 this.route.getAbsolutePath(),
-                {datatable: this.actions.datatable.name},
+                data,
                 this.route.method
             )
             .open()
@@ -39,7 +43,7 @@ class DatatableActionAddable {
     updateRowAfterAdd(response) {
         if(response.success) {
             this.actions.datatable.alert.success(response.messages);
-            DatatableRow.createFromData(this.actions.datatable, response.item);
+            DatatableRow.createFromData(this.actions.datatable, response[this.actions.datatable.ROW_MODEL_KEY]);
         }
         this.actions.datatable.run(
             this.actions.datatable.EVENT_ON_AFTER_ADDING_ITEM,

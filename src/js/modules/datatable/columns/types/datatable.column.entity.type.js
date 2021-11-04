@@ -35,6 +35,39 @@ class DatatableColumnEntityType extends DatatableColumnType {
         return new RegExp("((data\-)|option[ ]+)value\=(\'|\")"+ value +"(\'|\")( data\-selected\=(\'|\")(false|true)(\'|\"))?", "gi");
     }
 
+    /**
+     * @param {{value:number, title:string}|string|undefined} value
+     * @return {string}
+     */
+    checkValue(value) {
+        if(co.isObject(value)) {
+            return value.title;
+        }
+        return super.checkValue(value);
+    }
+
+    /**
+     * @param {{value:number, title:string}|string|undefined} value
+     * @return {number}
+     */
+    getRawValue(value) {
+        if(co.isObject(value)) {
+            return value.value;
+        }
+        return super.getRawValue(value);
+    }
+
+    /**
+     * @param {{value:number, title:string}|string|undefined} value
+     * @param {{value:number, title:string}|string|undefined} rawValue
+     * @return {string|number}
+     */
+    getCompareValue(value, rawValue) {
+        if(co.isObject(value) || co.isObject(rawValue)) {
+            return (value?.title || rawValue?.title);
+        }
+        return super.getCompareValue(value, rawValue);
+    }
 
 }
 

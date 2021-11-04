@@ -246,7 +246,7 @@ Object.assign(String.prototype, {
                 let
                     value = values[k]
                 ;
-                if((typeof value) !== "undefined") {
+                if(co.isSet(value)) {
                     this_o = this_o.replace(variable, value).toString();
                 }
             });

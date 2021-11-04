@@ -42,6 +42,7 @@ VISIBILITIES_DEFAULT[VISIBILITY_DELETABLE] = true;
  * }} visibility
  * @property {DatatableRowSelectedColumn} selected
  * @property {DatatableRowColumn[]} columns
+ * @property {object} modelRow
  */
 class DatatableRow {
 
@@ -71,6 +72,8 @@ class DatatableRow {
         this.selected = new DatatableRowSelectedColumn(this);
         /** @type {DatatableRowColumn[]} columns */
         this.columns = [];
+        /** @type {object} modelRow */
+        this.modelRow = Object.assign({}, datatable.modelRow);
 
         this.initColumns();
 
@@ -113,9 +116,8 @@ class DatatableRow {
         ;
         values.forEach((_item) => {
             _column = this_o.getColumn(_item.column);
-            if(_column && _column.isVisible()) {
+            if(_column && _column.isVisible() && _column.isSearchable()) {
                 if(_column.match(_item.value)) {
-                    _item.result++;
                     if(!_matched) _matched = true;
                 } else {
                     _column.resetMatch();
@@ -209,16 +211,25 @@ class DatatableRow {
     }
 
     initColumns() {
-        let this_o = this;
+        let
+            this_o = this,
+            _column
+        ;
         this.dom.find("td").each((k, column) => {
-            this_o.columns.push(new DatatableRowColumn(this_o, column));
+            _column = new DatatableRowColumn(this_o, column);
+            this_o.columns.push(_column);
+            if(!_column.isGeneratedColumn()) {
+                this_o.modelRow[_column.getName()] = _column.rawValue;
+            }
         });
     }
 
     updateColumns(item) {
-        this.columns.forEach((column) => {
-            column.updateValue(item[column.column.name]);
-        });
+        if(co.isObject(item)) {
+            this.columns.forEach((column) => {
+                column.updateValue(item[column.getName()]);
+            });
+        }
     }
 
     /**
@@ -263,7 +274,8 @@ class DatatableRow {
                     .attr("data-id", data[datatable.rowsID])
                     .attr("data-title", data.title || data[datatable.rowsID])
                     .attr("data-position", datatable.rows.length + 1)
-                    .attr("data-visibility", co.objectToJson(data.visibility, true)),
+                    .attr("data-visibility", co.objectToJson(data.visibility, true))
+                ,
                 actionColumn,
                 visibility = data.visibility || VISIBILITIES_DEFAULT
             ;

@@ -173,7 +173,7 @@ class AjaxRequest {
     static buildFormDataFromObject = function (formData, data, name = "") {
         if ( !co.instanceOf(data, File) && co.isList(data) ) {
             $.each(data, function(index, value){
-                if ( !co.isSet(name) ) {
+                if (!co.isSet(name)) {
                     AjaxRequest.buildFormDataFromObject(formData, value, index);
                 } else {
                     AjaxRequest.buildFormDataFromObject(formData, value, (name + "[" + index + "]"));

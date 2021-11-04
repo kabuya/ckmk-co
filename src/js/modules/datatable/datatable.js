@@ -56,6 +56,8 @@ const VISIBILITIES_KEYS = [
     VISIBILITY_PAGINATION_DOWN,
 ];
 
+const ROW_MODEL_KEY = "__model";
+
 const HTML_SELECTE_DOM = [
     "<td class='datatable-body-column datatable-selected-column'>",
         "<div class='datatable-row-selected'><div></div></div>",
@@ -85,6 +87,7 @@ let
  * @property {DatatableColumn[]} columns
  * @property {DatatableRow[]} rows
  * @property {number} countLine
+ * @property {object} modelRow
  * @property {string} rowsID
  * @property {string} rowsType
  * @property {[DatatableColumn, ("asc"|"desc")]} order
@@ -102,7 +105,6 @@ let
  */
 class Datatable extends EventTypes {
 
-
     /**
      * @param {jQuery|HTMLElement} dom
      */
@@ -117,6 +119,8 @@ class Datatable extends EventTypes {
         this.name = co.data(dom, "name");
         /** @type {number} countLine */
         this.countLine = co.data(dom, "count-line");
+        /** @type {object} modelRow */
+        this.modelRow = co.data(dom, "model-row");
         /** @type {{
          *     contentStyle: boolean,
          *     addableTop: boolean,
@@ -547,5 +551,6 @@ Datatable.prototype.VISIBILITY_PAGINATION_TOP = VISIBILITY_PAGINATION_TOP;
 Datatable.prototype.VISIBILITY_PAGINATION_DOWN = VISIBILITY_PAGINATION_DOWN;
 Datatable.prototype.VISIBILITIES_KEYS = VISIBILITIES_KEYS;
 Datatable.prototype.HTML_SELECTE_DOM = HTML_SELECTE_DOM;
+Datatable.prototype.ROW_MODEL_KEY = ROW_MODEL_KEY;
 
 module.exports = Datatable;

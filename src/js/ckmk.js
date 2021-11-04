@@ -263,6 +263,8 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
         return (typeof element);
     }
 
+
+
     /**
      * @param {*} element
      * @param {string} type
@@ -277,8 +279,9 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
      * @return {boolean}
      */
     isBool(...booleans) {
+        let this_o = this;
         return (booleans.filter((_bool) => {
-            return !this.isType(_bool, TYPE_BOOLEAN);
+            return (!this.isType(_bool, TYPE_BOOLEAN) || (this_o.isString(_bool) && !(""+_bool).in("false", "true")));
         }).length === 0);
     }
 
@@ -424,8 +427,9 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
      * @return {boolean}
      */
     isSet(...values) {
+        let this_o = this;
         return (values.filter((value) => {
-            return ((value === undefined || value === null) || (this.isString(value) && (value === "" || value.match(/^[ ]*$/))));
+            return ((value === undefined || value === null || (this_o.isNumber(value) && isNaN(value))) || (this.isString(value) && (value === "" || (""+value).match(/^([ ]*|undefined|null)$/))));
         }).length === 0);
     }
 

@@ -30,6 +30,10 @@ const COLUMNS_TYPES = [
 
 const HTML_CLASS_HIDDEN = "datatable-item-hidden";
 
+const DEFAULT_VALUE_ID = "___rowID___";
+const DEFAULT_VALUE_POSITION = "___rowPosition___";
+const DEFAULT_VALUE_VALUE = "___rawValue___";
+
 /**
  * @property {Datatable} datatable
  * @property {jQuery|HTMLElement} dom
@@ -209,6 +213,13 @@ class DatatableColumn {
     /**
      * @return {boolean}
      */
+    isGeneratedColumn() {
+        return (this.isColumnAction() || this.isColumnRowsCount());
+    }
+
+    /**
+     * @return {boolean}
+     */
     hasGroup() {
         return co.isObject(this.group);
     }
@@ -280,6 +291,13 @@ class DatatableColumn {
     /**
      * @return {boolean}
      */
+    isSearchable() {
+        return (!!this.type.searchable && !this.type.isNotSearchable());
+    }
+
+    /**
+     * @return {boolean}
+     */
     isTargetOrder() {
         return this.datatable.isOrderedByColumn(this);
     }
@@ -294,6 +312,9 @@ class DatatableColumn {
         return false;
     }
 
+    /**
+     * @return {boolean}
+     */
     isAscOrder() {
         if(this.isTargetOrder()) {
             return this.datatable.isAscOrder();
@@ -362,6 +383,18 @@ class DatatableColumn {
         ;
     }
 
+    /**
+     * @return {string}
+     */
+    getFormDefaultValue() {
+        return co.concat("___", this.name, "Value", "___");
+    }
+
+    unsetFormDefaultValue(value) {
+        if(this.getFormDefaultValue() === value) value = undefined;
+        return value;
+    }
+
     setEvents() {
         let
             this_o = this
@@ -411,5 +444,8 @@ class DatatableColumn {
 }
 
 DatatableColumn.prototype.HTML_CLASS_HIDDEN = HTML_CLASS_HIDDEN;
+DatatableColumn.prototype.DEFAULT_VALUE_ID = DEFAULT_VALUE_ID;
+DatatableColumn.prototype.DEFAULT_VALUE_POSITION = DEFAULT_VALUE_POSITION;
+DatatableColumn.prototype.DEFAULT_VALUE_VALUE = DEFAULT_VALUE_VALUE;
 
 module.exports = DatatableColumn;

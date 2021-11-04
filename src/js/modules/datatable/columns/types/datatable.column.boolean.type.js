@@ -20,10 +20,21 @@ class DatatableColumnBooleanType extends DatatableColumnType {
         super(column, data);
     }
 
+    checkValue(value) {
+        return [
+            "<div class='datatable-boolean datatable-boolean-"+ (value ? "enable" : "disable") +" datatable"+ (this.column.type.editable ? "-editable" : "") +"-boolean'>",
+                "<div class='datatable-circle'><div class='datatable-circle-core'></div></div>",
+            "</div>",
+        ].join("");
+    }
+
+    getRawValue(value) {
+        return value ? 1 : 0;
+    }
+
     getCompareValue(value, rawValue) {
         return rawValue ? 1 : 0;
     }
-
 
 }
 

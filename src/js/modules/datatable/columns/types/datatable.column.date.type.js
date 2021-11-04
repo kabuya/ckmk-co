@@ -1,4 +1,4 @@
-const DatatableColumnType = require("./datatable.column.type");
+const DatatableColumnDatetimeParent = require("./datatable.column.datetime.parent");
 
 /**
  * @property {DatatableColumn} column
@@ -8,29 +8,10 @@ const DatatableColumnType = require("./datatable.column.type");
  * @property {string} format
  * @property {string} defaultFormat
  */
-class DatatableColumnDateType extends DatatableColumnType {
+class DatatableColumnDateType extends DatatableColumnDatetimeParent {
 
 
-
-    static NAME = DatatableColumnType.TYPE_DATE;
-    
-
-    /**
-     * @param {DatatableColumn} column
-     * @param {object} data
-     */
-    constructor(column, data) {
-        super(column, data);
-        /** @type {string} format */
-        this.format = data.format;
-        /** @type {string} defaultFormat */
-        this.defaultFormat = data.defaultFormat;
-    }
-
-
-    getCompareValue(value, rawValue) {
-        return Date.format(this.defaultFormat, rawValue);
-    }
+    static NAME = DatatableColumnDatetimeParent.TYPE_DATE;
 
 }
 

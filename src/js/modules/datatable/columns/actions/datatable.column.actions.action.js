@@ -120,15 +120,19 @@ class DatatableColumnActionsAction extends DatatableColumnAction {
      * @param {Function|Array} cb
      */
     openManageCard(title, route, cb) {
+        let
+            data = {
+                datatable: this.column.column.datatable.name,
+                id: this.column.row.ID,
+                row: this.column.row.position,
+            }
+        ;
+        data[this.column.row.datatable.ROW_MODEL_KEY] = this.column.row.modelRow;
         co.popup.form(title)
             .setCb(cb)
             .load(
                 route.getAbsolutePath(),
-                {
-                    datatable: this.column.column.datatable.name,
-                    id: this.column.row.ID,
-                    row: this.column.row.position,
-                },
+                data,
                 route.method,
             )
             .open()
@@ -187,14 +191,17 @@ class DatatableColumnActionsAction extends DatatableColumnAction {
     updateRowAfterEdit(response) {
         if(response.success) {
             this.column.column.datatable.alert.success(response.messages);
-            this.column.row.updateColumns(response.item);
+            this.column.row.updateColumns(response[this.datatable.ROW_MODEL_KEY]);
         }
     }
 
     addRowAfterCopy(response) {
         if(response.success) {
             this.column.column.datatable.alert.success(response.messages);
-            DatatableRow.createFromData(this.column.row.datatable, response.item);
+            let
+                data = response[this.column.row.datatable.ROW_MODEL_KEY]
+            ;
+            DatatableRow.createFromData(this.column.row.datatable, data);
         }
         this.column.row.datatable.on(
             this.column.row.datatable.EVENT_ON_AFTER_ADDING_ITEM,

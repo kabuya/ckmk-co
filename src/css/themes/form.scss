@@ -1,5 +1,13 @@
 @import "../colors/form.default.colors";
 
+@mixin formLabel {
+  right: initial;
+  bottom: initial;
+  display: inline-block;
+  font-size: 10px;
+  padding: 4px 8px;
+}
+
 .form-body {
   width: 100%;
   padding: 15px;
@@ -91,6 +99,9 @@ form.form-container {
 
   }
 
+  .field-additional-data-container {
+    display: none !important;
+  }
 
   .field-un-editable {
     cursor: no-drop;
@@ -205,13 +216,14 @@ form.form-container {
       margin-bottom: 0;
     }
 
-    &.active, &.error {
+    &.active,
+    &.error,
+    &.field-un-editable,
+    &.field-fixed-content,
+    &.field-no-editable
+    {
       label {
-        right: initial;
-        bottom: initial;
-        display: inline-block;
-        font-size: 10px;
-        padding: 4px 8px;
+        @include formLabel;
       }
       .field-confirm {
         label {

@@ -337,10 +337,6 @@ class PasswordField extends Field {
             return this_o.eyeOnClick(e);
         });
 
-        baseInput.on("paste", function (e) {
-            return this_o.disableCopyOrPaste(e);
-        });
-
         baseInput.on("copy", function (e) {
             return this_o.disableCopyOrPaste(e);
         });
@@ -350,6 +346,10 @@ class PasswordField extends Field {
                 generateAndCopyButton = this.dom.find(".password-generated-button"),
                 confirmInput = this.dom.find(".field-confirm > input")
             ;
+
+            baseInput.on("paste", function (e) {
+                return this_o.disableCopyOrPaste(e);
+            });
 
             baseInput.on("change", function (e) {
                 this_o.fieldOnKeyUp(e);
