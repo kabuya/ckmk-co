@@ -27,10 +27,12 @@ form.form-container {
     right: 0;
     bottom: 0;
     text-align: left;
-    padding: 8px;
-    padding-top: 14px;
+    padding: 8px {
+      top: 14px;
+    };
     font-size: 15px;
     z-index: 10;
+    font-weight: bold;
 
     &.checked {
       .button-draw {
@@ -835,7 +837,7 @@ form.form-container {
 
     .form-tab-arrow {
       width: 20px;
-      height: 34px;
+      height: 44px;
       background-color: white;
       position: absolute;
       top: 0;
@@ -884,6 +886,7 @@ form.form-container {
       background-color: $formEmpty;
       border-top-left-radius: $formRadius;
       border-top-right-radius: $formRadius;
+      border: solid 1px $formEmpty;
       overflow: hidden;
       position: relative;
     }
@@ -892,8 +895,9 @@ form.form-container {
       width: auto;
       display: inline-block;
       padding: 5px 10px;
-      border-radius: $formRadius $formRadius 0 0;
+      border-radius: $formRadius;
       cursor: pointer;
+      margin: 5px;
 
       &:hover, &.form-tab-active {
         background-color: white;
@@ -914,12 +918,15 @@ form.form-container {
     .form-tabs-body {
       background-color: white;
       position: relative;
+      border: solid 1px $formEmpty;
+      border-bottom-left-radius: $formRadius;
+      border-bottom-right-radius: $formRadius;
     }
 
     .form-tab-body {
       width: 100%;
       height: auto;
-      padding: 20px;
+      padding: 20px 15px;
       border-bottom-left-radius: $formRadius;
       border-bottom-right-radius: $formRadius;
       display: none;
@@ -983,6 +990,41 @@ form.form-container {
     &.wysiwyg-save-plain-text-active {
       span {
         left: 21px;
+      }
+    }
+  }
+
+  .password-generated-container {
+    margin-bottom: 5px;
+
+    .password-generated-button, .password-generated-alert {
+      display: inline-block;
+    }
+
+    .password-generated-button {
+      padding: 2px 8px;
+      border-radius: $formRadius;
+      background-color: $formSuccess;
+      color: white;
+      cursor: pointer;
+      transition: .3s;
+
+      &:hover {
+        background-color: $formSuccessDark;
+      }
+    }
+
+    .password-generated-alert {
+      font-size: 12px;
+      background-color: $formSuccessLight;
+      color: $formSuccessDark;
+      border-radius: $formRadius;
+      margin-left: 5px;
+      padding: 5px 8px;
+      vertical-align: bottom;
+
+      &:empty {
+        display: none;
       }
     }
   }

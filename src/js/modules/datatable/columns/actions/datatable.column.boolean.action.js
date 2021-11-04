@@ -26,14 +26,14 @@ class DatatableColumnBooleanAction extends DatatableColumnAction {
      * @return {boolean}
      */
     isEnable() {
-        return (this.dom.hasClass(HTML_CLASS_ENABLE) || this.onRequest);
+        return (this.dom.hasClass(HTML_CLASS_ENABLE) && !this.onRequest);
     }
 
     /**
      * @return {boolean}
      */
     isDisable() {
-        return (this.dom.hasClass(HTML_CLASS_DISABLE) || this.onRequest);
+        return (this.dom.hasClass(HTML_CLASS_DISABLE) && !this.onRequest);
     }
 
     /**
@@ -119,6 +119,7 @@ class DatatableColumnBooleanAction extends DatatableColumnAction {
     setEditPopUp(e) {
         let elem = $(e.target);
         if(elem.prop("localName") !== "td") {
+            this.dom = $(e.currentTarget).find("> div");
             this.toggleAble();
             this.doRequest(this.isEnable());
             return true;

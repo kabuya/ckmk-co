@@ -84,7 +84,7 @@ let
  * @property {{}} errors
  * @property {boolean} requested
  * @property {jQuery|HTMLElement} errorTabShow
- * @property {FormTab} FormTab
+ * @property {FormTab} tab
  */
 class Form extends EventTypes {
 
@@ -132,7 +132,7 @@ class Form extends EventTypes {
         this.initFields();
         this.setEvents();
         this.requested = false;
-        this.FormTab = FormTab.init(this);
+        this.tab = FormTab.init(this);
         if(style.length) {
             $("head > title").before(style);
         }

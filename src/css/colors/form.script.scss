@@ -363,5 +363,22 @@ form {
 
     }
 
+    .password-generated-container {
+
+      .password-generated-button {
+        background-color: $formSuccess;
+
+        &:hover {
+          background-color: $formSuccessDark;
+        }
+      }
+
+      .password-generated-alert {
+        background-color: $formSuccessLight;
+        color: $formSuccessDark;
+        border-radius: $formRadius;
+      }
+    }
+
   }
 }

@@ -69,8 +69,6 @@ class DatatableColumn {
         this.title = co.data(this.dom, "title");
         /** @type {number} position */
         this.position = co.data(this.dom, "position");
-        /** @type {string|undefined} formTemplate */
-        this.formTemplate = this.getFormTemplate();
         /** @type {DatatableColumnsGroup|undefined} group */
         this.group = this.datatable.getColumnsGroup(co.data(this.dom, "group"));
         if(this.group) this.group.addColumn(this);
@@ -85,10 +83,14 @@ class DatatableColumn {
          *  |DatatableColumnLongtextType
          *  |DatatableColumnTextType
          *  |DatatableColumnTimeType
+         *  |DatatableColumnActionType
+         *  |DatatableColumnVoidType
          *  |DatatableColumnType
          *  |undefined
         } type */
         this.type = DatatableColumn.buildColumnType(this, co.data(this.dom, "type"));
+        /** @type {string|undefined} formTemplate */
+        this.formTemplate = this.getFormTemplate();
         /** @type {DatatableRowColumn[]} columns */
         this.columns = [];
         /** @type {jQuery|HTMLElement|undefined} searchROW */
@@ -248,15 +250,24 @@ class DatatableColumn {
      * @return {string|undefined}
      */
     getFormTemplate() {
-        let
-            formTemplate = this.dom.find(".form-template"),
-            template = formTemplate.text().trim()
-        ;
-        formTemplate.remove();
-        return template
-            ? template
-            : undefined
-        ;
+        if(!this.type.isNotUsePopupForm()) {
+            let
+                formTemplate = this.dom.find(".form-template"),
+                template = formTemplate.text().trim()
+            ;
+            formTemplate.remove();
+            return template
+                ? template
+                : undefined
+            ;
+        }
+    }
+
+    /**
+     * @return {boolean}
+     */
+    hasFormTemplate() {
+        return (!this.type.isNotUsePopupForm() && !!this.formTemplate);
     }
 
     /**

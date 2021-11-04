@@ -211,6 +211,7 @@ class Field extends EventTypes {
             value = field.length ? field.val() : undefined
         ;
         if(value) {
+            value = "" + value;
             if(!value.match(/^[ ]*$/)) {
                 if(!this.checkLengthValue(value)) {
                     this.setError({message : this.getErrorMessage(ERROR_SIZE_VALUE, value, this.min, this.max)});

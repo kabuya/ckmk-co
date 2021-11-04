@@ -11,6 +11,44 @@ const DatatableColumnTextAction = require("../actions/datatable.column.text.acti
 const DatatableColumnTimeAction = require("../actions/datatable.column.time.action");
 const DatatableColumnActionsAction = require("../actions/datatable.column.actions.action");
 
+const TYPE_TEXT = "text";
+const TYPE_LONGTEXT = "longtext";
+const TYPE_INTEGER = "integer";
+const TYPE_FLOAT = "float";
+const TYPE_TIME = "time";
+const TYPE_DATE = "date";
+const TYPE_DATETIME = "datetime";
+const TYPE_IMAGE = "image";
+const TYPE_BOOLEAN = "boolean";
+const TYPE_ENTITY = "entity";
+const TYPE_ACTION = "action";
+const TYPE_VOID = "void";
+
+const NOT_ORDERED = [
+    TYPE_IMAGE,
+    TYPE_ACTION,
+    TYPE_VOID,
+];
+
+const NOT_EDITABLE = [
+    TYPE_IMAGE,
+    TYPE_ACTION,
+    TYPE_VOID,
+];
+
+const NOT_SEARCHABLE = [
+    TYPE_IMAGE,
+    TYPE_BOOLEAN,
+    TYPE_ACTION,
+    TYPE_VOID,
+];
+
+const NOT_USE_FORM_TYPES = [
+    TYPE_IMAGE,
+    TYPE_BOOLEAN,
+    TYPE_ACTION,
+    TYPE_VOID,
+];
 
 /**
  * @property {DatatableColumn} column
@@ -22,20 +60,28 @@ const DatatableColumnActionsAction = require("../actions/datatable.column.action
  */
 class DatatableColumnType {
 
-    static TYPE_TEXT = "text";
-    static TYPE_LONGTEXT = "longtext";
-    static TYPE_INTEGER = "integer";
-    static TYPE_FLOAT = "float";
-    static TYPE_TIME = "time";
-    static TYPE_DATE = "date";
-    static TYPE_DATETIME = "datetime";
-    static TYPE_IMAGE = "image";
-    static TYPE_BOOLEAN = "boolean";
-    static TYPE_ENTITY = "entity";
-    static TYPE_ACTION = "action";
-    static TYPE_VOID = "void";
+    static TYPE_TEXT = TYPE_TEXT;
+    static TYPE_LONGTEXT = TYPE_LONGTEXT;
+    static TYPE_INTEGER = TYPE_INTEGER;
+    static TYPE_FLOAT = TYPE_FLOAT;
+    static TYPE_TIME = TYPE_TIME;
+    static TYPE_DATE = TYPE_DATE;
+    static TYPE_DATETIME = TYPE_DATETIME;
+    static TYPE_IMAGE = TYPE_IMAGE;
+    static TYPE_BOOLEAN = TYPE_BOOLEAN;
+    static TYPE_ENTITY = TYPE_ENTITY;
+    static TYPE_ACTION = TYPE_ACTION;
+    static TYPE_VOID = TYPE_VOID;
 
-    static NAME = DatatableColumnType.TYPE_TEXT;
+    static NOT_ORDERED = NOT_ORDERED;
+
+    static NOT_EDITABLE = NOT_EDITABLE;
+
+    static NOT_SEARCHABLE = NOT_SEARCHABLE;
+
+    static NOT_USE_FORM_TYPES = NOT_USE_FORM_TYPES;
+
+    static NAME = TYPE_TEXT;
 
     /**
      * @param {DatatableColumn} column
@@ -107,84 +153,84 @@ class DatatableColumnType {
      * @return {boolean}
      */
     isText() {
-        return this.name.in(DatatableColumnType.TYPE_TEXT);
+        return this.name.in(TYPE_TEXT);
     }
 
     /**
      * @return {boolean}
      */
     isLongText() {
-        return this.name.in(DatatableColumnType.TYPE_LONGTEXT);
+        return this.name.in(TYPE_LONGTEXT);
     }
 
     /**
      * @return {boolean}
      */
     isInteger() {
-        return this.name.in(DatatableColumnType.TYPE_INTEGER);
+        return this.name.in(TYPE_INTEGER);
     }
 
     /**
      * @return {boolean}
      */
     isFloat() {
-        return this.name.in(DatatableColumnType.TYPE_FLOAT);
+        return this.name.in(TYPE_FLOAT);
     }
 
     /**
      * @return {boolean}
      */
     isTime() {
-        return this.name.in(DatatableColumnType.TYPE_TIME);
+        return this.name.in(TYPE_TIME);
     }
 
     /**
      * @return {boolean}
      */
     isDate() {
-        return this.name.in(DatatableColumnType.TYPE_DATE);
+        return this.name.in(TYPE_DATE);
     }
 
     /**
      * @return {boolean}
      */
     isDateTime() {
-        return this.name.in(DatatableColumnType.TYPE_DATETIME);
+        return this.name.in(TYPE_DATETIME);
     }
 
     /**
      * @return {boolean}
      */
     isImage() {
-        return this.name.in(DatatableColumnType.TYPE_IMAGE);
+        return this.name.in(TYPE_IMAGE);
     }
 
     /**
      * @return {boolean}
      */
     isBoolean() {
-        return this.name.in(DatatableColumnType.TYPE_BOOLEAN);
+        return this.name.in(TYPE_BOOLEAN);
     }
 
     /**
      * @return {boolean}
      */
     isEntity() {
-        return this.name.in(DatatableColumnType.TYPE_ENTITY);
+        return this.name.in(TYPE_ENTITY);
     }
 
     /**
      * @return {boolean}
      */
     isAction() {
-        return this.name.in(DatatableColumnType.TYPE_ACTION);
+        return this.name.in(TYPE_ACTION);
     }
 
     /**
      * @return {boolean}
      */
     isVoid() {
-        return this.name.in(DatatableColumnType.TYPE_VOID);
+        return this.name.in(TYPE_VOID);
     }
 
     /**
@@ -192,6 +238,34 @@ class DatatableColumnType {
      */
     isHidden() {
         return this.hidden;
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isNotOrderAble() {
+        return this.name.in(...NOT_ORDERED);
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isNotEditable() {
+        return this.name.in(...NOT_EDITABLE);
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isNotSearchable() {
+        return this.name.in(...NOT_SEARCHABLE);
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isNotUsePopupForm() {
+        return this.name.in(...NOT_USE_FORM_TYPES);
     }
 
     checkValue(value) {

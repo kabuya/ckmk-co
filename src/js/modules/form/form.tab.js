@@ -1,7 +1,7 @@
 const FormTabItem = require("./tabs/form.tab.item");
 
 /**
- * @property {Form} Form
+ * @property {Form} form
  * @property {jQuery|HTMLElement} dom
  * @property {FormTabItem[]} tabs
  * @property {number} lastPosition
@@ -10,12 +10,13 @@ const FormTabItem = require("./tabs/form.tab.item");
 class FormTab {
 
     /**
-     * @param {Form} Form
+     * @param {Form} form
      */
-    constructor(Form) {
-        this.Form = Form;
-        this.dom = Form.dom.find(".form-tabs");
+    constructor(form) {
+        this.form = form;
+        this.dom = form.dom.find(".form-tabs");
         this.lastPosition = this.dom.find(".form-tab-head").last().position().left;
+        /** @type {FormTabItem[]} tabs */
         this.tabs = [];
         this.initTabs();
     }

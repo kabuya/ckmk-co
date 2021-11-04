@@ -291,10 +291,8 @@ class SelectField extends Field {
         let
             this_o = this
         ;
-        if(this.isMultiple()) {
-
-        } else {
-            this.dom.find(".super-selected, .super-arrow").on("click", (e) => {
+        if(!this.isMultiple()) {
+            this.dom.find("label, .super-selected, .super-arrow").on("click", (e) => {
                 return this_o.superSelectedOnClick(e);
             });
         }

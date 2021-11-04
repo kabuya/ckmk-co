@@ -1,5 +1,5 @@
 /**
- * @property {FormTab} FormTab
+ * @property {FormTab} formTab
  * @property {jQuery|HTMLElement} head
  * @property {jQuery|HTMLElement} body
  * @property {{left:number,right:number}} position
@@ -7,13 +7,13 @@
 class FormTabItem {
 
     /**
-     * @param {FormTab} FormTab
+     * @param {FormTab} formTab
      * @param {jQuery|HTMLElement} head
      */
-    constructor(FormTab, head) {
-        this.FormTab = FormTab;
+    constructor(formTab, head) {
+        this.formTab = formTab;
         this.head = $(head);
-        this.body = FormTab.dom.find("div[data-target='"+ this.head.attr("id") +"']");
+        this.body = formTab.dom.find("div[data-target='"+ this.head.attr("id") +"']");
         this.position = this.head.position().left;
     }
 
@@ -26,11 +26,11 @@ class FormTabItem {
 
     showTab(e) {
         if(!this.head.hasClass("form-tab-active")) {
-            this.FormTab.hideAll();
+            this.formTab.hideAll();
             this.head.addClass("form-tab-active");
             this.body.addClass("form-tab-active");
-            this.FormTab.currentTab = this;
-            this.FormTab.moveDom(this.position, this.head.outerWidth());
+            this.formTab.currentTab = this;
+            this.formTab.moveDom(this.position, this.head.outerWidth());
         }
     }
 

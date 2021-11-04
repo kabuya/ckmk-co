@@ -39,6 +39,7 @@ const ERRORS = [
 
 /**
  * @property {boolean} confirm
+ * @property {number} generateTimeOut
  */
 class PasswordField extends Field {
 
@@ -69,7 +70,7 @@ class PasswordField extends Field {
             parent = elem.parent()
         ;
         if(!parent.hasClass("error") && !parent.hasClass("active")) {
-            this.Form.dom.find(".field-container").removeClass("focus");
+            this.form.dom.find(".field-container").removeClass("focus");
             if(!elem.val()) {
                 parent.addClass("active");
             }
@@ -119,6 +120,32 @@ class PasswordField extends Field {
     disableCopyOrPaste(e) {
         e.preventDefault();
         return false;
+    }
+
+    /**
+     * @param {Event} e
+     */
+    generatePassword(e) {
+        let
+            this_o = this,
+            generatedAlert = this.dom.find(".password-generated-alert"),
+            generate = co.generate(16)
+        ;
+        this.dom
+            .find("input")
+            .val(generate)
+            .trigger("change")
+        ;
+        co.copy(generate);
+        if(this.generateTimeOut) {
+            clearTimeout(this.generateTimeOut);
+            this.generateTimeOut = undefined;
+        }
+        generatedAlert.html("Password generated <i class='fa fa-check-square-o'></i>");
+        this.generateTimeOut = setTimeout(() => {
+            generatedAlert.html("");
+        }, 3000);
+        return true;
     }
 
     /**
@@ -193,6 +220,11 @@ class PasswordField extends Field {
      * @return {boolean}
      */
     checkValue() {
+        let this_o = this;
+        this.dom.find("input").each((k, _input) => {
+            _input = $(_input);
+            this_o.toggleShowValue(_input, _input.next(), true);
+        });
         if(this.isToConfirm()) {
             let
                 base = this.dom.find(".field-item > input"),
@@ -210,7 +242,10 @@ class PasswordField extends Field {
             }
             return true;
         }
-        return super.checkValue();
+        if(!this.dom.find(".field-item > input").val()) {
+            this.setError({message : this.getErrorMessage(Field.ERROR_EMPTY)});
+        }
+        return true;
     }
 
     /**
@@ -250,19 +285,30 @@ class PasswordField extends Field {
         } else {
             this.run(EVENT_EYE_CLICK, e, this);
         }
-        if(input.attr("type") === "password") {
+        return this.toggleShowValue(input, elem);
+    }
+
+    /**
+     * @param {jQuery|HTMLElement} input
+     * @param {jQuery|HTMLElement} eye
+     * @param {boolean} forceHidden
+     * @return {boolean}
+     */
+    toggleShowValue(input, eye, forceHidden = false) {
+        if(input.attr("type") === "password" && !forceHidden) {
             input.attr("type", "text");
-            elem.find("i")
+            eye.find("i")
                 .removeClass("fa-eye")
                 .addClass("fa-eye-slash")
             ;
         } else {
             input.attr("type", "password");
-            elem.find("i")
+            eye.find("i")
                 .removeClass("fa-eye-slash")
                 .addClass("fa-eye")
             ;
         }
+        return true;
     }
 
     /**
@@ -301,11 +347,24 @@ class PasswordField extends Field {
 
         if(this.isToConfirm()) {
             let
+                generateAndCopyButton = this.dom.find(".password-generated-button"),
                 confirmInput = this.dom.find(".field-confirm > input")
             ;
 
+            baseInput.on("change", function (e) {
+                this_o.fieldOnKeyUp(e);
+            });
+
+            confirmInput.on("change", function (e) {
+                this_o.confirmOnKeyUp(e);
+            });
+
             baseInput.on("keyup", function (e) {
                 this_o.fieldOnKeyUp(e);
+            });
+
+            confirmInput.on("keyup", function (e) {
+                this_o.confirmOnKeyUp(e);
             });
 
             confirmInput.on("focusin", function (e) {
@@ -316,16 +375,16 @@ class PasswordField extends Field {
                 return this_o.confirmOnFocusOut(e);
             });
 
-            confirmInput.on("keyup", function (e) {
-                this_o.confirmOnKeyUp(e);
-            });
-
             confirmInput.on("paste", function (e) {
                 return this_o.disableCopyOrPaste(e);
             });
 
             confirmInput.on("copy", function (e) {
                 return this_o.disableCopyOrPaste(e);
+            });
+
+            generateAndCopyButton.on("click", (e) => {
+                return this_o.generatePassword(e);
             });
         }
     }

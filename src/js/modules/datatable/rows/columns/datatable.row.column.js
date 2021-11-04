@@ -46,8 +46,10 @@ class DatatableRowColumn {
         this.compareValue = co.data(this.dom, "compare-value");
         /** @type {string|undefined} formTemplate */
         this.formTemplate = this.getFormTemplate();
-        if(this.column) this.column.addColumn(this);
-        this.action = this.column.type.getAction(this);
+        if(this.column) {
+            this.column.addColumn(this);
+            this.action = this.column.type.getAction(this);
+        }
         if(this.isHidden()) this.dom.remove();
     }
 
@@ -111,7 +113,7 @@ class DatatableRowColumn {
      * @return {string|undefined}
      */
     getFormTemplate() {
-        if(co.isString(this.column.formTemplate) && this.column.formTemplate) {
+        if(this.hasFormTemplate()) {
             let template = this.column.formTemplate
                 .replace(
                     new RegExp("___rowID___", "g"),
@@ -138,11 +140,16 @@ class DatatableRowColumn {
                     }
                     return co.concat(str, " ", "selected=\"selected\"");
                 });
-
-                window.__ZZZ = template;
             }
             return template;
         }
+    }
+
+    /**
+     * @return {boolean}
+     */
+    hasFormTemplate() {
+        return (this.column && this.column.hasFormTemplate());
     }
 
     /**
