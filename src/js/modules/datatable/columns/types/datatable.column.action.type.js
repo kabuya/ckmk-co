@@ -7,11 +7,29 @@ const DatatableColumnType = require("./datatable.column.type");
  * @property {Route|boolean|undefined} searchable
  * @property {string} format
  * @property {string} defaultFormat
+ * @property {{
+ *     visible : PopUpCard,
+ *     manage  : PopupFormCard,
+ *     confirm  : PopupConfirmCard,
+ * }} popups
  */
 class DatatableColumnActionType extends DatatableColumnType {
 
     static NAME = DatatableColumnType.TYPE_ACTION;
 
+
+    /**
+     * @param {DatatableColumn} column
+     * @param {object} data
+     */
+    constructor(column, data) {
+        super(column, data);
+        this.popups = {
+            visible : co.popup.card(""),
+            manage  : co.popup.form(""),
+            confirm  : co.popup.confirm("", "", () => {}),
+        };
+    }
 
 }
 

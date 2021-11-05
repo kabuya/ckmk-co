@@ -43,6 +43,15 @@ class PopupConfirmCard extends PopupCard {
     }
 
     /**
+     * @param {Function|Array} cb
+     * @return {PopupCard}
+     */
+    setCb(cb) {
+        this.cb = cb;
+        return this;
+    }
+
+    /**
      * @return {string}
      */
     getButtons() {

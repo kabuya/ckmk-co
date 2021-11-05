@@ -82,7 +82,7 @@ class PopupFormCard extends PopupCard {
 
     /**
      * @param {Function|Array} cb
-     * @return {PopupFormCard}
+     * @return {PopupCard}
      */
     setCb(cb) {
         this.cb = cb;

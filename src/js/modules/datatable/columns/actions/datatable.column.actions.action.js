@@ -2,7 +2,7 @@ const DatatableColumnAction = require("./datatable.column.action");
 const DatatableRow = require("../../rows/datatable.row");
 
 /**
- * @property {DatatableColumnTimeType} type
+ * @property {DatatableColumnActionType} type
  * @property {DatatableRowColumn} column
  * @property {jQuery|HTMLElement} visible
  * @property {jQuery|HTMLElement} copyable
@@ -13,11 +13,16 @@ const DatatableRow = require("../../rows/datatable.row");
  *     editable: Route|undefined,
  *     deletable: Route|undefined,
  * }} routes
+ * @property {{
+ *     visible : PopUpCard,
+ *     manage  : PopupFormCard,
+ *     delete  : PopupConfirmCard,
+ * }} popups
  */
 class DatatableColumnActionsAction extends DatatableColumnAction {
 
     /**
-     * @param {DatatableColumnType} type
+     * @param {DatatableColumnActionType} type
      * @param {DatatableRowColumn} column
      */
     constructor(type, column) {
@@ -78,7 +83,8 @@ class DatatableColumnActionsAction extends DatatableColumnAction {
      * @param {Event} e
      */
     openVisibleCard(e) {
-        co.popup.card("Show element")
+        this.type.popups.visible
+            .setTitle("Show element")
             .load(
                 this.routes.visible.getAbsolutePath(),
                 {
@@ -86,7 +92,7 @@ class DatatableColumnActionsAction extends DatatableColumnAction {
                     id: this.column.row.ID,
                     row: this.column.row.position,
                 },
-                this.routes.visible.method,
+                this.routes.visible.method
             )
             .open()
         ;
@@ -128,8 +134,9 @@ class DatatableColumnActionsAction extends DatatableColumnAction {
             }
         ;
         data[this.column.row.datatable.ROW_MODEL_KEY] = this.column.row.modelRow;
-        co.popup.form(title)
+        this.type.popups.manage
             .setCb(cb)
+            .setTitle(title)
             .load(
                 route.getAbsolutePath(),
                 data,
@@ -143,15 +150,14 @@ class DatatableColumnActionsAction extends DatatableColumnAction {
      * @param {Event} e
      */
     openDeletableCard(e) {
-        co.popup.confirm(
-            "Confirm deleting",
-            co.concat(
+        this.type.popups.confirm
+            .setCb([this, "deleteItem"])
+            .setTitle("Confirm deleting")
+            .setContent(co.concat(
                 "Are you sure, you want to delete ",
                 this.column.row.title,
                 " ?"
-            ),
-            [this, "deleteItem"]
-        )
+            ))
             .open()
         ;
     }

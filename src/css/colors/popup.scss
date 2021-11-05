@@ -17,21 +17,31 @@
   }
 
   .popup-button {
-    color: $popupSuccessText;
-    background-color: $popupSuccess;
+    //color: $popupSuccessText;
+    //background-color: $popupSuccess;
+    background-color: transparent;
+    border-color: transparent;
+    color: $popupSuccess;
 
     &.popup-btn-cancel {
-      background-color: $popupDanger;
+      //background-color: $popupDanger;
+      color: $popupDanger;
 
       &:hover, &:focus {
-        background-color: $popupDangerDark;
-        box-shadow: 0px 0px 8px $popupDangerShadow;
+        //background-color: $popupDangerDark;
+        //box-shadow: 0px 0px 8px $popupDangerShadow;
+        color: $popupSuccessText;
+        background-color: $popupDanger;
+        border-color: $popupDanger;
       }
     }
 
     &:hover, &:focus {
-      background-color: $popupSuccessDark;
-      box-shadow: 0px 0px 8px $popupSuccessShadow;
+      //background-color: $popupSuccessDark;
+      //box-shadow: 0px 0px 8px $popupSuccessShadow;
+      color: $popupSuccessText;
+      background-color: $popupSuccess;
+      border-color: $popupSuccess;
     }
   }
 

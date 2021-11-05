@@ -486,6 +486,7 @@
       border-radius: 100%;
       background-color: $searchInputBorderColorFocus;
       transition: .3s;
+      box-shadow: 0 0 5px rgba(0,0,0,.3) inset;
     }
 
     .datatable-circle-core {
@@ -496,6 +497,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      box-shadow: 0 0 5px rgba(0,0,0,.3);
     }
 
     &.datatable-editable-boolean {
@@ -507,13 +509,15 @@
       width: 40px;
       height: $circleSize;
       border-radius: 200px;
+      box-shadow: 0 0 5px rgba(0,0,0,.3) inset;
 
       .datatable-circle {
         width: $circleEditableSize;
         height: $circleEditableSize;
         position: absolute;
         top: $circlePositionY;
-        left: 22px;
+        left: 21px;
+        box-shadow: 0 0 5px rgba(0,0,0,.3);
       }
 
       .datatable-circle-core {
@@ -526,7 +530,7 @@
 
       &.datatable-boolean-disable {
         .datatable-circle {
-          left: 3px;
+          left: 4px;
         }
       }
     }

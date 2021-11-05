@@ -745,7 +745,7 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
             let
                 dataValue = dom.data(name)
             ;
-            if(dataValue) {
+            if(this.isSet(dataValue)) {
                 if(remove) dom.removeAttr("data-" + name);
                 return this.parseJSONFromPHPDataProperty(dataValue);
             } else {

@@ -391,7 +391,7 @@ class DatatableColumn {
     }
 
     unsetFormDefaultValue(value) {
-        if(this.getFormDefaultValue() === value) value = undefined;
+        if(this.getFormDefaultValue() === value || !co.isSet(value)) value = undefined;
         return value;
     }
 

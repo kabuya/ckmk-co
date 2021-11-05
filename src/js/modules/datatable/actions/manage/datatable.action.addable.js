@@ -4,6 +4,7 @@ const DatatableRow = require("../../rows/datatable.row");
  * @property {DatatableActions} actions
  * @property {jQuery|HTMLElement} dom
  * @property {Route|undefined} route
+ * @property {PopupFormCard} popup
  */
 class DatatableActionAddable {
 
@@ -17,6 +18,10 @@ class DatatableActionAddable {
         /** @type {jQuery|HTMLElement} */
         this.dom = this.actions.dom.find(".datatable-global-manage-item.datatable-global-add");
         this.route = co.router.get(co.data(this.dom, "route"), co.ajax.METHOD_POST);
+        this.popup = co.popup
+            .form("Add new item")
+            .setCb([this, "updateRowAfterAdd"])
+        ;
         this.setEvents();
         // co.log(this);
     }
@@ -29,13 +34,8 @@ class DatatableActionAddable {
             data = {datatable: this.actions.datatable.name}
         ;
         data[this.actions.datatable.ROW_MODEL_KEY] = this.actions.datatable.modelRow;
-        co.popup.form("Add new item")
-            .setCb([this, "updateRowAfterAdd"])
-            .load(
-                this.route.getAbsolutePath(),
-                data,
-                this.route.method
-            )
+        this.popup
+            .load(this.route.getAbsolutePath(), data, this.route.method)
             .open()
         ;
     }
