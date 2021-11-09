@@ -12,6 +12,7 @@ const PopupCard = require("../popup.card");
  * @property {number} position
  * @property {boolean} appended
  * @property {number|undefined} waiting
+ * @property {string} hiddenDirection
  * @property {Function|array} cb
  */
 class PopupConfirmCard extends PopupCard {
@@ -67,7 +68,7 @@ class PopupConfirmCard extends PopupCard {
             confirm = btn.hasClass("popup-btn-confirm")
         ;
         if(co.isFunction(this.cb)) co.runCb(this.cb, confirm);
-        return this.close(true);
+        return this.close();
     }
 
 }

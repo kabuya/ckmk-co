@@ -6,6 +6,16 @@ const TYPE_FORM = "form";
 const TYPE_CONFIRM = "confirm";
 const TYPE_IFRAME = "iframe";
 
+const HIDDEN_DIRECTION_TOP = "popup-top";
+const HIDDEN_DIRECTION_DOWN = "popup-bottom";
+const HIDDEN_DIRECTION_VISIBILITY = "popup-hide";
+
+const HIDDEN_DIRECTIONS = [
+    HIDDEN_DIRECTION_TOP,
+    HIDDEN_DIRECTION_DOWN,
+    HIDDEN_DIRECTION_VISIBILITY,
+];
+
 const BEFORE_SHOW = "popup.before.show";
 const AFTER_SHOW = "popup.after.show";
 const BEFORE_CLOSE = "popup.before.close";
@@ -24,10 +34,8 @@ const HTML_DOM = [
             "<div class='popup-title'></div>",
             "<div class='popup-close'><i class='fa fa-close'></i></div>",
         "</div>",
-        "<div class='popup-content'>",
-        "</div>",
-        "<div class='popup-footer'>",
-        "</div>",
+        "<div class='popup-content'></div>",
+        "<div class='popup-footer'></div>",
     "</div>",
 ].join("")
 
@@ -48,6 +56,7 @@ let
  * @property {number} position
  * @property {boolean} appended
  * @property {number|undefined} waiting
+ * @property {string} hiddenDirection
  */
 class PopUpCard extends EventTypes {
 
@@ -90,6 +99,7 @@ class PopUpCard extends EventTypes {
         this.position = popup.getCardPosition();
         /** @type {boolean} title */
         this.appended = false;
+        this.hiddenDirection = HIDDEN_DIRECTION_TOP;
         this.setTitle(title);
         this.setContent(content);
         // co.log(this);
@@ -136,10 +146,58 @@ class PopUpCard extends EventTypes {
         return this;
     }
 
+    /**
+     * @param {string} hiddenDirection
+     * @return {PopUpCard}
+     */
+    setHiddenDirection(hiddenDirection) {
+        if((""+hiddenDirection).in(...HIDDEN_DIRECTIONS)) {
+            this.hiddenDirection = hiddenDirection;
+        }
+        return this;
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isVisible() {
+        return (
+            !this.dom.hasClass(HIDDEN_DIRECTION_DOWN)
+            &&
+            !this.dom.hasClass(HIDDEN_DIRECTION_TOP)
+            &&
+            !this.dom.hasClass(HIDDEN_DIRECTION_VISIBILITY)
+        );
+    }
+
+    /**
+     * @return {boolean}
+     */
+    show() {
+        if(this.isVisible()) return false;
+        this.dom.removeClass(HIDDEN_DIRECTIONS.join(" "));
+        return true;
+    }
+
+    /**
+     * @return {boolean}
+     */
+    hide() {
+        if(!this.isVisible()) return false;
+        this.dom.addClass([this.hiddenDirection, HIDDEN_DIRECTION_VISIBILITY].join(" "));
+        return true;
+    }
+
+    /**
+     * @return {boolean}
+     */
     isOpen() {
         return this.appended;
     }
 
+    /**
+     * @return {boolean}
+     */
     isClosed() {
         return !this.appended;
     }
@@ -148,28 +206,18 @@ class PopUpCard extends EventTypes {
         if(!this.appended) {
             this.appended = true;
             let
-                this_o = this,
-                prev = this.prev()
+                this_o = this
             ;
             this.loadContent();
-            if(prev && prev.isOpen()) {
-                prev.close();
-                prev.setInHiddenToShowList();
-            }
             this.popup.append(this);
-
-            this.executeDisplayType();
-
+            if(!this.dom.find(".popup-load").length) this.executeDisplayType();
             setTimeout(function () {
-                this_o.dom.removeClass("popup-top popup-hide");
+                this_o.show();
             }, this.timeOut());
         }
     }
 
-    /**
-     * @param {boolean} openPrevPopupCard
-     */
-    close(openPrevPopupCard = false) {
+    close() {
         if(this.appended) {
             this.run(this.BEFORE_CLOSE, this);
             this.appended = false;
@@ -177,25 +225,11 @@ class PopUpCard extends EventTypes {
                 this_o = this
             ;
             this.resetXHR();
-            this.dom.addClass("popup-top popup-hide");
+            this.hide();
+            this_o.popup.removeOpenedCard(this);
             setTimeout(function () {
-                this_o.dom.remove();
-                if(destroy) {
-                    this_o.popup.removeCard(this);
-                }
-                if(openPrevPopupCard) {
-                    let
-                        prev = this_o.popup.getLastCardFromHiddenToShowList()
-                    ;
-                    if(prev && prev.isClosed()) {
-                        prev.open();
-                        this_o.popup.removeToHiddenToShowList(prev);
-                    } else {
-                        this_o.popup.hide();
-                    }
-                } else {
-                    this_o.popup.hide();
-                }
+                if(!this_o.popup.isOpenedCard(this_o)) this_o.dom.remove();
+                if(destroy) this_o.popup.removeCard(this);
                 this_o.run(this_o.AFTER_CLOSE, this_o);
             }, this.timeOut());
         }
@@ -210,7 +244,7 @@ class PopUpCard extends EventTypes {
 
     destroy() {
         if(this.appended) {
-            this.close(true);
+            this.close();
         }
         this.popup.removeCard(this);
     }
@@ -250,10 +284,6 @@ class PopUpCard extends EventTypes {
      */
     getButtons() {
         return "<button class='popup-button popup-btn-card'>Ok</button>";
-    }
-
-    setInHiddenToShowList() {
-        return this.popup.appendToHiddenToShowList(this);
     }
 
     loadContent() {
@@ -302,7 +332,7 @@ class PopUpCard extends EventTypes {
         this.resetXHR();
         setTimeout(function () {
             let contentType = xhr.getResponseHeader("Content-Type");
-            if(co.isString(contentType) && contentType.match(/html|text/i)) {
+            if(co.isString(contentType) && !!contentType.match(/html|text/i)) {
                 this_o.setContent(response);
                 this_o.setButtons();
                 this_o.setButtonEvent();
@@ -311,7 +341,7 @@ class PopUpCard extends EventTypes {
                 this_o.setContent("The request response is not HTML content or TEXT/PLAIN");
             }
             this_o.run(this_o.AFTER_SHOW, this_o, response, status, xhr);
-        }, 1500);
+        }, this.timeOut());
     }
 
     setButtonEvent() {
@@ -320,7 +350,7 @@ class PopUpCard extends EventTypes {
                 this_o = this
             ;
             this.dom.find(".popup-close").on("click", function (e) {
-                this_o.close(true);
+                this_o.close();
             });
             $.each(this.dom.find(".popup-button"), function (btnKey, btn) {
                 btn = $(btn);
@@ -331,19 +361,14 @@ class PopUpCard extends EventTypes {
         }
     }
 
-
     executeDisplayType() {
-        if(!this.dom.find(".popup-load").length) {
-            if(this.type.in(TYPE_IFRAME)) this.setStyleForIframes();
-            else if(this.type.in(TYPE_FORM)) this.iniForms();
-        }
     }
 
     /**
      * @param {Event} e
      */
     buttonOnClick(e) {
-        return this.close(true);
+        return this.close();
     }
 
     /**
@@ -361,5 +386,9 @@ PopUpCard.prototype.BEFORE_SHOW = BEFORE_SHOW;
 PopUpCard.prototype.AFTER_SHOW = AFTER_SHOW;
 PopUpCard.prototype.BEFORE_CLOSE = BEFORE_CLOSE;
 PopUpCard.prototype.AFTER_CLOSE = AFTER_CLOSE;
+PopUpCard.prototype.HIDDEN_DIRECTION_TOP = HIDDEN_DIRECTION_TOP;
+PopUpCard.prototype.HIDDEN_DIRECTION_DOWN = HIDDEN_DIRECTION_DOWN;
+PopUpCard.prototype.HIDDEN_DIRECTION_VISIBILITY = HIDDEN_DIRECTION_VISIBILITY;
+PopUpCard.prototype.HIDDEN_DIRECTIONS = HIDDEN_DIRECTIONS;
 
 module.exports = PopUpCard;

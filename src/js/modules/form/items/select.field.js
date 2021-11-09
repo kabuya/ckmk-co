@@ -291,6 +291,9 @@ class SelectField extends Field {
         let
             this_o = this
         ;
+
+        this.setToggleAbleEvents();
+
         if(!this.isMultiple()) {
             this.dom.find("label, .super-selected, .super-arrow").on("click", (e) => {
                 return this_o.superSelectedOnClick(e);

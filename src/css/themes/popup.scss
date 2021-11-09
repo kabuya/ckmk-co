@@ -58,6 +58,7 @@ $popupCardBorder : #b0b0b0;
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 20px;
+    font-weight: bold;
   }
 
   .popup-close {
@@ -111,6 +112,8 @@ $popupCardBorder : #b0b0b0;
     //transition: .3s;
     //border: none;
     border: solid 1px;
+    user-select: none;
+    font-weight:bold;
 
     &:hover, &:focus {
       //border: none;
@@ -123,11 +126,11 @@ $popupCardBorder : #b0b0b0;
   }
 
   .popup-top {
-    top: 40%;
+    top: 45%;
   }
 
   .popup-bottom {
-    top: 60%;
+    top: 55%;
   }
 
   .popup-hide {

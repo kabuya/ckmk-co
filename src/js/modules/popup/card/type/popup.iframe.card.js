@@ -12,6 +12,8 @@ const PopupCard = require("../popup.card");
  * @property {number} position
  * @property {boolean} appended
  * @property {number|undefined} waiting
+ * @property {string} hiddenDirection
+ * @property {boolean} styleInit
  */
 class PopupIframeCard extends PopupCard {
 
@@ -36,6 +38,7 @@ class PopupIframeCard extends PopupCard {
             PopupIframeCard.NAME
         );
         this.url = url;
+        this.styleInit = false;
     }
 
     setStyleForIframes() {
@@ -68,6 +71,7 @@ class PopupIframeCard extends PopupCard {
      */
     setContent(url) {
         if(url) {
+            this.styleInit = false;
             let
                 iframe = $("<iframe></iframe>")
             ;
@@ -80,6 +84,13 @@ class PopupIframeCard extends PopupCard {
             this.content = iframe.prop("outerHTML");
         }
         return this;
+    }
+
+    executeDisplayType() {
+        if(!this.styleInit) {
+            this.styleInit = true;
+            this.setStyleForIframes();
+        }
     }
 
 }

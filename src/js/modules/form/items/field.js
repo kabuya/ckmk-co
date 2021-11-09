@@ -436,6 +436,10 @@ class Field extends EventTypes {
 
         this.form.on(FORM_EVENT_BEFORE_SUBMIT, [this, "onBeforeSubmit"]);
         this.form.on(FORM_EVENT_AFTER_SUBMIT, [this, "onAfterSubmit"]);
+        this.setToggleAbleEvents();
+    }
+
+    setToggleAbleEvents() {
         this.form.on(FORM_EVENT_DISABLED, [this, "disabled"]);
         this.form.on(FORM_EVENT_ENABLED, [this, "enabled"]);
     }

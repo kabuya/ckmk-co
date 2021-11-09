@@ -28,7 +28,7 @@ let
      * |PopUpFormCard
      * |PopUpIframeCard
     )[]} hiddenToShow */
-    hiddenToShow = [],
+    openedCards = [],
     appended = false,
     container = $("body")
 ;
@@ -175,67 +175,7 @@ class PopUp {
         if(this.hasCard(card)) {
             this.show();
             dom.append(card.dom);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * @return {(
-     * PopUpCard
-     * |PopUpConfirmCard
-     * |PopUpFormCard
-     * |PopUpIframeCard
-    )|undefined}
-     */
-    getLastCardFromHiddenToShowList() {
-        return hiddenToShow[(hiddenToShow.length - 1)];
-    }
-
-    /**
-     * @return {(
-     * PopUpCard
-     * |PopUpConfirmCard
-     * |PopUpFormCard
-     * |PopUpIframeCard
-    )[]}
-     */
-    getHiddenToShowList() {
-        return hiddenToShow;
-    }
-
-    /**
-     * @param {(
-     * PopUpCard
-     * |PopUpConfirmCard
-     * |PopUpFormCard
-     * |PopUpIframeCard
-    )} card
-     * @return {number}
-     */
-    appendToHiddenToShowList(card) {
-        if(!co.instanceOf(card, ...CARDS)) return -1;
-        return hiddenToShow.push(card);
-    }
-
-    /**
-     * @param {(
-     * PopUpCard
-     * |PopUpConfirmCard
-     * |PopUpFormCard
-     * |PopUpIframeCard
-     * |string
-    )} card
-     * @return {boolean}
-     */
-    removeToHiddenToShowList(card) {
-        let
-            list = hiddenToShow.filter((_card) => {
-                return card !== _card && card !== _card.ID;
-            })
-        ;
-        if(list.length !== hiddenToShow.length) {
-            hiddenToShow = list;
+            this.addOpenedCard(card);
             return true;
         }
         return false;
@@ -279,11 +219,106 @@ class PopUp {
             })
         ;
         if(list.length !== cards.length) {
+            this.removeOpenedCard(card);
             cards = list;
             return true;
         }
         return false;
     }
+
+    /**
+     * @param {
+     * PopUpCard
+     * |PopUpConfirmCard
+     * |PopUpFormCard
+     * |PopUpIframeCard
+     * } card
+     * @return {boolean}
+     */
+    addOpenedCard(card) {
+        if(co.instanceOf(card, ...CARDS) && !this.hasOpenedCard(card)) {
+            openedCards.push(card);
+            let last = openedCards[(openedCards.length - 2)];
+            if(last) {
+                last
+                    .setHiddenDirection(last.HIDDEN_DIRECTION_DOWN)
+                    .close()
+                ;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param {
+     * PopUpCard
+     * |PopUpConfirmCard
+     * |PopUpFormCard
+     * |PopUpIframeCard
+     * } card
+     * @return {boolean}
+     */
+    removeOpenedCard(card) {
+        if(co.instanceOf(card, ...CARDS) && this.hasOpenedCard(card)) {
+            let this_o = this, last;
+            last = openedCards.last();
+            if(last === card) {
+                openedCards = openedCards.filter((_card) => {
+                    return _card !== card;
+                });
+                last = openedCards.last();
+                if(last) {
+                    last.open();
+                    last
+                        .setHiddenDirection(last.HIDDEN_DIRECTION_TOP)
+                    ;
+                } else {
+                    setTimeout(() => {
+                        this_o.hide();
+                    }, card.timeOut());
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param {
+     * PopUpCard
+     * |PopUpConfirmCard
+     * |PopUpFormCard
+     * |PopUpIframeCard
+     * } card
+     * @return {boolean}
+     */
+    isOpenedCard(card) {
+        return this.hasOpenedCard(card);
+    }
+
+    /**
+     * @param {
+     * PopUpCard
+     * |PopUpConfirmCard
+     * |PopUpFormCard
+     * |PopUpIframeCard
+     * } card
+     * @return {boolean}
+     */
+    hasOpenedCard(card) {
+        return (openedCards.filter((_card) => {
+            return _card === card;
+        }).length === 1);
+    }
+
+    /**
+     * @return {number}
+     */
+    getTotalOpenedCard() {
+        return openedCards.length;
+    }
+
 }
 
 module.exports = new PopUp;

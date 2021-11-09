@@ -92,13 +92,22 @@ if(!Array.compact) {
         return mergeList;
     }
 }
+Object.assign(Array.prototype, {
+    last() {
+        return this[(this.length - 1)];
+    },
+
+    first() {
+        return this[0];
+    }
+});
 // Type Array
 
 // Type String
 const GENERATED_UPPERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const GENERATED_LOWERS = "abcdefghijklmnopqrstuvwxyz";
 const GENERATED_NUMBERS = "0123456789";
-const GENERATED_SPEC_CHARS = "$&_-=+/%&@#~=<>!";
+const GENERATED_SPEC_CHARS = "$&_-=+/%&@#~<>!?";
 const SPECIAL_CHARS = [
 //        " ", ".", "'", "\"", "/", "$",
 //        "!", "(", ")", "#", "&", "?",

@@ -198,10 +198,17 @@ class DatatableRowColumn {
                 alert.warning(response.messages);
             }
         }
-        if(response[this.column.datatable.ROW_MODEL_KEY]) {
+        this.shareDataResponse(response);
+    }
+
+    /**
+     * @param {object} dataResponse
+     */
+    shareDataResponse(dataResponse) {
+        if(dataResponse[this.column.datatable.ROW_MODEL_KEY]) {
             let
                 this_o = this,
-                data = response[this.column.datatable.ROW_MODEL_KEY]
+                data = dataResponse[this.column.datatable.ROW_MODEL_KEY]
             ;
             this.updateValue(data[this.getName()]);
             $.each(data, (_name, _value) => {

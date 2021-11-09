@@ -29,11 +29,13 @@ class DatatableColumnBooleanType extends DatatableColumnType {
     }
 
     getRawValue(value) {
-        return value ? 1 : 0;
+        if(co.isString(value)) value = (value !== "false");
+        return (value) ? 1 : 0;
     }
 
     getCompareValue(value, rawValue) {
-        return rawValue ? 1 : 0;
+        if(co.isString(rawValue)) rawValue = (rawValue !== "false");
+        return (rawValue) ? 1 : 0;
     }
 
 }

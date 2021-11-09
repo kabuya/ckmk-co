@@ -3,10 +3,10 @@ const HTML_CLASS_ALERT_SUCCESS = "_success";
 const HTML_CLASS_ALERT_WARNING = "_warning";
 const HTML_CLASS_ALERT_DANGER = "_danger";
 const HTML_ICONS = {
-    info: "<i class='fa fa-info-circle'></i>",
-    success: "<i class='fa fa-check-square-o'></i>",
-    warning: "<i class='fa fa-exclamation-triangle'></i>",
-    danger: "<i class='fa fa-exclamation'></i>",
+    info    : "<i class='fa fa-info-circle'></i>",
+    success : "<i class='fa fa-check-square-o'></i>",
+    warning : "<i class='fa fa-exclamation-triangle'></i>",
+    danger  : "<i class='fa fa-exclamation'></i>",
 };
 
 
@@ -60,12 +60,12 @@ class DatatableAlert {
 
     /**
      * @param {string} type
-     * @param {string|string[]} message
+     * @param {string|string[]} messages
      * @return {boolean}
      */
-    openNewMessage(type, message) {
+    openNewMessage(type, messages) {
         this.reset();
-        if(!(("" + message).trim())) return this.close();
+        if(!co.isSet(messages)) return this.close();
         if(type.in("success")) {
             this.dom.addClass(HTML_CLASS_ALERT_SUCCESS);
         } else if( type.in("warning")) {
@@ -73,21 +73,27 @@ class DatatableAlert {
         } else if( type.in("danger")) {
             this.dom.addClass(HTML_CLASS_ALERT_DANGER);
         }
-        if(co.isString(message)) message = [message];
+        if(co.isString(messages)) messages = [messages];
         let
+            this_o = this,
             content = this.dom.find(".datatable-alert-message-content")
         ;
-        for(let i in message) {
-            let _msg = message[i];
-            content.append([
-                "<div class='datatable-alert-message-item'>",
-                    HTML_ICONS[type],
-                    "<span>",
-                        _msg,
-                    "</span>",
-                "</div>"
-            ].join(""));
-        }
+        Object.entries(messages).forEach((keyValues, keyEntry) => {
+            let
+                key = keyValues[0],
+                _msg = keyValues[1]
+            ;
+            if(co.isString(_msg)) {
+                content.append([
+                    "<div class='datatable-alert-message-item'>",
+                        HTML_ICONS[type],
+                        "<span>",
+                            _msg,
+                        "</span>",
+                    "</div>",
+                ].join(""));
+            }
+        });
         return this.open();
     }
 

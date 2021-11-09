@@ -75,19 +75,21 @@ class DatatableColumnBooleanAction extends DatatableColumnAction {
      */
     doRequest(value) {
         let
-            route = this.column.column.type.editable
+            route = this.column.column.type.editable,
+            data = {
+                datatable: this.column.column.datatable.name,
+                id: this.column.row.ID,
+                row: this.column.row.position,
+            }
         ;
+        data["value"] = value;
+        data[this.column.column.name] = value;
         this.dom.addClass(HTML_CLASS_LOADING);
         this.onRequest = true;
         co.ajax.build()
             .setUrl(route.getAbsolutePath())
             .setType(route.method)
-            .setData({
-                datatable: this.column.column.datatable.name,
-                id: this.column.row.ID,
-                row: this.column.row.position,
-                value: value,
-            })
+            .setData(data)
             .setSuccess([this, "applyResult"])
             .execute()
         ;
@@ -99,6 +101,7 @@ class DatatableColumnBooleanAction extends DatatableColumnAction {
         this.dom.removeClass(HTML_CLASS_LOADING);
         if(response.success) {
             this.column.column.datatable.alert.success(response.messages || this.getDefaultReturnedMessages());
+            this.column.shareDataResponse(response);
         } else {
             this.column.column.datatable.alert.warning(response.messages || "Error on request");
             this.toggleAble();

@@ -698,8 +698,9 @@ form.form-container {
 
   .super-input {
     text-align: left;
-    padding: 4px;
-    padding-right: 16px;
+    padding: 4px {
+      right: 25px;
+    };
     border-radius: $formRadius;
     margin: 0;
     height: 35px;
@@ -724,10 +725,11 @@ form.form-container {
   }
 
   .super-option {
-    margin: 7px;
-    margin-bottom: 5px;
+    margin: 7px {
+      bottom: 5px;
+    };
     border-radius: $formRadius;
-    padding: 2px;
+    padding: 5px 10px;
     cursor: pointer;
     min-height: 28px;
 
@@ -753,9 +755,10 @@ form.form-container {
   .search-icon {
     display: inline-block;
     position: absolute;
-    top: 4px;
-    right: 12px;
+    top: 0;
+    right: 7px;
     cursor: pointer;
+    padding: 5px 8px;
 
     i {
       font-size: 12px;
@@ -804,7 +807,7 @@ form.form-container {
   }
 
   .super-search-found {
-    padding: 0 2px;
+    //padding: 0 2px;
     border-radius: 3px;
   }
 
@@ -849,7 +852,7 @@ form.form-container {
 
     .form-tab-arrow {
       width: 20px;
-      height: 44px;
+      height: 46px;
       background-color: white;
       position: absolute;
       top: 0;
@@ -864,9 +867,7 @@ form.form-container {
       > div {
         width: 10px;
         height: 10px;
-        border: solid 3px $formText;
-        border-top-color: transparent;
-        border-right-color: transparent;
+        border: solid 3px;
         position: absolute;
         top: 50%;
         left: 65%;
@@ -895,10 +896,12 @@ form.form-container {
     .form-tabs-head {
       width: 100%;
       white-space: nowrap;
-      background-color: $formEmpty;
+      //background-color: $formEmpty;
       border-top-left-radius: $formRadius;
       border-top-right-radius: $formRadius;
-      border: solid 1px $formEmpty;
+      border: solid 1px {
+        //bottom: none;
+      };
       overflow: hidden;
       position: relative;
     }
@@ -910,27 +913,16 @@ form.form-container {
       border-radius: $formRadius;
       cursor: pointer;
       margin: 5px;
-
-      &:hover, &.form-tab-active {
-        background-color: white;
-
-        &.form-tab-error {
-          background-color: white;
-          color: $formError;
-        }
-      }
-
-      &.form-tab-error {
-        background-color: $formErrorLight;
-        color: $formError;
-      }
+      font-weight: bold;
 
     }
 
     .form-tabs-body {
       background-color: white;
       position: relative;
-      border: solid 1px $formEmpty;
+      border: solid 1px {
+        top: none;
+      };
       border-bottom-left-radius: $formRadius;
       border-bottom-right-radius: $formRadius;
     }
@@ -939,8 +931,6 @@ form.form-container {
       width: 100%;
       height: auto;
       padding: 20px 15px;
-      border-bottom-left-radius: $formRadius;
-      border-bottom-right-radius: $formRadius;
       display: none;
 
       &.form-tab-active {

@@ -3,382 +3,426 @@
   box-shadow: 0px 0px 8px $formShadow;
 }
 
-form {
-  &.form-container {
-    label {
+.form-container {
+  label {
 
-      &.checked {
-        background-color: $formSuccess;
+    &.checked {
+      background-color: $formSuccess;
 
-        .button-draw {
-          div {
-            border-color: $formSuccessDark;
-          }
+      .button-draw {
+        div {
+          border-color: $formSuccessDark;
         }
       }
     }
+  }
 
-    select, input, textarea {
-      color: $formText;
+  select, input, textarea {
+    color: $formText;
+  }
+
+  input[type=submit], button {
+    color: $formText;
+    &:active, &:focus, &:hover {
+      background-color: $formSuccess;
+      color: $formSuccessText;
     }
+  }
 
-    input[type=submit], button {
-      color: $formText;
-      &:active, &:focus, &:hover {
-        background-color: $formSuccess;
-        color: $formSuccessText;
-      }
-    }
+  .field-disabled {
+    background-color: $formDisabled;
+  }
 
-    .field-disabled {
-      background-color: $formDisabled;
-    }
+  .require-star {
+    color: $formError2;
+  }
 
-    .require-star {
-      color: $formError2;
-    }
-
-    .field-container {
-      &.active {
-        .field-item {
-          border-color: $formSuccess;
-        }
-
-        &.focus {
-          .field-item {
-            box-shadow: 0px 0px 10px $formSuccessFocus;
-          }
-        }
-      }
-
-      &.error {
-        .field-item {
-          border-color: $formError;
-        }
-
-        .super-input {
-          &:focus {
-            border: solid 1px $formError;
-          }
-        }
-
-        &.focus {
-          .field-item {
-            box-shadow: 0px 0px 10px $formErrorFocus;
-          }
-        }
-      }
-
-      .field-schedule {
-        &.active {
-          .schedule-day {
-            border-color: $formSuccess;
-            background-color: $formSuccess;
-            color: white;
-          }
-
-          .schedule-step {
-            border-color: $formSuccess;
-          }
-
-          .schedule-type {
-            border-color: $formSuccess;
-          }
-        }
-
-        &.error {
-          .schedule-day {
-            border-color: $formError;
-            background-color: $formError;
-            color: white;
-          }
-
-          .schedule-step {
-            border-color: $formError;
-          }
-
-          .schedule-type {
-            border-color: $formError;
-          }
-        }
-      }
-
-      .password-level {
-
-        > div {
-
-          div {
-            &.password-danger {
-              background-color: $formError;
-              border-color: $formError;
-            }
-
-            &.password-warning {
-              background-color: $formWarning;
-              border-color: $formWarning;
-            }
-
-            &.password-success {
-              background-color: $formSuccess;
-              border-color: $formSuccess;
-            }
-          }
-        }
-      }
-
-    }
-
-    .field-confirm {
-      &.active {
+  .field-container {
+    &.active {
+      .field-item {
         border-color: $formSuccess;
+      }
 
-        &.focus {
+      &.focus {
+        .field-item {
           box-shadow: 0px 0px 10px $formSuccessFocus;
         }
       }
+    }
 
-      &.error {
+    &.error {
+      .field-item {
         border-color: $formError;
+      }
 
-        &.focus {
+      .super-input {
+        &:focus {
+          border: solid 1px $formError;
+        }
+      }
+
+      &.focus {
+        .field-item {
           box-shadow: 0px 0px 10px $formErrorFocus;
         }
       }
-
     }
 
-    .field-item, .field-confirm {
-      background-color: white;
-      border-color: $formBorder;
-      .field-checkbox, .field-radio {
-        label {
-          color: $formText;
-          background-color: $formEmpty;
-          &.checked {
-            background-color: $formSuccess;
-            color: $formSuccessText;
-          }
-        }
-      }
-    }
-
-    .schedule-day {
-      border-color: $formBorder;
-      background-color: $formBorder;
-    }
-
-    .schedule-step {
-      border-color: $formBorder;
-    }
-
-    .schedule-type {
-      border-color: $formBorder;
-    }
-
-    .field-error, .form-error {
-      background-color: $formErrorLight;
-      color: $formError;
-    }
-
-    .field-languages {
-      .lang-item {
-        background-color: $formEmpty;
-        &.active, &:hover {
+    .field-schedule {
+      &.active {
+        .schedule-day {
+          border-color: $formSuccess;
           background-color: $formSuccess;
-          color: $formSuccessText;
-
-          &.error {
-            background-color: $formError;
-            color: white;
-          }
+          color: white;
         }
 
-        &.error {
-          background-color: $formErrorLight;
-          color: $formError;
+        .schedule-step {
+          border-color: $formSuccess;
+        }
+
+        .schedule-type {
+          border-color: $formSuccess;
         }
       }
-      .lang-arrow {
-        div {
-          border-color: $formBorder;
+
+      &.error {
+        .schedule-day {
+          border-color: $formError;
+          background-color: $formError;
+          color: white;
         }
 
-        &:hover {
-          div {
+        .schedule-step {
+          border-color: $formError;
+        }
+
+        .schedule-type {
+          border-color: $formError;
+        }
+      }
+    }
+
+    .password-level {
+
+      > div {
+
+        div {
+          &.password-danger {
+            background-color: $formError;
+            border-color: $formError;
+          }
+
+          &.password-warning {
+            background-color: $formWarning;
+            border-color: $formWarning;
+          }
+
+          &.password-success {
+            background-color: $formSuccess;
             border-color: $formSuccess;
           }
         }
       }
     }
 
-    .file-item-download {
+  }
+
+  .field-confirm {
+    &.active {
       border-color: $formSuccess;
-      border-left-color: transparent;
-      border-right-color: transparent;
+
+      &.focus {
+        box-shadow: 0px 0px 10px $formSuccessFocus;
+      }
     }
 
-    .file-item {
+    &.error {
+      border-color: $formError;
+
+      &.focus {
+        box-shadow: 0px 0px 10px $formErrorFocus;
+      }
+    }
+
+  }
+
+  .field-item, .field-confirm {
+    background-color: white;
+    border-color: $formBorder;
+    .field-checkbox, .field-radio {
+      label {
+        color: $formText;
+        background-color: $formEmpty;
+        &.checked {
+          background-color: $formSuccess;
+          color: $formSuccessText;
+        }
+      }
+    }
+  }
+
+  .schedule-day {
+    border-color: $formBorder;
+    background-color: $formBorder;
+  }
+
+  .schedule-step {
+    border-color: $formBorder;
+  }
+
+  .schedule-type {
+    border-color: $formBorder;
+  }
+
+  .field-error, .form-error {
+    background-color: $formErrorLight;
+    color: $formError;
+  }
+
+  .field-languages {
+    .lang-item {
+      background-color: $formEmpty;
+      &.active, &:hover {
+        background-color: $formSuccess;
+        color: $formSuccessText;
+
+        &.error {
+          background-color: $formError;
+          color: white;
+        }
+      }
+
+      &.error {
+        background-color: $formErrorLight;
+        color: $formError;
+      }
+    }
+    .lang-arrow {
+      div {
+        border-color: $formBorder;
+      }
 
       &:hover {
-        background-color: $formFileHover;
+        div {
+          border-color: $formSuccess;
+        }
       }
+    }
+  }
+
+  .file-item-download {
+    border-color: $formSuccess;
+    border-left-color: transparent;
+    border-right-color: transparent;
+  }
+
+  .file-item {
+
+    &:hover {
+      background-color: $formFileHover;
+    }
+
+    .file-item-info {
+
+      &.file-item-remove {
+        div {
+          background-color: $formError;
+        }
+      }
+    }
+
+    &.file-item-load {
 
       .file-item-info {
 
         &.file-item-remove {
           div {
-            background-color: $formError;
+            background-color: transparent;
+            border-color: $formSuccess;
+            border-left-color: transparent;
+            border-right-color: transparent;
+          }
+
+          i {
+            color: transparent;
           }
         }
       }
 
-      &.file-item-load {
+    }
+  }
 
-        .file-item-info {
+  .super-input {
+    border: solid 1px $formBorder;
 
-          &.file-item-remove {
-            div {
-              background-color: transparent;
-              border-color: $formSuccess;
-              border-left-color: transparent;
-              border-right-color: transparent;
-            }
+    &:focus {
+      border: solid 1px $formSuccess;
+    }
+  }
 
-            i {
-              color: transparent;
-            }
-          }
-        }
+  .super-search {
+    background-color: $formItemBg;
+  }
 
-      }
+  .super-arrow {
+    border-top-color: $formText;
+
+    &.super-arrow-open {
+      border-top-color: transparent;
+      border-bottom-color: $formText;
+    }
+  }
+
+  .super-option {
+    &:hover {
+      background-color: $formFileHover;
     }
 
-    .super-input {
-      border: solid 1px $formBorder;
-
-      &:focus {
-        border: solid 1px $formSuccess;
-      }
-    }
-
-    .super-search {
-      background-color: $formItemBg;
-    }
-
-    .super-arrow {
-      border-top-color: $formText;
-
-      &.super-arrow-open {
-        border-top-color: transparent;
-        border-bottom-color: $formText;
-      }
-    }
-
-    .super-option {
-      &:hover {
-        background-color: $formFileHover;
-      }
-
-      &.selected {
-        background-color: $formSuccess;
-        color: white;
-
-        &:hover {
-          background-color: $formSuccess;
-        }
-      }
-    }
-
-    .super-search-found {
+    &.selected {
+      background-color: $formSuccess;
       color: white;
-      background-color: $formSuccessDark;
-    }
 
-    .textarea-count-char {
-      background-color: $formItemBg;
-    }
-
-    .wysiwyg-textarea {
-
-      input, textarea, select {
-        &:focus {
-          border-color: $formSuccess;
-        }
+      &:hover {
+        background-color: $formSuccess;
       }
+    }
+  }
 
+  .super-search-found {
+    //color: white;
+    //background-color: $formSuccessDark;
+    color: $formSuccessDark;
+    font-weight: bold;
+  }
+
+  .textarea-count-char {
+    background-color: $formItemBg;
+  }
+
+  .wysiwyg-textarea {
+
+    input, textarea, select {
+      &:focus {
+        border-color: $formSuccess;
+      }
+    }
+
+    path {
+      fill : $formText !important;
+    }
+
+    .fr-active {
       path {
-        fill : $formText !important;
+        fill : $formSuccess !important;
       }
+    }
 
-      .fr-active {
+    button {
+      &:hover {
+        background-color: $formSuccess !important;
+        color: white !important;
+
         path {
-          fill : $formSuccess !important;
+          fill : white !important;
         }
       }
-
-      button {
-        &:hover {
-          background-color: $formSuccess !important;
-          color: white !important;
-
-          path {
-            fill : white !important;
-          }
-        }
-      }
-
-      > div {
-        &:first-child {
-          border: none !important;
-        }
-
-        &:nth-child(2) {
-          border: none !important;
-
-          div[contenteditable=true] {
-            color: $formText !important;
-          }
-        }
-
-        &:nth-child(3) {
-          border: solid 1px $formBorder !important;
-          border-left: none !important;
-          border-right: none !important;
-          border-bottom: none !important;
-        }
-      }
-
-    }
-    .wysiwyg-save-plain-text {
-      background-color: $formEmpty;
-
-      span {
-        border-color: $formBorder;
-        background-color: white;
-      }
-
-      &.wysiwyg-save-plain-text-active {
-        background-color: $formSuccess;
-      }
-
     }
 
-    .password-generated-container {
+    > div {
+      &:first-child {
+        border: none !important;
+      }
 
-      .password-generated-button {
-        background-color: $formSuccess;
+      &:nth-child(2) {
+        border: none !important;
 
-        &:hover {
-          background-color: $formSuccessDark;
+        div[contenteditable=true] {
+          color: $formText !important;
         }
       }
 
-      .password-generated-alert {
-        background-color: $formSuccessLight;
-        color: $formSuccessDark;
-        border-radius: $formRadius;
+      &:nth-child(3) {
+        border: solid 1px $formBorder !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-bottom: none !important;
       }
     }
 
   }
+  .wysiwyg-save-plain-text {
+    background-color: $formEmpty;
+
+    span {
+      border-color: $formBorder;
+      background-color: white;
+    }
+
+    &.wysiwyg-save-plain-text-active {
+      background-color: $formSuccess;
+    }
+
+  }
+
+  .password-generated-container {
+
+    .password-generated-button {
+      background-color: $formSuccess;
+
+      &:hover {
+        background-color: $formSuccessDark;
+      }
+    }
+
+    .password-generated-alert {
+      background-color: $formSuccessLight;
+      color: $formSuccessDark;
+      border-radius: $formRadius;
+    }
+  }
+
+  .form-tabs {
+
+    .form-tab-arrow {
+      > div {
+        border-color: $formText;
+        border-top-color: transparent;
+        border-right-color: transparent;
+      }
+    }
+
+    .form-tabs-head {
+      background-color: $formEmpty;
+      border-color: $formEmpty;
+    }
+
+    .form-tab-head {
+
+      &:hover, &.form-tab-active {
+        //background-color: $formSuccess;
+        //color: white;
+        background-color: white;
+        box-shadow: 0px 0px 5px rgba(0,0,0,.1);
+
+        &.form-tab-error {
+          //background-color: $formError;
+          //color: white;
+          background-color: white;
+          color: $formError;
+        }
+      }
+
+      &.form-tab-error {
+        background-color: $formErrorLight;
+        color: $formError;
+        box-shadow: 0px 0px 5px rgba(0,0,0,.1);
+      }
+
+    }
+
+    .form-tabs-body {
+      border-color: $formEmpty;
+    }
+  }
+
 }

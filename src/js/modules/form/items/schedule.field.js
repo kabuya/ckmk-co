@@ -36,6 +36,7 @@ class ScheduleField extends Field {
     }
 
     setEvents() {
+        this.setToggleAbleEvents();
 
     }
 

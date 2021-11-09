@@ -11,8 +11,10 @@ const PopupCard = require("../popup.card");
  * @property {number} position
  * @property {boolean} appended
  * @property {number|undefined} waiting
+ * @property {string} hiddenDirection
  * @property {boolean} useFormClass
  * @property {Function} cb
+ * @property {boolean} formInit
  */
 class PopupFormCard extends PopupCard {
 
@@ -39,11 +41,13 @@ class PopupFormCard extends PopupCard {
             PopupFormCard.NAME
         );
         this.useFormClass = useFormClass;
+        this.formInit = false;
     }
 
     setContent(content) {
         super.setContent(content);
         if(content && !content.match(/popup-load/i)) {
+            this.formInit = false;
             /** @type {jQuery|HTMLElement} form */
             let form = this.core.find("form");
             if(!form.length) {
@@ -76,7 +80,7 @@ class PopupFormCard extends PopupCard {
             if(co.isFunction(this.cb)) {
                 co.runCb(this.cb, response, status, xhr);
             }
-            this.close(true);
+            this.close();
         }
     }
 
@@ -87,6 +91,13 @@ class PopupFormCard extends PopupCard {
     setCb(cb) {
         this.cb = cb;
         return this;
+    }
+
+    executeDisplayType() {
+        if(!this.formInit) {
+            this.formInit = true;
+            this.iniForms();
+        }
     }
 
     getButtons() {
@@ -101,7 +112,7 @@ class PopupFormCard extends PopupCard {
             btn = $(e.currentTarget)
         ;
         if(btn.hasClass("popup-btn-cancel")) {
-            return this.close(true);
+            return this.close();
         }
         this.core.find("form").submit();
     }
