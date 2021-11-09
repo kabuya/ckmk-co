@@ -32,22 +32,22 @@ class DatatableColumnEntityType extends DatatableColumnType {
     }
 
     parseTemplate(template, rowColumn) {
-        let rg = this.getSelectedRegexp(rowColumn.rawValue);
-        return template.replace(rg, (str) => {
-            if(str.match(/selected/)) {
-                return str.replace("false", "true");
-            } else  if(str.match(/option/)) {
-                return co.concat(str, " ", "selected=\"selected\"");
-            }
-        });
-    }
-
-    /**
-     * @param {number} value
-     * @return {RegExp}
-     */
-    getSelectedRegexp(value) {
-        return new RegExp("((data\-)|option[ ]+)value\=(\'|\")"+ value +"(\'|\")( data\-selected\=(\'|\")(false|true)(\'|\"))?", "gi");
+        let
+            domTemplate = $(template),
+            value = rowColumn.rawValue,
+            option = domTemplate.find("option[value=\""+ value +"\"]"),
+            selected = domTemplate.find(".super-option[data-value=\""+ value +"\"]"),
+            superSelected = domTemplate.find(".super-selected")
+        ;
+        if(option.length && selected.length) {
+            option.attr("selected", "selected");
+            selected.attr("data-selected", "true");
+            selected.addClass("selected");
+            selected.parent().parent().parent().parent().addClass("active");
+            superSelected.text(selected.text());
+            return domTemplate.prop("outerHTML");
+        }
+        return template;
     }
 
     /**

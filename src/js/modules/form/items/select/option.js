@@ -6,7 +6,7 @@ const SPAN_TO_HASH = "````````````````````````````";
 const SPAN_TO_REGEXP = new RegExp(SPAN_TO_HASH, "g");
 
 /**
- * @property {SelectField} SelectField
+ * @property {SelectField} select
  * @property {jQuery|HTMLElement} dom
  * @property {jQuery|HTMLElement} option
  * @property {string} title
@@ -17,22 +17,18 @@ const SPAN_TO_REGEXP = new RegExp(SPAN_TO_HASH, "g");
 class SelectOption {
 
     /**
-     * @param {SelectField} SelectField
+     * @param {SelectField} select
      * @param {jQuery|HTMLElement} dom
      * @param {jQuery|HTMLElement} option
      */
-    constructor(SelectField, dom, option) {
-        this.SelectField = SelectField;
+    constructor(select, dom, option) {
+        this.select = select;
         this.dom = $(dom);
         this.option = $(option);
         this.title = this.option.text();
-        this.value = this.option.attr("value") || this.dom.data("value");
-        this.empty = !!this.dom.data("empty");
-        this.selected = this.dom.data("selected");
-        this.dom
-            .removeAttr("data-value")
-            .removeAttr("data-selected")
-        ;
+        this.value = co.data(this.dom, "value") || this.option.attr("value");
+        this.empty = !!co.data(this.dom, "empty");
+        this.selected = co.data(this.dom, "selected");
     }
 
     /**
@@ -63,16 +59,16 @@ class SelectOption {
         if(this.option.is(":selected")) {
             this.dom.removeClass("selected");
             this.option.prop("selected", false);
-            if(this.SelectField.isMultiple()) {
-                if(!this.SelectField.dom.find("select").val().length && this.SelectField.dom.addClass("active")) {
-                    this.SelectField.dom.removeClass("active");
+            if(this.select.isMultiple()) {
+                if(!this.select.dom.find("select").val().length && this.select.dom.addClass("active")) {
+                    this.select.dom.removeClass("active");
                 }
             }
         } else {
             this.dom.addClass("selected");
             this.option.prop("selected", true);
-            if(!this.SelectField.dom.hasClass("active") && !this.SelectField.dom.hasClass("error")) {
-                !this.SelectField.dom.addClass("active");
+            if(!this.select.dom.hasClass("active") && !this.select.dom.hasClass("error")) {
+                !this.select.dom.addClass("active");
             }
         }
     }
@@ -82,18 +78,20 @@ class SelectOption {
      */
     domOnClickSingle(e) {
         if(this.isEmpty()) {
-            this.SelectField.emptySelected();
+            this.select.emptySelected();
         } else {
             if(!this.option.is(":selected")) {
-                this.SelectField.dom.find(".super-remove").addClass("super-remove-show");
+                this.select.dom.find(".selected").removeClass("selected");
+                this.select.dom.find(".super-remove").addClass("super-remove-show");
+                this.select.dom.find(".super-selected").html(this.title);
                 this.option.prop("selected", true);
-                this.SelectField.dom.find(".super-selected").html(this.title);
-                if(!this.SelectField.dom.hasClass("active")) {
-                    this.SelectField.dom.addClass("active");
+                this.dom.addClass("selected");
+                if(!this.select.dom.hasClass("active")) {
+                    this.select.dom.addClass("active");
                 }
             }
         }
-        this.SelectField.closeOptions();
+        this.select.closeOptions();
     }
 
     /**
@@ -175,7 +173,7 @@ class SelectOption {
         let
             this_o = this
         ;
-        if(this.SelectField.isMultiple()) {
+        if(this.select.isMultiple()) {
             this.dom.on("click", (e) => {
                 return this_o.domOnClickMultiple(e);
             });

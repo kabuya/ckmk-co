@@ -29,7 +29,22 @@ class DatatableColumnEmailType extends DatatableColumnTranslatorParentType {
     }
 
     parseTemplate(template, rowColumn) {
-        return template.replace(new RegExp("email\@void\.com", "gi"), (rowColumn.rawValue || ""));
+        let
+            value = rowColumn.rawValue,
+            domTemplate = $(template),
+            input = domTemplate.find("input[value='email@void.com']")
+        ;
+        if(input.length) {
+            if(value) {
+                input.val(value);
+                input.attr("value", value);
+            } else {
+                input.removeAttr("value");
+                input.val("");
+                input.parent().parent().removeClass("active");
+            }
+        }
+        return domTemplate.prop("outerHTML");
     }
 
     checkValue(value) {

@@ -264,6 +264,7 @@ class SelectField extends Field {
         this.dom.find("select").val("");
         this.dom.find(".super-selected").html("");
         this.dom.find(".super-remove").removeClass("super-remove-show");
+        if(!this.isMultiple()) this.dom.find(".selected").removeClass("selected");
         if(this.dom.hasClass("active")) {
             this.dom.removeClass("active");
         }
