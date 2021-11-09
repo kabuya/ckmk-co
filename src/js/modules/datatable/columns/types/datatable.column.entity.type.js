@@ -1,4 +1,5 @@
 const DatatableColumnType = require("./datatable.column.type");
+const DatatableColumnEntityAction = require("../actions/datatable.column.entity.action");
 
 /**
  * @property {DatatableColumn} column
@@ -26,6 +27,20 @@ class DatatableColumnEntityType extends DatatableColumnType {
         this.property = data.property;
     }
 
+    getAction(column) {
+        return new DatatableColumnEntityAction(this, column);
+    }
+
+    parseTemplate(template, rowColumn) {
+        let rg = this.getSelectedRegexp(rowColumn.rawValue);
+        return template.replace(rg, (str) => {
+            if(str.match(/selected/)) {
+                return str.replace("false", "true");
+            } else  if(str.match(/option/)) {
+                return co.concat(str, " ", "selected=\"selected\"");
+            }
+        });
+    }
 
     /**
      * @param {number} value

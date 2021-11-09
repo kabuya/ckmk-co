@@ -1,5 +1,6 @@
 const DatatableColumnType = require("./datatable.column.type");
 const DatatableColumnTranslatorParentType = require("./datatable.column.translator.parent.type");
+const DatatableColumnLongtextAction = require("../actions/datatable.column.longtext.action");
 
 const LONGTEXT_MAXLENGTH = 7;
 const LONGTEXT_STRING_MAXLENGTH = 50;
@@ -26,6 +27,10 @@ class DatatableColumnLongtextType extends DatatableColumnTranslatorParentType {
      */
     constructor(column, data) {
         super(column, data);
+    }
+
+    getAction(column) {
+        return new DatatableColumnLongtextAction(this, column);
     }
 
     checkValue(value) {

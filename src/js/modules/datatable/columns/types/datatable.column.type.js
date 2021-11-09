@@ -12,6 +12,7 @@ const DatatableColumnTimeAction = require("../actions/datatable.column.time.acti
 const DatatableColumnActionsAction = require("../actions/datatable.column.actions.action");
 
 const TYPE_TEXT = "text";
+const TYPE_EMAIL = "email";
 const TYPE_LONGTEXT = "longtext";
 const TYPE_INTEGER = "integer";
 const TYPE_FLOAT = "float";
@@ -61,6 +62,7 @@ const NOT_USE_FORM_TYPES = [
 class DatatableColumnType {
 
     static TYPE_TEXT = TYPE_TEXT;
+    static TYPE_EMAIL = TYPE_EMAIL;
     static TYPE_LONGTEXT = TYPE_LONGTEXT;
     static TYPE_INTEGER = TYPE_INTEGER;
     static TYPE_FLOAT = TYPE_FLOAT;
@@ -122,33 +124,16 @@ class DatatableColumnType {
      * }
      */
     getAction(column) {
-        if(this.isBoolean()) {
-            return new DatatableColumnBooleanAction(this, column);
-        } else if(this.isDate()) {
-            return new DatatableColumnDateAction(this, column);
-        } else if(this.isDateTime()) {
-            return new DatatableColumnDatetimeAction(this, column);
-        } else if(this.isEntity()) {
-            return new DatatableColumnEntityAction(this, column);
-        } else if(this.isFloat()) {
-            return new DatatableColumnFloatAction(this, column);
-        } else if(this.isImage()) {
-            return new DatatableColumnImageAction(this, column);
-        } else if(this.isInteger()) {
-            return new DatatableColumnIntegerAction(this, column);
-        } else if(this.isLongText()) {
-            return new DatatableColumnLongtextAction(this, column);
-        } else if(this.isText()) {
-            return new DatatableColumnTextAction(this, column);
-        } else if(this.isTime()) {
-            return new DatatableColumnTimeAction(this, column);
-        } else if(this.isAction()) {
-            return new DatatableColumnActionsAction(this, column);
-        } else {
-            co.log(column);
-            console.error("Ici quelque chose");
-            //return new DatatableColumnAction(this, column);
-        }
+        return new DatatableColumnAction(this, column);
+    }
+
+    /**
+     * @param {string} template
+     * @param {DatatableRowColumn} rowColumn
+     * @return {string}
+     */
+    parseTemplate(template, rowColumn) {
+        return template;
     }
 
     /**

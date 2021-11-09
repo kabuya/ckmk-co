@@ -1,4 +1,5 @@
 const DatatableColumnType = require("./datatable.column.type");
+const DatatableColumnBooleanAction = require("../actions/datatable.column.boolean.action");
 
 /**
  * @property {DatatableColumn} column
@@ -18,6 +19,10 @@ class DatatableColumnBooleanType extends DatatableColumnType {
      */
     constructor(column, data) {
         super(column, data);
+    }
+
+    getAction(column) {
+        return new DatatableColumnBooleanAction(this, column);
     }
 
     checkValue(value) {

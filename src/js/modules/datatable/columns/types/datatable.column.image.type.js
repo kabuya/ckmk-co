@@ -1,4 +1,5 @@
 const DatatableColumnType = require("./datatable.column.type");
+const DatatableColumnImageAction = require("../actions/datatable.column.image.action");
 
 /**
  * @property {DatatableColumn} column
@@ -21,6 +22,9 @@ class DatatableColumnImageType extends DatatableColumnType {
     }
 
 
+    getAction(column) {
+        return new DatatableColumnImageAction(this, column);
+    }
 
 
 }

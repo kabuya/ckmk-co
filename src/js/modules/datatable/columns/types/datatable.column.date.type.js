@@ -1,4 +1,5 @@
 const DatatableColumnDatetimeParent = require("./datatable.column.datetime.parent");
+const DatatableColumnDateAction = require("../actions/datatable.column.date.action");
 
 /**
  * @property {DatatableColumn} column
@@ -12,6 +13,10 @@ class DatatableColumnDateType extends DatatableColumnDatetimeParent {
 
 
     static NAME = DatatableColumnDatetimeParent.TYPE_DATE;
+
+    getAction(column) {
+        return new DatatableColumnDateAction(this, column);
+    }
 
 }
 

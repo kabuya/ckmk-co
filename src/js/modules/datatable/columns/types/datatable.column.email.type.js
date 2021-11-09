@@ -1,6 +1,6 @@
 const DatatableColumnType = require("./datatable.column.type");
 const DatatableColumnTranslatorParentType = require("./datatable.column.translator.parent.type");
-const DatatableColumnTextAction = require("../actions/datatable.column.text.action");
+const DatatableColumnEmailAction = require("../actions/datatable.column.email.action");
 
 
 /**
@@ -11,10 +11,10 @@ const DatatableColumnTextAction = require("../actions/datatable.column.text.acti
  * @property {boolean} translator
  * @property {TranslatorText|string|undefined} text
  */
-class DatatableColumnTextType extends DatatableColumnTranslatorParentType {
+class DatatableColumnEmailType extends DatatableColumnTranslatorParentType {
 
 
-    static NAME = DatatableColumnType.TYPE_TEXT;
+    static NAME = DatatableColumnType.TYPE_EMAIL;
 
     /**
      * @param {DatatableColumn} column
@@ -25,7 +25,16 @@ class DatatableColumnTextType extends DatatableColumnTranslatorParentType {
     }
 
     getAction(column) {
-        return new DatatableColumnTextAction(this, column);
+        return new DatatableColumnEmailAction(this, column);
+    }
+
+    parseTemplate(template, rowColumn) {
+        return template.replace(new RegExp("email\@void\.com", "gi"), (rowColumn.rawValue || ""));
+    }
+
+    checkValue(value) {
+        if(!co.isString(value) || value === "email@void.com") return;
+        return super.checkValue(value);
     }
 
     getCompareValue(value, rawValue) {
@@ -35,4 +44,4 @@ class DatatableColumnTextType extends DatatableColumnTranslatorParentType {
 
 }
 
-module.exports = DatatableColumnTextType;
+module.exports = DatatableColumnEmailType;

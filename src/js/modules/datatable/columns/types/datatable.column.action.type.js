@@ -1,4 +1,5 @@
 const DatatableColumnType = require("./datatable.column.type");
+const DatatableColumnActionsAction = require("../actions/datatable.column.actions.action");
 
 /**
  * @property {DatatableColumn} column
@@ -29,6 +30,10 @@ class DatatableColumnActionType extends DatatableColumnType {
             manage  : co.popup.form(""),
             confirm  : co.popup.confirm("", "", () => {}),
         };
+    }
+
+    getAction(column) {
+        return new DatatableColumnActionsAction(this, column);
     }
 
 }

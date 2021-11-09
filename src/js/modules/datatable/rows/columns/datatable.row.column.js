@@ -139,15 +139,7 @@ class DatatableRowColumn {
                     (this.rawValue || "")
                 )
             ;
-            if(this.column.type.isEntity()) {
-                let rg = this.column.type.getSelectedRegexp(this.rawValue);
-                template = template.replace(rg, (str) => {
-                    if(str.match(/selected/)) {
-                        return str.replace("false", "true");
-                    }
-                    return co.concat(str, " ", "selected=\"selected\"");
-                });
-            }
+            template = this.column.type.parseTemplate(template, this);
             return template;
         }
     }

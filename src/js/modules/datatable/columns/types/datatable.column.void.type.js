@@ -12,6 +12,8 @@ class DatatableColumnVoidType extends DatatableColumnType {
 
     static NAME = DatatableColumnType.TYPE_VOID;
 
+
+
 }
 
 module.exports = DatatableColumnVoidType;

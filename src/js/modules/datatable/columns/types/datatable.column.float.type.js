@@ -1,4 +1,5 @@
 const DatatableColumnType = require("./datatable.column.type");
+const DatatableColumnFloatAction = require("../actions/datatable.column.float.action");
 
 /**
  * @property {DatatableColumn} column
@@ -23,6 +24,9 @@ class DatatableColumnFloatType extends DatatableColumnType {
         this.round = data.round;
     }
 
+    getAction(column) {
+        return new DatatableColumnFloatAction(this, column);
+    }
 
 
 }

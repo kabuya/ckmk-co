@@ -1,4 +1,5 @@
 const DatatableColumnType = require("./datatable.column.type");
+const DatatableColumnIntegerAction = require("../actions/datatable.column.integer.action");
 
 /**
  * @property {DatatableColumn} column
@@ -21,6 +22,9 @@ class DatatableColumnIntegerType extends DatatableColumnType {
     }
 
 
+    getAction(column) {
+        return new DatatableColumnIntegerAction(this, column);
+    }
 
 
 }

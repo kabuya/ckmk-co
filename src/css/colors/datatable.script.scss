@@ -27,20 +27,24 @@
   .datatable-alert-message {
     background-color: $infoAlertBg;
     color: $infoText;
+    @include selectionText($infoText);
 
     &._success {
       background-color: $successAlertBg;
       color: $successText;
+      @include selectionText($successText);
     }
 
     &._warning {
       background-color: $warningAlertBg;
       color: $warningText;
+      @include selectionText($warningText);
     }
 
     &._danger {
       background-color: $dangerAlertBg;
       color: $dangerText;
+      @include selectionText($dangerText);
     }
   }
 

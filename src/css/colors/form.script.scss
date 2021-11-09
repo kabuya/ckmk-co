@@ -177,6 +177,8 @@
   .field-error, .form-error {
     background-color: $formErrorLight;
     color: $formError;
+
+    @include selectionText($formError);
   }
 
   .field-languages {

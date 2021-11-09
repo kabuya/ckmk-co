@@ -8,6 +8,7 @@ const DatatableColumnImageType = require("./types/datatable.column.image.type");
 const DatatableColumnIntegerType = require("./types/datatable.column.integer.type");
 const DatatableColumnLongtextType = require("./types/datatable.column.longtext.type");
 const DatatableColumnTextType = require("./types/datatable.column.text.type");
+const DatatableColumnEmailType = require("./types/datatable.column.email.type");
 const DatatableColumnTimeType = require("./types/datatable.column.time.type");
 const DatatableColumnActionType = require("./types/datatable.column.action.type");
 const DatatableColumnVoidType = require("./types/datatable.column.void.type");
@@ -23,6 +24,7 @@ const COLUMNS_TYPES = [
     DatatableColumnIntegerType,
     DatatableColumnLongtextType,
     DatatableColumnTextType,
+    DatatableColumnEmailType,
     DatatableColumnTimeType,
     DatatableColumnActionType,
     DatatableColumnVoidType,
@@ -431,14 +433,12 @@ class DatatableColumn {
     static buildColumnType(column, data) {
         if(co.isObject(data)) {
             let type;
-            COLUMNS_TYPES.forEach((_type) => {
-                if(data.name === _type.NAME && !type) {
-                    type = new _type(column, data);
-                }
-            });
-            return type;
+            type = COLUMNS_TYPES.filter((_type) => {
+                return data.name === _type.NAME;
+            })[0];
+            if(type) return new type(column, data);
         }
-        return new DatatableColumnVoidType(column, {});
+        return new DatatableColumnVoidType(column, {name: DatatableColumnType.TYPE_VOID});
     }
 
 }

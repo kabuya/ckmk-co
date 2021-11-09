@@ -128,7 +128,7 @@
 }
 
 @mixin selectionText(
-  $bg, $color
+  $bg, $color : white
 ) {
   ::selection {
     background-color: $bg;
