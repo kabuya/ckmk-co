@@ -74,6 +74,7 @@ class DatatableActionDeletable {
                 .setType(this.route.method)
                 .setData({
                     datatable:this.actions.datatable.name,
+                    all: (this.rows.length === this.actions.datatable.rows.length),
                     id: this.getRowsIDs(),
                 })
                 .setSuccess([this, "updateRowAfterDelete"])

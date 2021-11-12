@@ -80,13 +80,7 @@ $popupCardBorder : #b0b0b0;
   }
 
   .popup-load {
-    width: 100px;
-    height: 100px;
-    margin: 80px auto;
-    border-radius: 100%;
-    transition: .3s;
-    animation: rotate 1s infinite ease-in-out;
-    cursor: progress;
+    @include rondLoaderRotate(100px, 80px auto, 2px);
   }
 
   .popup-footer {

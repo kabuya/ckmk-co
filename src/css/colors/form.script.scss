@@ -43,6 +43,19 @@
         border-color: $formSuccess;
       }
 
+      .super-option {
+
+        &.selected {
+          background-color: $formSuccess;
+          color: white;
+
+          &:hover {
+            background-color: $formSuccess;
+            color: white;
+          }
+        }
+      }
+
       &.focus {
         .field-item {
           box-shadow: 0px 0px 10px $formSuccessFocus;
@@ -51,6 +64,9 @@
     }
 
     &.error {
+
+      @include selectionText($formError, white);
+
       .field-item {
         border-color: $formError;
       }
@@ -86,6 +102,8 @@
       }
 
       &.error {
+        @include selectionText($formError, white);
+
         .schedule-day {
           border-color: $formError;
           background-color: $formError;
@@ -189,12 +207,16 @@
         color: $formSuccessText;
 
         &.error {
+          @include selectionText($formError, white);
+
           background-color: $formError;
           color: white;
         }
       }
 
       &.error {
+        @include selectionText($formError, white);
+
         background-color: $formErrorLight;
         color: $formError;
       }
@@ -281,12 +303,10 @@
     }
 
     &.selected {
-      background-color: $formSuccess;
-      color: white;
+      background-color: $formFileHover;
 
       &:hover {
-        background-color: $formSuccess;
-        color: white;
+        background-color: $formFileHover;
       }
     }
   }
@@ -408,6 +428,7 @@
         box-shadow: 0px 0px 5px rgba(0,0,0,.1);
 
         &.form-tab-error {
+          @include selectionText($formError, white);
           //background-color: $formError;
           //color: white;
           background-color: white;
@@ -416,6 +437,7 @@
       }
 
       &.form-tab-error {
+        @include selectionText($formError, white);
         background-color: $formErrorLight;
         color: $formError;
         box-shadow: 0px 0px 5px rgba(0,0,0,.1);
@@ -425,6 +447,17 @@
 
     .form-tabs-body {
       border-color: $formEmpty;
+    }
+  }
+
+  .field-data-list {
+    background-color: white;
+    box-shadow: 0px 0px 5px rgba(0,0,0,.2);
+
+    div {
+      &:hover {
+        background-color: $formEmpty;
+      }
     }
   }
 

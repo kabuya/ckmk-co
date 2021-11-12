@@ -145,7 +145,7 @@ class Form extends EventTypes {
                 this_o = this,
                 fields = []
             ;
-            $.each(this.dom.find(".field-container"), (i, fieldDom) => {
+            this.dom.find(".field-container").each((i, fieldDom) => {
                 fieldDom = $(fieldDom);
                 let
                     type = fieldDom.data("target-type") || fieldDom.data("type"),

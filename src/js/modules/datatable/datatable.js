@@ -89,6 +89,7 @@ let
  * @property {number} countLine
  * @property {object} modelRow
  * @property {string} rowsID
+ * @property {string} rowsTitle
  * @property {string} rowsType
  * @property {[DatatableColumn, ("asc"|"desc")]} order
  * @property {DatatableActions} actions
@@ -135,6 +136,8 @@ class Datatable extends EventTypes {
         this.visibility = co.data(dom, "visibility");
         /** @type {string} rowsID */
         this.rowsID = co.data(dom, "rows-id");
+        /** @type {string} rowsTitle */
+        this.rowsTitle = co.data(dom, "rows-title");
         /** @type {string} rowsType */
         this.rowsType = co.data(dom, "rows-type");
         this.grants = new DatatableGrants(this, co.data(dom, "grants"));

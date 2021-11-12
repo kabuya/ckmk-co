@@ -1,15 +1,15 @@
 const Load = require('./load');
 
-const DEFAULT_SIZE = 10;
+const DEFAULT_SIZE = 100;
 
 class RotateCircleLoad extends Load {
 
     /**
      * @param {jQuery|HTMLElement} parentDom
-     * @param {number} size
      * @param {string|undefined} title
+     * @param {number} size
      */
-    constructor(parentDom, size = DEFAULT_SIZE, title = undefined) {
+    constructor(parentDom, title = undefined, size = DEFAULT_SIZE) {
         super(parentDom, title);
         let
             circle = $("<div class='loader-rotate-circle'></div>")

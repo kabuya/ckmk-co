@@ -8,6 +8,20 @@ const ERRORS = [
 ];
 
 /**
+ * @property {Form} form
+ * @property {jQuery|HTMLElement} dom
+ * @property {string} label
+ * @property {string} type
+ * @property {string} targetType
+ * @property {string} name
+ * @property {string} nameID
+ * @property {jQuery|HTMLElement|undefined} tab
+ * @property {number|string} max
+ * @property {number|string} min
+ * @property {boolean} required
+ * @property {boolean} unique
+ * @property {{}} errorMessages
+ * @property {boolean} ________disable________
  * @property {boolean} translator
  * @property {number} lastPosition
  * @property {jQuery|HTMLElement} langContainer
@@ -96,7 +110,7 @@ class TranslatorField extends Field {
             success = true,
             fields = this.dom.find("input[type=text], textarea")
         ;
-        $.each(fields, (k, elem) => {
+        fields.each((k, elem) => {
             elem = $(elem);
             let
                 hasValue = !!elem.val()

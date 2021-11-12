@@ -61,32 +61,19 @@ class DatatableRowColumn {
         this.resetMatch();
         if(!values.length) return false;
         let
-            vJoin = values
-                .join(HASH_JOIN)
-                .trim()
-                .replace("|", "\\|")
-                .replace(HASH_JOIN, "\|")
-            ,
-            rg = RegExp.searchBuild(vJoin, "gi"),
-            _html = this.dom.html(),
-            _text = this.column.type.isLongText()
-                ? this.dom.text().trim().replace(/(\|)?[.]{3}(\|)?$/, "")
-                : this.dom.text().trim()
-            ,
-            _matched = _text.match(rg),
-            _textMatched
+            _html, _text, _textMatched
         ;
-        if(_matched) {
-            _textMatched = _text.replace(rg, (str) => {
-                return [
-                    "<span class='datatable-search-found'>",
-                        str,
-                    "</span>",
-                ].join("");
-            });
+        _html = this.dom.html();
+        _text = this.column.type.isLongText()
+            ? this.dom.text().trim().replace(/(\|)?[.]{3}(\|)?$/, "")
+            : this.dom.text().trim()
+        ;
+        _textMatched = co.search(values, _text);
+
+        if(_textMatched) {
             this.dom.html(_html.replace(_text, _textMatched));
             return true;
-        } else if(this.checkMatchFromCompareValue(rg)) {
+        } else if(this.checkMatchFromCompareValue(RegExp.searchBuild(values, "gi"))) {
             return true;
         }
         return false;
@@ -241,6 +228,7 @@ class DatatableRowColumn {
     destroy() {
         if(this.action) this.action.destroy();
         this.dom.remove();
+        if(this.column) this.column.removeColumn(this);
         return true;
     }
 

@@ -53,7 +53,7 @@ class DatatableColumnEmailType extends DatatableColumnTranslatorParentType {
     }
 
     getCompareValue(value, rawValue) {
-        return rawValue.noAccent();
+        if(rawValue) return rawValue.noAccent();
     }
 
 

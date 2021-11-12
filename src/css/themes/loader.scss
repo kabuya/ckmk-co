@@ -25,11 +25,7 @@
   }
 
   .loader-rotate-circle {
-    margin: auto;
-    border: solid 3px transparent;
-    border-radius: 1000000000000px;
-    animation: rotate 1s infinite ease-in-out;
-    cursor: progress;
+    @include rondLoaderRotate(50px, auto, 3px);
   }
 
   .loader-bound-item {

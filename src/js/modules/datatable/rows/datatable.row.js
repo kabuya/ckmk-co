@@ -256,6 +256,16 @@ class DatatableRow {
         return false;
     }
 
+    /**
+     * @param {string} title
+     * @return {string|undefined}
+     */
+    static parseTitle(title) {
+        if(co.isString(title)) {
+            return title.ucfirst();
+        }
+    }
+
     setEvents() {
         this.datatable.on(this.datatable.EVENT_ON_SEARCH, [this, "toggleShow"]);
         this.datatable.on(this.datatable.EVENT_ON_CHANGE_ROWS_TARGET, [this, "toggleDisplayByTargetLines"]);
@@ -272,7 +282,7 @@ class DatatableRow {
                 row = $("<tr></tr>")
                     .addClass("datatable-body-row")
                     .attr("data-id", data[datatable.rowsID])
-                    .attr("data-title", data.title || data[datatable.rowsID])
+                    .attr("data-title", DatatableRow.parseTitle(data.title || data[datatable.rowsTitle] || data[datatable.rowsID]))
                     .attr("data-position", datatable.rows.length + 1)
                     .attr("data-visibility", co.objectToJson(data.visibility, true))
                 ,

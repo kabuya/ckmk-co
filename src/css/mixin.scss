@@ -70,6 +70,27 @@
   }
 }
 
+@mixin rondLoaderRotate(
+  $square: 100px,
+  $margin: auto,
+  $borderWidth: 3px,
+  $borderColor: transparent,
+  $borderRadius: 100%
+) {
+  width: $square;
+  height: $square;
+  margin: $margin;
+  border: solid $borderWidth $borderColor;
+  border-radius: $borderRadius;
+  cursor: progress;
+  position: relative;
+  @include rotateInfinit;
+}
+
+@mixin rotateInfinit {
+  animation: rotate 1s infinite ease-in-out;
+}
+
 @mixin respond($breakpoint) {
   @if $breakpoint == mobile {
     @content
@@ -115,16 +136,20 @@
   padding: 15px;
 }
 
-@mixin searchFound {
-  //background-color: $successColor;
-  display: inline-block;
-  color: $successColor;
-  font-weight: bold;
-  position: relative;
-  left: initial;
-  right: initial;
-  transform: none;
-  //padding: 0 2px;
+@mixin searchFound(
+  $bgColor: transparent,
+  $color: $successColor,
+  $padding: 0px
+) {
+  background-color: $bgColor !important;
+  padding:$padding !important;
+  color: $color !important;
+  display: inline-block !important;
+  font-weight: bold !important;
+  position: relative !important;
+  left: initial !important;
+  right: initial !important;
+  transform: none !important;
 }
 
 @mixin selectionText(
@@ -139,7 +164,7 @@
 @mixin scrollBar(
   $scrollScrollbarThumb,
   $scrollScrollbarTrack,
-  $width: 10px,
+  $width: 8px,
   $height: 5px,
   $radius: 50px
 ) {

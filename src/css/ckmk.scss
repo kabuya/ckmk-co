@@ -42,6 +42,10 @@ img {
   @include threePoint;
 }
 
+.search-found-item {
+  @include searchFound;
+}
+
 .hidden {
   display: none !important;
 }

@@ -142,7 +142,7 @@ class HeaderSearch {
                         item.title,
                         item.description,
                         item.link,
-                        item.onPopup ? true : false
+                        !!item.onPopup
                     )
                 ;
             });
@@ -217,9 +217,7 @@ class HeaderSearch {
             })
             .on("focusin", function (e) {
                 this_o.focusin(e);
-                if(!this_o.resultContentIsShowed()) {
-                    this_o.search(e);
-                }
+                this_o.search(e);
             })
             .on("focusout", function (e) {
                 this_o.focusout(e);

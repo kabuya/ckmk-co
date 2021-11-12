@@ -310,7 +310,7 @@ $contentRadius: 10px;
 
       i {
         &.rotation {
-          animation: rotate 1s infinite ease-in-out;
+          @include rotateInfinit;
         }
       }
     }
@@ -434,17 +434,9 @@ $contentRadius: 10px;
       }
 
       .admin-search-load {
-        width: 70px;
-        height: 70px;
-        margin: auto {
-          top: 90px;
-        };
-        position: relative;
-        border-radius: 200px;
-        border: solid 1px $successColor {
-          left-color: transparent;
-        };
-        animation: rotate 1s infinite ease-in-out;
+        @include rondLoaderRotate(70px, auto, 2px, $successColor);
+        margin-top: 90px;
+        border-left-color: transparent;
       }
 
     }
@@ -536,13 +528,13 @@ $contentRadius: 10px;
 
   } // USER MENU -------------------------------------------------------------------------------------------
 
-  .admin-content-view-core {// ADMIN CORE ---------------------------------------------------------------------------------
+  .admin-content-view-core {
+    // ADMIN CORE ---------------------------------------------------------------------------------
     padding: 10px 20px 20px;
     position: relative;
 
     .loader-rotate-circle {
-      width: 130px !important;
-      height: 130px !important;
+      @include rondLoaderRotate(130px !important, auto, 3px);
       margin-top: 20%;
     }
   }// ADMIN CORE ---------------------------------------------------------------------------------

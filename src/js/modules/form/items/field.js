@@ -36,7 +36,7 @@ const ERRORS = [
 const DISABLED_DOM = ["<div class='field-disabled'></div>"].join("");
 
 /**
- * @property {Form} Form
+ * @property {Form} form
  * @property {jQuery|HTMLElement} dom
  * @property {string} label
  * @property {string} type
@@ -48,8 +48,8 @@ const DISABLED_DOM = ["<div class='field-disabled'></div>"].join("");
  * @property {number|string} min
  * @property {boolean} required
  * @property {boolean} unique
- * @property {boolean} __disable
  * @property {{}} errorMessages
+ * @property {boolean} ________disable________
  */
 class Field extends EventTypes {
 
@@ -82,24 +82,80 @@ class Field extends EventTypes {
     constructor(form, dom) {
         super();
         let
-            this_o = this
+            this_o = this,
+            nameID
         ;
         this.form = form;
         this.dom = $(dom);
         /** @type {string} */
         this.label = this.dom.find(".field-item > label").attr("title");
         form.setProperties(this, this.dom.data());
-        this.nameID = this.name.match(/\[[a-z0-9\-\_]+\]/i);
-        if(this.nameID) {
+        nameID = this.name.match(/\[[a-z0-9\-\_]+\]/i);
+        if(nameID) {
             /** @type {string} */
-            this.nameID = this.nameID[0].replace(/[\[\]]+/g, "");
+            this.nameID = nameID[0].replace(/[\[\]]+/g, "");
         }
         if(this.tab) {
             this.tab = form.dom.find("#" + this.tab);
         }
         this.addAcceptedEvents(EVENTS);
-        if(this.__disable) this.disabled();
+        if(this.________disable________) this.disabled();
         // co.log(this);
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isValid() {
+        if(this.isRequired()) {
+            if(!this.checkValue()) return false;
+            if(!this.dom.hasClass("active")) {
+                this.dom.addClass("active");
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isActive() {
+        return this.dom.hasClass("active");
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isOnFocus() {
+        return this.dom.hasClass("focus");
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isRequired() {
+        return this.required;
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isUnique() {
+        return this.unique;
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isDisable() {
+        return (this.dom.find(".field-disabled").length > 0);
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isTypeHidden() {
+        return this.type === "hidden";
     }
 
     /**
@@ -172,33 +228,6 @@ class Field extends EventTypes {
      */
     getTargetType() {
         return this.targetType;
-    }
-
-    /**
-     * @return {boolean}
-     */
-    isRequired() {
-        return this.required;
-    }
-
-    /**
-     * @return {boolean}
-     */
-    isUnique() {
-        return this.unique;
-    }
-
-    /**
-     * @return {boolean}
-     */
-    isValid() {
-        if(this.isRequired()) {
-            if(!this.checkValue()) return false;
-            if(!this.dom.hasClass("active")) {
-                this.dom.addClass("active");
-            }
-        }
-        return true;
     }
 
     /**
@@ -307,10 +336,8 @@ class Field extends EventTypes {
     fieldOnFocusIn(e) {
         this.runFocusinEvent(e, this);
         this.form.dom.find(".field-container").removeClass("focus");
-        if(!this.dom.hasClass("active") && !this.dom.hasClass("error")) {
-            this.dom.addClass("active");
-        }
-        this.dom.addClass("focus");
+        this.active();
+        this.doFocus();
     }
 
     /**
@@ -321,10 +348,10 @@ class Field extends EventTypes {
         let
             elem = $(e.currentTarget)
         ;
-        if(!elem.val() && !this.dom.hasClass("error")) {
-            this.dom.removeClass("active");
+        if(!elem.val()) {
+            this.unActive();
         }
-        this.dom.removeClass("focus");
+        this.doNotFocus();
     }
 
     /**
@@ -385,8 +412,48 @@ class Field extends EventTypes {
     /**
      * @return {boolean}
      */
+    active() {
+        if(this.isActive()) return false;
+        if(!this.dom.hasClass("error")) {
+            this.dom.addClass("active");
+        }
+        return true;
+    }
+
+    /**
+     * @return {boolean}
+     */
+    unActive() {
+        if(!this.isActive()) return false;
+        if(!this.dom.hasClass("error") && this.dom.hasClass("active")) {
+            this.dom.removeClass("active");
+        }
+        return true;
+    }
+
+    /**
+     * @return {boolean}
+     */
+    doFocus() {
+        if(this.isOnFocus()) return false;
+        this.dom.addClass("focus");
+        return true;
+    }
+
+    /**
+     * @return {boolean}
+     */
+    doNotFocus() {
+        if(!this.isOnFocus()) return false;
+        this.dom.removeClass("focus");
+        return true;
+    }
+
+    /**
+     * @return {boolean}
+     */
     disabled() {
-        if(this.isDisable() && this.__disable) return false;
+        if(this.isDisable() && this.________disable________) return false;
         this.dom.find(".field-item").prepend(DISABLED_DOM);
         this.dom.addClass("field-un-editable field-fixed-content field-no-editable");
         return true;
@@ -396,24 +463,10 @@ class Field extends EventTypes {
      * @return {boolean}
      */
     enabled() {
-        if(!this.isDisable() || this.__disable) return false;
+        if(!this.isDisable() || this.________disable________) return false;
         this.dom.find(".field-disabled").remove();
         this.dom.removeClass("field-un-editable field-fixed-content field-no-editable");
         return true;
-    }
-
-    /**
-     * @return {boolean}
-     */
-    isDisable() {
-        return (this.dom.find(".field-disabled").length > 0);
-    }
-
-    /**
-     * @return {boolean}
-     */
-    isTypeHidden() {
-        return this.type === "hidden";
     }
 
     setEvents() {

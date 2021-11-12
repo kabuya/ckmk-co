@@ -263,8 +263,6 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
         return (typeof element);
     }
 
-
-
     /**
      * @param {*} element
      * @param {string} type
@@ -858,6 +856,54 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
                 if(this.isFunction(successCB)) successCB();
             }
         }
+    }
+
+    /**
+     * @param {*} regexp
+     * @param {string} value
+     * @param {Function|Array|undefined} cb
+     * @return {string|undefined}
+     */
+    search(regexp, value, cb = undefined) {
+        cb = cb || [CO_JAVASCRIPT_PROJECT_INSTANCE, "setDefaultSearchFoundValue"]
+        if(this.isArray(regexp)) {
+            /** @type {RegExp} */
+            regexp = RegExp.searchBuild(regexp, "gi");
+        } else if(this.isString(regexp)) {
+            if(regexp.match(/\/[a-z]+/)) {
+                regexp.replace(/\/([a-z]+)?$/, "/gi");
+            } else {
+                regexp += "/gi";
+            }
+            /** @type {RegExp} */
+            regexp = RegExp.buildFromString(regexp);
+        }
+        if(this.instanceOf(regexp, RegExp) && this.isString(value) && this.isFunction(cb)) {
+            if(this.isSet(value) && value.match(regexp)) {
+                let
+                    this_o = this
+                ;
+                return value.replace(regexp, (_str) => {
+                    if(this_o.isArray(cb)) {
+                        return cb[0][cb[1]](_str);
+                    } else {
+                        return cb(_str);
+                    }
+                });
+            }
+        }
+    }
+
+    /**
+     * @param {string} _str
+     * @return {string}
+     */
+    static setDefaultSearchFoundValue(_str) {
+        return [
+            "<span class='search-found-item'>",
+                _str,
+            "</span>",
+        ].join("");
     }
 
     /**

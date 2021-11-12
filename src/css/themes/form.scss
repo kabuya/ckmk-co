@@ -179,6 +179,7 @@ form.form-container {
   .field-container {
 
     margin-bottom: 20px;
+    position: relative;
 
     &:last-child {
       margin-bottom: 0;
@@ -623,12 +624,9 @@ form.form-container {
   }
 
   .file-item-download {
-    width: 20px;
-    height: 20px;
-    border: solid 1px transparent;
-    margin: 4px auto;
-    border-radius: 100%;
-    animation: rotate 1s infinite ease-in-out;
+    @include rondLoaderRotate(20px, 4px auto, 1px);
+    margin-top: 90px;
+    border-left-color: transparent;
   }
 
   .file-item {
@@ -680,7 +678,7 @@ form.form-container {
         &.file-item-remove {
           div {
             border: solid 1px transparent;
-            animation: rotate 1s infinite ease-in-out;
+            @include rotateInfinit;
           }
         }
       }
@@ -1027,6 +1025,47 @@ form.form-container {
 
       &:empty {
         display: none;
+      }
+    }
+  }
+
+  .field-data-list {
+
+    width: 100%;
+    padding: 4px;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 12;
+    margin-top: -15px;
+    min-height: 57.78px;
+    max-height: 144.45px;
+    overflow: hidden auto;
+    text-align: center;
+    transition: .3s;
+    top: 110%;
+    opacity: 0;
+    display: none;
+
+    &.field-data-list-include {
+      display: block;
+    }
+
+    &.field-data-list-show {
+      top: 102%;
+      opacity: 1;
+    }
+
+    div {
+      @include threePoint;
+      width: 100%;
+      font-size: 14px;
+      border-radius: 5px;
+      padding: 4px 0;
+      cursor: pointer;
+      font-weight: bold;
+
+      &.not-found {
+        display: none !important;
       }
     }
   }

@@ -11,7 +11,7 @@ const HTML_FOUND_CLASS = "admin-search-found";
 
 
 /**
- * @property {HeaderSearch} HeaderSearch
+ * @property {HeaderSearch} headerSearch
  * @property {jQuery|HTMLElement} dom
  * @property {string} title
  * @property {string} description
@@ -22,20 +22,20 @@ class SearchResultItem {
 
 
     /**
-     * @param {HeaderSearch} HeaderSearch
+     * @param {HeaderSearch} headerSearch
      * @param {string} title
      * @param {string} description
      * @param {string} link
      * @param {boolean} onPopup
      */
     constructor(
-        HeaderSearch,
+        headerSearch,
         title,
         description,
         link,
         onPopup
     ) {
-        this.HeaderSearch = HeaderSearch;
+        this.headerSearch = headerSearch;
         this.title = title;
         this.description = description;
         this.link = link;
@@ -60,18 +60,18 @@ class SearchResultItem {
             this_o = this,
             link = $(e.currentTarget)
         ;
-        this.HeaderSearch.disableAbortRequest();
+        this.headerSearch.disableAbortRequest();
         if(this.onPopup) {
             let popup = co.popup
                 .card(this.title)
                 .load(link.attr("href"), undefined, co.ajax.METHOD_POST)
             ;
             popup.on(popup.AFTER_SHOW, (pp) => {
-                this_o.HeaderSearch.Admin.run(this_o.HeaderSearch.Admin.EVENT_SEARCH_RESULT_DISPLAY, pp);
+                this_o.headerSearch.Admin.run(this_o.headerSearch.Admin.EVENT_SEARCH_RESULT_DISPLAY, pp);
             });
             popup.open();
         } else {
-            this.HeaderSearch.Admin.run(this.HeaderSearch.Admin.EVENT_VIEW_CHANGE_REQUEST, this.link, undefined, undefined, this.title);
+            this.headerSearch.Admin.run(this.headerSearch.Admin.EVENT_VIEW_CHANGE_REQUEST, this.link, undefined, undefined, this.title);
         }
         return false;
     }
@@ -93,30 +93,21 @@ class SearchResultItem {
     initDOM() {
         let
             elem = $(SEARCH_RESULT_ITEM),
-            link = elem.find("a")
+            link = elem.find("a"),
+            value = this.headerSearch.input.val().split(" ")
         ;
         elem.attr("title", this.title);
         link
             .attr("href", this.link)
             .find(".admin-search-title")
-            .html(this.title.replace(new RegExp(this.HeaderSearch.input.val().replace(" ", "|"), "gi"), function (value) {
-                if(value) {
-                    return "<span class='"+ HTML_FOUND_CLASS +"'>"+ value +"</span>";
-                }
-                return value;
-            }))
+            .html(co.search(value, (this.title || "")))
         ;
         link
             .find(".admin-search-description")
-            .html((this.description || "").replace(new RegExp(this.HeaderSearch.input.val().replace(" ", "|"), "gi"), function (value) {
-                if(value) {
-                    return "<span class='"+ HTML_FOUND_CLASS +"'>"+ value +"</span>";
-                }
-                return value;
-            }))
+            .html(co.search(value, (this.description || "")))
             .attr("href", this.link)
         ;
-        this.HeaderSearch.searchContent.append(elem);
+        this.headerSearch.searchContent.append(elem);
         return elem;
     }
 

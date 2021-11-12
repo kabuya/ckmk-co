@@ -41,6 +41,8 @@ Object.assign(Date.prototype, {
 // Type Date
 
 // Type RegExp
+const SEARCH_HASH_VALUE = "###########################################################";
+
 if(!RegExp.searchSpecChar) {
     RegExp.searchSpecChar = [
         "\\?", "\\\\", "\\/", "\\(", "\\)", "\\*", "\\.", "\\^", "\\$"
@@ -49,7 +51,7 @@ if(!RegExp.searchSpecChar) {
 
 if(!RegExp.searchBuild) {
     /**
-     * @param {RegExp|string} rg
+     * @param {RegExp|string|Array} rg
      * @param {string} flags
      * @return {RegExp}
      */
@@ -60,17 +62,44 @@ if(!RegExp.searchBuild) {
 
 if(!RegExp.searchParse) {
     /**
-     * @param {string} rg
+     * @param {string|Array} rg
      * @return {string}
      */
     RegExp.searchParse = (rg) => {
+        if(co.isArray(rg)) {
+            rg = rg
+                .join(SEARCH_HASH_VALUE)
+                .trim()
+                .replace("|", "\\|")
+                .replace(SEARCH_HASH_VALUE, "\|")
+            ;
+        }
         return rg
             .replace(new RegExp(RegExp.searchSpecChar.join("|"), "g"), (str) => {
                 if(str.match(/[ ]+/)) return str;
                 return "\\" + str;
             })
-            ;
+        ;
     };
+}
+
+if(!RegExp.buildFromString) {
+    /**
+     * @param {string} pattern
+     * @return {RegExp|undefined}
+     */
+    RegExp.buildFromString = function buildFromString(pattern) {
+        if(co.isString(pattern)) {
+            let
+                core = pattern
+                    .replace(/^\//, "")
+                    .replace(/\/([a-z]+)?$/, ""),
+                specChar = pattern.match(/\/[a-z]+$/),
+                flags = specChar ? specChar[0].substring(1) : ""
+            ;
+            return new RegExp(core, flags);
+        }
+    }
 }
 // Type RegExp
 
