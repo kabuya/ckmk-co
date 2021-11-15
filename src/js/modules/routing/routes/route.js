@@ -9,6 +9,7 @@ const DOT_HASH = "@dot@";
  * @property {Router} Router
  * @property {string} name
  * @property {string} method
+ * @property {string[]} methods
  * @property {string} path
  * @property {boolean} current
  * @property {boolean} apacheServer
@@ -28,9 +29,56 @@ class Route {
     constructor(Router, data) {
         this.Router = Router;
         Object.assign(this, data);
+        /** @type {RouteParameter[]} */
         this.params = [];
         this.setParams();
         // co.log(this);
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isApacheServer() {
+        return this.apacheServer;
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isCurrent() {
+        return this.current;
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isAdminRoute() {
+        return this.adminRoute;
+    }
+
+    /**
+     * @param {string} route
+     * @return {boolean}
+     */
+    isRoute(route) {
+        return (this.name === route);
+    }
+
+    /**
+     * @param {string} method
+     * @return {string|undefined}
+     */
+    getMethod(method = co.ajax.METHOD_GET) {
+        if(("" + method).in(...this.methods)) {
+            return method;
+        }
+    }
+
+    /**
+     * @return {string}
+     */
+    getDefaultMethod() {
+        return this.methods[0];
     }
 
     /**
@@ -43,7 +91,7 @@ class Route {
             path = this.path,
             valueParam = 0
         ;
-        $.each(this.params, function (i, _param) {
+        this.params.forEach((_param) => {
             if(_param.isTranslatorParameter()) {
                 path = path.replace(_param.string, _param.getTranslatorValue("translator"));
             } else if(_param.requireUserParams()) {
@@ -183,13 +231,6 @@ class Route {
     }
 
     /**
-     * @return {boolean}
-     */
-    isApacheServer() {
-        return this.apacheServer;
-    }
-
-    /**
      * @param value
      * @return {string}
      */
@@ -207,25 +248,12 @@ class Route {
     }
 
     /**
+     * @param {string} name
+     * @param {string} method
      * @return {boolean}
      */
-    isCurrent() {
-        return this.current;
-    }
-
-    /**
-     * @return {boolean}
-     */
-    isAdminRoute() {
-        return this.adminRoute;
-    }
-
-    /**
-     * @param {string} route
-     * @return {boolean}
-     */
-    isRoute(route) {
-        return (this.name === route);
+    matchNameAndMethod(name, method) {
+        return (this.name.in(name) && ("" + method).in(...this.methods));
     }
 
 }

@@ -124,7 +124,7 @@ class ViewStorage {
      */
     setRoute(route) {
         this.route = route || this.route;
-        this.updateVal("route", this.route ? this.route.name + "||" + this.route.method : undefined);
+        this.updateVal("route", this.route ? this.route.name : undefined);
         return this;
     }
 

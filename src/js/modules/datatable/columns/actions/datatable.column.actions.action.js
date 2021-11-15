@@ -140,7 +140,7 @@ class DatatableColumnActionsAction extends DatatableColumnAction {
             .load(
                 route.getAbsolutePath(),
                 data,
-                route.method,
+                route.getDefaultMethod(),
             )
             .open()
         ;

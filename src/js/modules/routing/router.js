@@ -1,7 +1,9 @@
 const Route = require("./routes/route");
 
 let
+    /** @type {Route[]} */
     routes = [],
+    /** @type {string[]} */
     routesNames = [],
     _routes_
 ;
@@ -61,32 +63,18 @@ class Router {
      * @return {Route|undefined}
      */
     getRoute(name, method = co.ajax.METHOD_GET) {
-        let routeFound;
-        $.each(routes, function (i, _routeO) {
-            if(_routeO.name === name && !routeFound) {
-                if(_routeO.method === method) {
-                    routeFound = _routeO;
-                    return false;
-                }
-            }
-        });
-        return routeFound;
+        return routes.filter((_route) => {
+            return _route.matchNameAndMethod(name, method);
+        })[0];
     }
 
     /**
      * @return {Route|undefined}
      */
     getCurrentRoute() {
-        let
-            currentRoute
-        ;
-        $.each(this.getRoutes(), (k, route) => {
-            if(route.isCurrent() && !currentRoute) {
-                currentRoute = route;
-                return false;
-            }
-        });
-        return currentRoute;
+        return routes.filter((_route) => {
+            return _route.isCurrent();
+        })[0];
     }
 
     /**
@@ -116,18 +104,9 @@ class Router {
      * @return {boolean}
      */
     hasLink(link) {
-        let
-            found = false
-        ;
-        $.each(routes, (i, route) => {
-            if(!route.requireUserParams()) {
-                if(route.getAbsolutePath() === link && !found) {
-                    found = true;
-                    return false;
-                }
-            }
-        });
-        return found;
+        return !!routes.filter((_route) => {
+            return (!_route.requireUserParams() && (_route.getAbsolutePath() === link));
+        }).length;
     }
 
 }

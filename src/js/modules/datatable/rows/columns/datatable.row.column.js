@@ -386,7 +386,7 @@ class DatatableRowColumn {
         return $("<i></i>")
             .addClass("fa datatable-column-action-icon")
             .attr("data-route", route.name)
-            .attr("data-route-method", route.method)
+            .attr("data-route-method", route.getDefaultMethod())
         ;
     }
 

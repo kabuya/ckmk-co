@@ -24,10 +24,10 @@ class BurgerMenu {
         this.hiddenItems = this.menuContent.find(".admin-project-logo > a, .menu-title, .menu-icon-sub-menu");
         this.menuTitleContent = this.menuContent.find(".menu-title-content");
         this.contentWidthFull = this.menuContent.outerWidth();
-        this.contentWidthShort = 60;
+        this.contentWidthShort = 47;
         this.menuContent.width(this.contentWidthFull);
         this.setEvents();
-        // co.log(this);
+        //co.log(this);
     }
 
     /**
@@ -38,15 +38,17 @@ class BurgerMenu {
             this_o = this,
             isOpen = this.menuContent.hasClass(MENU_OPEN_HTML_CLASS)
         ;
-        co.timeOutChain(50,
+        co.timeOutChain((isOpen ? 300 : 50),
             () => {
                 if(isOpen) {
                     this_o.menuContent.removeClass(MENU_OPEN_HTML_CLASS);
                     this_o.menuTitleContent.addClass(MENU_TEXT_CENTER_HTML_CLASS);
                     this_o.hiddenItems.addClass(MENU_HIDDEN_TEXT_HIDE_BY_OPACITY);
+                    this_o.menuContent.width(this_o.contentWidthShort);
                 } else {
                     this_o.menuContent.addClass(MENU_OPEN_HTML_CLASS);
                     this_o.menuTitleContent.removeClass(MENU_TEXT_CENTER_HTML_CLASS);
+                    this_o.hiddenItems.removeClass(MENU_HIDDEN_TEXT_HIDE_BY_OPACITY);
                     this_o.menuContent.width(this_o.contentWidthFull);
                 }
             },
@@ -55,13 +57,6 @@ class BurgerMenu {
                     this_o.hiddenItems.hide();
                 } else {
                     this_o.hiddenItems.show();
-                }
-            },
-            () => {
-                if(isOpen) {
-                    this_o.menuContent.width(this_o.contentWidthShort);
-                } else {
-                    this_o.hiddenItems.removeClass(MENU_HIDDEN_TEXT_HIDE_BY_OPACITY);
                 }
             }
         );

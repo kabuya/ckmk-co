@@ -35,7 +35,7 @@ class DatatableActionAddable {
         ;
         data[this.actions.datatable.ROW_MODEL_KEY] = this.actions.datatable.modelRow;
         this.popup
-            .load(this.route.getAbsolutePath(), data, this.route.method)
+            .load(this.route.getAbsolutePath(), data, this.route.getDefaultMethod())
             .open()
         ;
     }

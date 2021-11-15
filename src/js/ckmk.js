@@ -811,6 +811,8 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
      * @return {number}
      */
     ascendingResult(a, b) {
+        let unComparValue = this.ascOrDescResult(a, b);
+        if(unComparValue) return unComparValue;
         return (a == b) ? 0 : (( a < b ) ? -1 : 1);
     }
 
@@ -820,7 +822,20 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
      * @return {number}
      */
     descendingResult(a, b) {
+        let unComparValue = this.ascOrDescResult(a, b);
+        if(unComparValue) return unComparValue;
         return (a == b) ? 0 : (( a < b ) ? 1 : -1);
+    }
+
+    /**
+     * @param {*} a
+     * @param {*} b
+     * @return {number|undefined}
+     */
+    ascOrDescResult(a, b) {
+        if(!this.isSet(a) && this.isSet(b)) return 1;
+        else if(this.isSet(a) && !this.isSet(b)) return -1;
+        else if(!this.isSet(a) && !this.isSet(b)) return 0;
     }
 
     /**

@@ -71,7 +71,7 @@ class DatatableActionDeletable {
             this.started = false;
             co.ajax.build()
                 .setUrl(this.route.getAbsolutePath())
-                .setType(this.route.method)
+                .setType(this.route.getDefaultMethod())
                 .setData({
                     datatable:this.actions.datatable.name,
                     all: (this.rows.length === this.actions.datatable.rows.length),

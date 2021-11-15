@@ -35,7 +35,16 @@ $contentRadius: 10px;
     display: none;
   }
 
-  .admin-content-view-menu { // START MENU ----------------------------------------------------------------------------
+  .menu-hidden-text-hide {
+    opacity: 0 !important;
+
+    img {
+      opacity: 0 !important;
+    }
+  }
+
+  // START MENU ----------------------------------------------------------------------------
+  .admin-content-view-menu {
     color: white;
     transition: .3s;
     white-space: nowrap;
@@ -61,54 +70,60 @@ $contentRadius: 10px;
       overflow: hidden auto;
     }
 
+    &.menu-admin-left-is-open {
+
+      i {
+        margin-right: 5px;
+      }
+
+
+      .menu-title-content {
+        padding: 5px 15px;
+
+        &.menu-title-hover {
+          margin-left: 10px;
+          padding: 5px 15px {
+            right: 40px;
+          };
+        }
+      }
+    }
+
+    @mixin menuTitleHoverActive {
+      background-color: $contentBg;
+      text-decoration: none;
+      border-top-left-radius: 100px;
+      border-bottom-left-radius: 100px;
+      color: $contentColor;
+      z-index: 1;
+
+      i {
+        color: $bgBase;
+      }
+
+      .menu-element-radius {
+        display: initial;
+      }
+    }
+
     .menu-item {
 
       &.menu-active {
 
         > .menu-title-hover {
-          background-color: $contentBg;
-          text-decoration: none;
-          padding-right: 10px;
-          margin-left: 5px;
-          border-top-left-radius: 100px;
-          border-bottom-left-radius: 100px;
-          color: $contentColor;
-          z-index: 1;
-
-          i {
-            color: $bgBase;
-          }
-
-          .menu-element-radius {
-            display: initial;
-          }
+          @include menuTitleHoverActive;
         }
       }
     }
 
     .menu-title-hover {
       &:hover {
-        background-color: $contentBg;
-        text-decoration: none;
-        padding-right: 10px;
-        margin-left: 5px;
-        border-top-left-radius: 100px;
-        border-bottom-left-radius: 100px;
-        color: $contentColor;
-        z-index: 1;
-
-        i {
-          color: $bgBase;
-        }
-
-        .menu-element-radius {
-          display: initial;
-        }
+        @include menuTitleHoverActive;
       }
     }
 
     .menu-title-content {
-      padding: 5px 15px;
+      padding: 5px 10px;
       cursor: pointer;
       white-space: nowrap;
       display: block;
@@ -193,6 +208,7 @@ $contentRadius: 10px;
 
     .menu-items-child {
       background-color: rgba(0,0,0,.1);
+      padding-left: 15px;
     }
 
     .menu-element-radius {
@@ -262,10 +278,6 @@ $contentRadius: 10px;
 
   .admin-project-logo > a, .menu-title, .menu-icon-sub-menu {
     transition: .05s;
-  }
-
-  .menu-hidden-text-hide {
-    opacity: 0 !important;
   }
 
   .admin-burger-menu {
@@ -502,7 +514,7 @@ $contentRadius: 10px;
       padding: 0;
     }
 
-    a {
+    .menu-title-content {
       text-align: center;
       color: $contentColor;
       padding: 10px;
@@ -510,6 +522,7 @@ $contentRadius: 10px;
       border-bottom: solid 1px $borderCard;
       width: 250px;
       text-decoration: none;
+      cursor: pointer;
 
       &:hover {
         text-decoration: none;

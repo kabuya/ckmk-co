@@ -88,7 +88,7 @@ class DatatableColumnBooleanAction extends DatatableColumnAction {
         this.onRequest = true;
         co.ajax.build()
             .setUrl(route.getAbsolutePath())
-            .setType(route.method)
+            .setType(route.getDefaultMethod())
             .setData(data)
             .setSuccess([this, "applyResult"])
             .execute()
