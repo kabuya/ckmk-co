@@ -41,8 +41,7 @@ class TextField extends Translator {
         super(form, dom);
         this.pattern = RegExp.buildFromString(this.pattern);
         this.dataList = TextDatalist.init(this.dataList, this.dataListControl, this);
-
-        co.log(this);
+        //co.log(this);
     }
 
     setValue(value) {

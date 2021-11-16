@@ -256,6 +256,11 @@ class DatatableRow {
         return false;
     }
 
+    setEvents() {
+        this.datatable.on(this.datatable.EVENT_ON_SEARCH, [this, "toggleShow"]);
+        this.datatable.on(this.datatable.EVENT_ON_CHANGE_ROWS_TARGET, [this, "toggleDisplayByTargetLines"]);
+    }
+
     /**
      * @param {string} title
      * @return {string|undefined}
@@ -264,11 +269,6 @@ class DatatableRow {
         if(co.isString(title)) {
             return title.ucfirst();
         }
-    }
-
-    setEvents() {
-        this.datatable.on(this.datatable.EVENT_ON_SEARCH, [this, "toggleShow"]);
-        this.datatable.on(this.datatable.EVENT_ON_CHANGE_ROWS_TARGET, [this, "toggleDisplayByTargetLines"]);
     }
 
     /**

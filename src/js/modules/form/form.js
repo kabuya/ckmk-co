@@ -124,7 +124,7 @@ class Form extends EventTypes {
         ;
         this.ID = this.dom.attr("id");
         this.name = this.ID;
-        this.method = this.dom.attr("method") || "get";
+        this.method = this.dom.attr("method") || co.ajax.METHOD_GET;
         this.action = this.dom.attr("action") || window.location.href;
         this.errors = {};
         this.setProperties(this, this.dom.data());

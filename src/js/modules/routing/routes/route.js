@@ -249,11 +249,11 @@ class Route {
 
     /**
      * @param {string} name
-     * @param {string} method
+     * @param {string|undefined} method
      * @return {boolean}
      */
     matchNameAndMethod(name, method) {
-        return (this.name.in(name) && ("" + method).in(...this.methods));
+        return (this.name.in(name) && (!co.isSet(method) || ("" + method).in(...this.methods)));
     }
 
 }

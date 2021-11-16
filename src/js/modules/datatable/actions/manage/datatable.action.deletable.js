@@ -34,9 +34,22 @@ class DatatableActionDeletable {
     }
 
     /**
+     * @return {boolean}
+     */
+    abortEvent() {
+        if(this.isStarted()) {
+            this.started = false;
+            this.removeAllSelected();
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * @param {Event} e
      */
     openDeleteCheckbox(e) {
+        if(!this.actions.datatable.hasItems()) return;
         if(!this.isStarted()) {
             this.started = true;
             this.appendAllSelected();
@@ -50,8 +63,7 @@ class DatatableActionDeletable {
                     .open()
                 ;
             } else {
-                this.started = false;
-                this.removeAllSelected();
+                this.abortEvent();
                 this.actions.datatable.alert.warning(
                     "No lines have been selected."
                 );
@@ -98,12 +110,13 @@ class DatatableActionDeletable {
             this.actions.datatable.alert.success(
                 co.concat(
                     "The (<b>",
-                    total,
+                        total,
                     "</b>) elements are deleted"
                 )
             );
             this.actions.datatable.removeRow(rows);
         }
+        this.actions.datatable.run(this.actions.datatable.EVENT_ON_AFTER_REMOVING_ITEM, response.success);
     }
 
     appendAllSelected() {
@@ -269,6 +282,11 @@ class DatatableActionDeletable {
             this.actions.datatable.on(
                 this.actions.datatable.EVENT_ON_AFTER_ADDING_ITEM,
                 [this, "openCheckboxAgain"]
+            );
+
+            this.actions.datatable.onAfter(
+                this.actions.datatable.EVENT_ON_AFTER_REMOVING_ITEM,
+                [this, "abortEvent"]
             );
         }
     }

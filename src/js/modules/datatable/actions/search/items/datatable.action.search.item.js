@@ -52,6 +52,20 @@ class DatatableActionSearchItem {
             }
         }
         this.parent.buildSearch();
+        return true;
+    }
+
+    empty() {
+        let
+            input = this.dom.find("input")
+        ;
+        this.value = undefined;
+        input.val("");
+        input.removeClass(HTML_CLASS_INPUT_ACTIVE);
+        input.removeClass(HTML_CLASS_INPUT_ERROR);
+        if(this.dom.hasClass(HTML_CLASS_DISPLAY_REMOVE_TEXT)) {
+            this.dom.removeClass(HTML_CLASS_DISPLAY_REMOVE_TEXT);
+        }
     }
 
     /**

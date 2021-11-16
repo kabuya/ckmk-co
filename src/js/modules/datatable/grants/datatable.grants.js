@@ -36,21 +36,21 @@ class DatatableGrants {
      * @return {boolean}
      */
     isCreate() {
-        return this.create;
+        return (this.read && this.create);
     }
 
     /**
      * @return {boolean}
      */
     isUpdate() {
-        return this.update;
+        return (this.read && this.update);
     }
 
     /**
      * @return {boolean}
      */
     isDelete() {
-        return this.delete;
+        return (this.read && this.delete);
     }
 
 }

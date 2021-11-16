@@ -19,6 +19,7 @@ const EVENT_ON_SELECTED_ROW_ADD = "selected.row.add";
 const EVENT_ON_SELECTED_ROW_REMOVE = "selected.row.remove";
 const EVENT_ON_COLUMN_REORDER_ROWS = "column.reorder.rows";
 const EVENT_ON_AFTER_ADDING_ITEM = "after.adding.item";
+const EVENT_ON_AFTER_REMOVING_ITEM = "after.removing.item";
 
 const EVENTS = [
     EVENT_ON_SEARCH,
@@ -32,6 +33,7 @@ const EVENTS = [
     EVENT_ON_SELECTED_ROW_REMOVE,
     EVENT_ON_COLUMN_REORDER_ROWS,
     EVENT_ON_AFTER_ADDING_ITEM,
+    EVENT_ON_AFTER_REMOVING_ITEM,
 ];
 
 const VISIBILITY_CONTENT_STYLE = "contentStyle";
@@ -63,6 +65,8 @@ const HTML_SELECTE_DOM = [
         "<div class='datatable-row-selected'><div></div></div>",
     "</td>"
 ].join("");
+
+const EMPTY_DATA_ROW = "<td title='' class='datatable-data-empty' colspan=''></td>";
 
 let
     /** @type {Datatable[]} datatables */
@@ -103,6 +107,7 @@ let
  * @property {Route|undefined} deletable
  * @property {Route|boolean|undefined} searchable
  * @property {DatatableGrants} grants
+ * @property {jQuery|HTMLElement} emptyDataDom
  */
 class Datatable extends EventTypes {
 
@@ -162,6 +167,7 @@ class Datatable extends EventTypes {
 
         this.initColumnsAndRows();
 
+        this.emptyDataDom = Datatable.getEmptyDataDom(this);
         /** @type {[DatatableColumn, ("asc"|"desc")]} order */
         this.order = co.data(dom, "order");
         if(this.order.length) this.order[0] = this.getColumn(this.order[0]);
@@ -230,6 +236,13 @@ class Datatable extends EventTypes {
                 _row.dom[0] === row[0]
             );
         })[0];
+    }
+
+    /**
+     * @return {boolean}
+     */
+    hasItems() {
+        return !!this.rows.length;
     }
 
     initColumnsAndRows() {
@@ -415,6 +428,26 @@ class Datatable extends EventTypes {
         });
     }
 
+    /**
+     * @param {boolean} success
+     */
+    addEmptyRow(success) {
+        if(success) {
+            if(!this.hasItems()) {
+                this.dom.find(".datatable-body").append(this.emptyDataDom);
+            }
+        }
+    }
+
+    /**
+     * @param {boolean} success
+     */
+    removeEmptyRow(success) {
+        if(success) {
+            this.dom.find(".datatable-data-empty").remove();
+        }
+    }
+
     destroy() {
         this.dom.remove();
     }
@@ -430,6 +463,20 @@ class Datatable extends EventTypes {
         return false;
     }
 
+    /**
+     * @return {boolean}
+     */
+    isManagingItems() {
+        return ((this.addable || this.editable || this.copyable) && (this.grants.isCreate() || this.grants.isUpdate()));
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isDeletableItems() {
+        return (this.deletable && this.grants.isDelete());
+    }
+
     setEvents() {
         let
             this_o = this
@@ -437,22 +484,52 @@ class Datatable extends EventTypes {
         this.dom.on("click", (e) => {
             this_o.run(this_o.EVENT_ON_CLICK_ON_TABLE_DOM, e);
         });
+
         if(this.isVisible(this.VISIBILITY_LINES_TOP)) {
             this.on(this.EVENT_ON_CHANGE_COUNT_LINE, [this,"changeCountLine"]);
+        }
+
+        if(this.isManagingItems()) {
+            this.onBefore(this.EVENT_ON_AFTER_ADDING_ITEM, [this, "removeEmptyRow"]);
+        }
+
+        if(this.isDeletableItems()) {
+            this.onAfter(this.EVENT_ON_AFTER_REMOVING_ITEM, [this, "addEmptyRow"]);
         }
     }
 
     /**
-     * @param {string[]|string|boolean} action
+     * @param {Route|string[]|string|boolean} action
      * @return {Route|boolean|undefined}
      */
     getActionRouteOrBoolean(action) {
+        if(co.router.isRouteInstance(action)) return action;
         if(co.isArray(action)) {
             return co.router.get(action[0], action[1]);
         } else if(co.isString(action)) {
             return co.router.get(action, co.ajax.METHOD_POST);
         } else if(co.isBool(action)) {
             return action;
+        }
+    }
+
+    /**
+     * @param {Datatable} datatable
+     * @return {jQuery|HTMLElement}
+     */
+    static getEmptyDataDom(datatable) {
+        if(co.instanceOf(datatable, Datatable)) {
+            let emptyDom = datatable.dom.find(".datatable-data-empty");
+            if(!emptyDom.length) {
+                let
+                    title = co.texts.get("datatable:rows:empty")?.getValue()
+                ;
+                emptyDom = $(EMPTY_DATA_ROW);
+                emptyDom.attr("title", title);
+                emptyDom.attr("colspan", datatable.columns.length);
+                emptyDom.html(title);
+            }
+            return emptyDom;
         }
     }
 
@@ -543,6 +620,7 @@ Datatable.prototype.EVENT_ON_SELECTED_ROW_ADD = EVENT_ON_SELECTED_ROW_ADD;
 Datatable.prototype.EVENT_ON_SELECTED_ROW_REMOVE = EVENT_ON_SELECTED_ROW_REMOVE;
 Datatable.prototype.EVENT_ON_COLUMN_REORDER_ROWS = EVENT_ON_COLUMN_REORDER_ROWS;
 Datatable.prototype.EVENT_ON_AFTER_ADDING_ITEM = EVENT_ON_AFTER_ADDING_ITEM;
+Datatable.prototype.EVENT_ON_AFTER_REMOVING_ITEM = EVENT_ON_AFTER_REMOVING_ITEM;
 Datatable.prototype.VISIBILITY_CONTENT_STYLE = VISIBILITY_CONTENT_STYLE;
 Datatable.prototype.VISIBILITY_ADDABLE_TOP = VISIBILITY_ADDABLE_TOP;
 Datatable.prototype.VISIBILITY_DELETABLE_TOP = VISIBILITY_DELETABLE_TOP;

@@ -66,6 +66,19 @@ class DatatableActionSearch {
     /**
      * @param {boolean} success
      */
+    removeSearchIfDatatableHasNotRows(success) {
+        if(success) {
+            if(this.actions.datatable.hasItems()) {
+                this.buildSearch();
+            } else {
+                this.#removeAllSearch();
+            }
+        }
+    }
+
+    /**
+     * @param {boolean} success
+     */
     buildSearchAgain(success) {
         if(success) this.buildSearch();
     }
@@ -83,6 +96,9 @@ class DatatableActionSearch {
         ;
         this.resultCount = 0;
         if(co.isBool(method)) {
+            if(!this.resultAppended && !hasValue) {
+                return this.#removeAllSearch();
+            }
             this.actions.datatable.run(
                 this.actions.datatable.EVENT_ON_SEARCH,
                 values,
@@ -115,8 +131,7 @@ class DatatableActionSearch {
      */
     removeResultCount(values, _hasValue) {
         if(!_hasValue && this.resultAppended) {
-            this.resultAppended = false;
-            this.#removeResultShow();
+            this.#reset();
         }
     }
 
@@ -140,6 +155,18 @@ class DatatableActionSearch {
         });
     }
 
+    #removeAllSearch() {
+        this.items.forEach((_item) => {
+            _item.empty();
+        });
+        this.#reset();
+    }
+
+    #reset() {
+        this.resultAppended = false;
+        this.#removeResultShow();
+    }
+
     #removeResultShow() {
         this.resultRow.find("td").text("");
         this.resultRow.remove();
@@ -159,6 +186,11 @@ class DatatableActionSearch {
         this.actions.datatable.onAfter(
             this.actions.datatable.EVENT_ON_AFTER_ADDING_ITEM,
             [this, "buildSearchAgain"]
+        );
+
+        this.actions.datatable.onAfter(
+            this.actions.datatable.EVENT_ON_AFTER_REMOVING_ITEM,
+            [this, "removeSearchIfDatatableHasNotRows"]
         );
 
         this.actions.datatable.onAfter(

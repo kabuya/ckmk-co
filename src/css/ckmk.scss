@@ -46,7 +46,7 @@ img {
   @include searchFound;
 }
 
-.hidden {
+.hidden, .no-visibility {
   display: none !important;
 }
 

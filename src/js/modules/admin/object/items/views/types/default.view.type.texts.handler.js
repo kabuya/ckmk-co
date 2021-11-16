@@ -9,7 +9,7 @@ class DefaultViewTypeTextsHandler extends DefaultViewHandler {
 
     handleView(view) {
         super.handleView(view);
-        if(this.view.route.isRoute('admin:translator:index')) {
+        if(this.view.route && this.view.route.isRoute('admin:translator:index')) {
             let
                 this_o = this
             ;

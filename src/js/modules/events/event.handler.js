@@ -83,6 +83,7 @@ class EventHandler {
      * @return {boolean}
      */
     beforeListen(name, cb) {
+        if(!this.hasEvent(name)) this.register(name);
         let listener = this.getEvent(name);
         if(listener) {
             return listener.addBeforeCallback(cb);
@@ -96,6 +97,7 @@ class EventHandler {
      * @return {boolean}
      */
     afterListen(name, cb) {
+        if(!this.hasEvent(name)) this.register(name);
         let listener = this.getEvent(name);
         if(listener) {
             return listener.addAfterCallback(cb);
@@ -112,9 +114,7 @@ class EventHandler {
         let listener = this.getEvent(name);
         if(listener) {
             if(listener.removeCallback(cb)) {
-                if(!listener.hasCallback()) {
-                    this.remove(listener);
-                }
+                if(!listener.hasCallback()) this.remove(listener);
                 return true;
             }
         }

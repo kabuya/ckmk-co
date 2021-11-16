@@ -169,7 +169,7 @@ class DatatableColumnActionsAction extends DatatableColumnAction {
         if(confirm) {
             co.ajax.build()
                 .setUrl(this.routes.deletable.getAbsolutePath())
-                .setType(this.routes.deletable.method)
+                .setType(this.routes.deletable.getDefaultMethod())
                 .setData({
                     datatable:this.column.column.datatable.name,
                     id:this.column.row.ID
@@ -192,6 +192,7 @@ class DatatableColumnActionsAction extends DatatableColumnAction {
             );
             this.column.column.datatable.removeRow([this.column.row]);
         }
+        this.column.column.datatable.run(this.column.column.datatable.EVENT_ON_AFTER_REMOVING_ITEM, response.success);
     }
 
     updateRowAfterEdit(response) {

@@ -19,7 +19,7 @@ class DatatableSelected {
         return this.dom
             .find("div.datatable-row-selected")
             .hasClass("datatable-row-selected-checked")
-            ;
+        ;
     }
 
     /**

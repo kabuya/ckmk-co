@@ -2,6 +2,7 @@ const ViewStorage = require("./items/view/view.storage");
 const ViewContent = require("./items/view/view.content");
 
 const VIEW_TIMEOUT_RENDER = 0;
+const CLASS_DYNAMIC = "5754dfdDSDs6fds6qsFD66dsDQMGdaV3";
 
 /**
  * @property {Admin} Admin
@@ -85,7 +86,7 @@ class View {
             this_o.domTitle.find("h1").attr("title", this_o.title);
             this_o.domTitle.find("h1").html(this_o.title);
             this_o.loader.remove();
-            this_o.dom.html(response);
+            this_o.dom.html(this_o.parseResponseView(response));
             co.form.init(this_o.dom.find("form"), true);
             co.datatable.init(this_o.dom.find(".datatable-content"), true);
             this_o.Admin.run(this.Admin.EVENT_VIEW_LOAD_DISPLAY, new ViewContent(
@@ -152,6 +153,68 @@ class View {
         }
         this.current = window.location.href;
         return false;
+    }
+
+    /**
+     * @param {string} response
+     */
+    parseResponseView(response) {
+        if(co.isString(response)) {
+            let
+                html = this.dom.parent().parent().parent().parent().parent(),
+                body = html.find("body"),
+                head = body.parent().find("head"),
+                titleDom = head.find("title"),
+                responseDOM = $(co.concat("<div>", response, "</div>"))
+            ;
+            html.find(co.concat(".", CLASS_DYNAMIC)).remove();
+            responseDOM.find(".dynamic-view").each((i, item) => {
+                item = $(item);
+                item.remove();
+                let
+                    target = co.data(item, "dynamic-target")
+                ;
+                if(target.in("stylesheet")) {
+                    item.find("style").each((_styleKey, _style) => {
+                        _style = $(_style);
+                        _style.addClass(CLASS_DYNAMIC);
+                        titleDom.before(_style);
+                    });
+                    item.find("link").each((_linkKey, _link) => {
+                        _link = $(_link);
+                        _link.addClass(CLASS_DYNAMIC);
+                        let
+                            _linkString = _link.prop("outerHTML")
+                        ;
+                        if(head.html().indexOf(_linkString) === -1) {
+                            titleDom.before(_link);
+                        }
+                    });
+                } else if(target.in("head")) {
+                    item.children().each((_childrenKey, _children) => {
+                        _children = $(_children);
+                        if(_children.length) {
+                            _children.addClass(CLASS_DYNAMIC);
+                            titleDom.before(_children);
+                        }
+                    });
+                } else if(target.in("title")) {
+                    let
+                        title = item.text().trim()
+                    ;
+                    if(title) {
+                        titleDom.html(title);
+                    }
+                } else if(target.in("scripts")) {
+                    item.find("script").each((_scriptKey, _script) => {
+                        _script = $(_script);
+                        _script.addClass(CLASS_DYNAMIC);
+                        body.append(_script);
+                    });
+                }
+            });
+            return responseDOM.html();
+        }
     }
 
     /**

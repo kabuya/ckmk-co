@@ -33,7 +33,7 @@ class DatatableSelectedColumns extends DatatableSelected {
      * @return {boolean}
      */
     append() {
-        if(this.appended) return false;
+        if(this.isAppended()) return false;
         this.appended = true;
         this.datatable.dom
             .find("thead tr:first-child")
@@ -55,7 +55,8 @@ class DatatableSelectedColumns extends DatatableSelected {
      * @return {boolean}
      */
     remove() {
-        if(!this.appended) return false;
+        if(!this.isAppended()) return false;
+        this.uncheck();
         this.appended = false;
         this.dom.remove();
         this.searchDom.remove();
@@ -69,11 +70,9 @@ class DatatableSelectedColumns extends DatatableSelected {
         if(this.isChecked()) {
             this.uncheck();
             this.uncheckRows();
-
         } else {
             this.check();
             this.checkRows();
-
         }
     }
 

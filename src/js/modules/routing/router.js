@@ -50,19 +50,19 @@ class Router {
 
     /**
      * @param {string} name
-     * @param {string} method
+     * @param {string|undefined} method
      * @return {Route|undefined}
      */
-    get(name, method = co.ajax.METHOD_GET) {
+    get(name, method = undefined) {
         return this.getRoute(name, method);
     }
 
     /**
      * @param {string} name
-     * @param {string} method
+     * @param {string|undefined} method
      * @return {Route|undefined}
      */
-    getRoute(name, method = co.ajax.METHOD_GET) {
+    getRoute(name, method = undefined) {
         return routes.filter((_route) => {
             return _route.matchNameAndMethod(name, method);
         })[0];

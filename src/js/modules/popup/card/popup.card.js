@@ -135,7 +135,7 @@ class PopUpCard extends EventTypes {
      * @param {string|get} method
      * @return {PopUpCard}
      */
-    load(path, data, method = "get") {
+    load(path, data, method = co.ajax.METHOD_GET) {
         if(!request[this.ID] && co.isString(path, method)) {
             request[this.ID] = {
                 path : path,

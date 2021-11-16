@@ -1,8 +1,8 @@
-const METHOD_GET = "get";
-const METHOD_POST = "post";
-const METHOD_PUT = "put";
-const METHOD_DELETE = "delete";
-const METHOD_PATCH = "patch";
+const METHOD_GET = "GET";
+const METHOD_POST = "POST";
+const METHOD_PUT = "PUT";
+const METHOD_DELETE = "DELETE";
+const METHOD_PATCH = "PATCH";
 
 const METHODS = [
     METHOD_GET,
@@ -41,7 +41,7 @@ class AjaxRequest {
         this.Ajax = ajax;
         this.ID = co.generate(15);
         this.url = undefined;
-        this.type = "get";
+        this.type = METHOD_GET;
         this.dataType = undefined;
         this.cache = false;
         this.contentType = false;
@@ -69,7 +69,7 @@ class AjaxRequest {
      * @return {AjaxRequest}
      */
     setType(type = METHOD_GET) {
-        if(co.isString(type) && METHODS.indexOf(type) > -1) {
+        if(co.isString(type) && type.in(...METHODS)) {
             this.type = type;
         }
         return this;
