@@ -168,7 +168,13 @@ class EventListener {
      * @return {boolean}
      */
     hasCallback() {
-        return (this.callbacks.length > 0);
+        return (
+            !(!!this.callbacks.length)
+            ||
+            !(!!this.afterCallbacks.length)
+            ||
+            !(!!this.beforeCallbacks.length)
+        );
     }
 
     /**

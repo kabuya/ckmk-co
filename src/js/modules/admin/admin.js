@@ -66,7 +66,7 @@ class Admin extends EventTypes {
 
             , headerSearch = new HeaderSearch(this)
 
-            , defaultViewsHandler = new DefaultViewsHandler(this, [
+            , defaultViewsHandler = new DefaultViewsHandler(this, view, [
                 new DefaultViewTypeTextsHandler(),
             ])
         ;

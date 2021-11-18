@@ -68,9 +68,7 @@ class DatatableActionSearch {
      */
     removeSearchIfDatatableHasNotRows(success) {
         if(success) {
-            if(this.actions.datatable.hasItems()) {
-                this.buildSearch();
-            } else {
+            if(!this.actions.datatable.hasItems()) {
                 this.#removeAllSearch();
             }
         }
@@ -80,7 +78,12 @@ class DatatableActionSearch {
      * @param {boolean} success
      */
     buildSearchAgain(success) {
-        if(success) this.buildSearch();
+        if(success) {
+            if(this.actions.datatable.hasItems()) {
+                this.items.forEach((_item) => {_item.enable();});
+                this.buildSearch();
+            }
+        }
     }
 
     /**
@@ -96,9 +99,6 @@ class DatatableActionSearch {
         ;
         this.resultCount = 0;
         if(co.isBool(method)) {
-            if(!this.resultAppended && !hasValue) {
-                return this.#removeAllSearch();
-            }
             this.actions.datatable.run(
                 this.actions.datatable.EVENT_ON_SEARCH,
                 values,

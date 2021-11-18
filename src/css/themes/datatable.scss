@@ -560,11 +560,20 @@
 
   .datatable-search-core {
     position: relative;
-
+    overflow: hidden;
+    border-radius: 5px;
 
     &.datatable-remove-search-text-display {
       .datatable-remove-search-text {
         display: block;
+      }
+    }
+
+    &.datatable-search-disable, &.datatable-rows-count-0, &.datatable-empty-data {
+      cursor: no-drop;
+
+      .datatable-search-input {
+        pointer-events: none;
       }
     }
 
@@ -584,6 +593,16 @@
         transform: translate(-50%, -50%);
         font-size: $datatableFontSize;
       }
+    }
+
+    .datatable-hidden-search-input {
+      $absSize:-5px;
+      position: absolute;
+      top: $absSize;
+      left: $absSize;
+      right: $absSize;
+      bottom: $absSize;
+      z-index: 5;
     }
   }
 
@@ -624,6 +643,7 @@
     };
     box-shadow: 0px 0px 8px $shadowColor;
     overflow: hidden;
+    white-space: break-spaces;
 
     .datatable-body-column-longtext-more-close {
       display: block;

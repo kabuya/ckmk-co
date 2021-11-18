@@ -5,15 +5,19 @@ class DefaultViewTypeTextsHandler extends DefaultViewHandler {
 
     constructor() {
         super();
+
     }
 
-    handleView(view) {
-        super.handleView(view);
-        if(this.view.route && this.view.route.isRoute('admin:translator:index')) {
+    /**
+     * @param {Route|undefined} route
+     */
+    setEventByMatchedRoute(route) {
+        if(route && route.isRoute('admin:translator:index')) {
             let
-                this_o = this
+                this_o = this,
+                coreDom = this.getCoreDom()
             ;
-            this.view.dom.find(".dt-btn").on("click", (e) => {
+            coreDom.find(".dt-btn").on("click", (e) => {
                 this_o.changeTranslatorDatatableView(e);
             });
         }
@@ -25,11 +29,12 @@ class DefaultViewTypeTextsHandler extends DefaultViewHandler {
     changeTranslatorDatatableView(e) {
         let
             elem = $(e.currentTarget),
+            coreDom = this.getCoreDom(),
             allTarget, allBtn
         ;
         if(!elem.hasClass("dt-active")) {
-            allTarget = this.view.dom.find(".translator-element-target");
-            allBtn = this.view.dom.find(".dt-btn");
+            allTarget = coreDom.find(".translator-element-target");
+            allBtn = coreDom.find(".dt-btn");
             allTarget
                 .addClass("hidden")
                 .each((k, target) => {

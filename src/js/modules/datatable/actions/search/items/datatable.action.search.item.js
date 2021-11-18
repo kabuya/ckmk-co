@@ -3,6 +3,11 @@ const HTML_CLASS_INPUT_ERROR = "input-error";
 const HTML_CLASS_INPUT_ACTIVE = "input-active";
 const HASH_JOIN = "###########################################################";
 
+const DISABLE_HIDDEN_SEARCH_DOM = "<div class='datatable-hidden-search-input'></div>";
+const HTML_DISABLE_CLASS_HIDDEN = "datatable-hidden-search-input";
+const HTML_DISABLE_CLASS_SEARCH = "datatable-search-disable";
+const HTML_DISABLE_CLASS_ROWS = "datatable-rows-count-0";
+const HTML_DISABLE_CLASS_EMPTY = "datatable-empty-data";
 
 /**
  * @property {DatatableActionSearch} parent
@@ -10,6 +15,7 @@ const HASH_JOIN = "###########################################################";
  * @property {DatatableColumn[]} columns
  * @property {Route|boolean} method
  * @property {string|undefined} value
+ * @property {boolean} __isDisable__
  */
 class DatatableActionSearchItem {
 
@@ -25,7 +31,7 @@ class DatatableActionSearchItem {
         this.columns = this.getColumnTarget(co.data(this.dom, "column-target"));
         /** @type {Route|boolean} columns */
         this.method = this.getMethod(co.data(this.dom, "search"));
-
+        this.__isDisable__ = this.isDisable();
         this.setEvents();
     }
 
@@ -66,6 +72,7 @@ class DatatableActionSearchItem {
         if(this.dom.hasClass(HTML_CLASS_DISPLAY_REMOVE_TEXT)) {
             this.dom.removeClass(HTML_CLASS_DISPLAY_REMOVE_TEXT);
         }
+        this.disable();
     }
 
     /**
@@ -139,12 +146,58 @@ class DatatableActionSearchItem {
         }).length > 0);
     }
 
+    /**
+     * @return {boolean}
+     */
+    isDisable() {
+        if(this.__isDisable__) return true;
+        return (
+            this.dom.hasClass(HTML_DISABLE_CLASS_SEARCH)
+            ||
+            this.dom.hasClass(HTML_DISABLE_CLASS_ROWS)
+            ||
+            this.dom.hasClass(HTML_DISABLE_CLASS_EMPTY)
+            ||
+            !!this.dom.find(co.concat(".", HTML_DISABLE_CLASS_HIDDEN)).length
+        );
+    }
+
+    disable() {
+        if(this.isDisable()) return false;
+        this.__isDisable__ = true;
+        if(!this.dom.find(co.concat(".", HTML_DISABLE_CLASS_HIDDEN)).length) {
+            this.dom.append(DISABLE_HIDDEN_SEARCH_DOM);
+        }
+        this.dom.addClass(HTML_DISABLE_CLASS_SEARCH);
+        this.dom.addClass(HTML_DISABLE_CLASS_ROWS);
+        this.dom.addClass(HTML_DISABLE_CLASS_EMPTY);
+        return true;
+    }
+
+    enable() {
+        if(!this.isDisable()) return false;
+        this.__isDisable__ = false;
+        this.dom.find(co.concat(".", HTML_DISABLE_CLASS_HIDDEN)).remove();
+        this.dom.removeClass(HTML_DISABLE_CLASS_SEARCH);
+        this.dom.removeClass(HTML_DISABLE_CLASS_ROWS);
+        this.dom.removeClass(HTML_DISABLE_CLASS_EMPTY);
+        return true;
+    }
+
+    /**
+     * @param {Event} e
+     */
+    checkDisable(e) {
+        return !this.__isDisable__;
+    }
+
     setEvents() {
         let
             this_o = this,
             input = this.dom.find("input"),
             close = this.dom.find("i.fa-close")
         ;
+        this.dom.on("click", (e) => {return this_o.checkDisable(e);});
         input.on("keyup", (e) => {this_o.editValue(e);});
         input.on("change", (e) => {this_o.editValue(e);});
         input.on("focusout", (e) => {this_o.toggleActive(e);});

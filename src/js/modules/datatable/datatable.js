@@ -477,6 +477,21 @@ class Datatable extends EventTypes {
         return (this.deletable && this.grants.isDelete());
     }
 
+    /**
+     * @param {Route|string[]|string|boolean} action
+     * @return {Route|boolean|undefined}
+     */
+    getActionRouteOrBoolean(action) {
+        if(co.router.isRouteInstance(action)) return action;
+        if(co.isArray(action)) {
+            return co.router.get(action[0], action[1]);
+        } else if(co.isString(action)) {
+            return co.router.get(action, co.ajax.METHOD_POST);
+        } else if(co.isBool(action)) {
+            return action;
+        }
+    }
+
     setEvents() {
         let
             this_o = this
@@ -495,21 +510,6 @@ class Datatable extends EventTypes {
 
         if(this.isDeletableItems()) {
             this.onAfter(this.EVENT_ON_AFTER_REMOVING_ITEM, [this, "addEmptyRow"]);
-        }
-    }
-
-    /**
-     * @param {Route|string[]|string|boolean} action
-     * @return {Route|boolean|undefined}
-     */
-    getActionRouteOrBoolean(action) {
-        if(co.router.isRouteInstance(action)) return action;
-        if(co.isArray(action)) {
-            return co.router.get(action[0], action[1]);
-        } else if(co.isString(action)) {
-            return co.router.get(action, co.ajax.METHOD_POST);
-        } else if(co.isBool(action)) {
-            return action;
         }
     }
 
