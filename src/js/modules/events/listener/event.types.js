@@ -38,10 +38,11 @@ class EventTypes {
      */
     removeAcceptedEvents(event) {
         let
+            this_o = this,
             index = acceptedEvents[this.typeID].indexOf(event)
         ;
         if(index) {
-            if(acceptedEvents[this.typeID].splice(index, 1).length){
+            if(acceptedEvents[this_o.typeID].splice(index, 1).length){
                 return true;
             }
         }

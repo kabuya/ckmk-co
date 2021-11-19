@@ -329,7 +329,7 @@ class DatatableColumn {
      */
     changerOrder(e) {
         this.datatable.run(
-            this.datatable.EVENT_ON_COLUMN_REORDER_ROWS,
+            co.datatable.EVENT_ON_COLUMN_REORDER_ROWS,
             this
         );
         if(this.isAscOrder()) {
@@ -406,7 +406,7 @@ class DatatableColumn {
                 return this_o.changerOrder(e);
             });
             this.datatable.on(
-                this.datatable.EVENT_ON_COLUMN_REORDER_ROWS,
+                co.datatable.EVENT_ON_COLUMN_REORDER_ROWS,
                 [this, "removeOrderIcon"]
             );
         }

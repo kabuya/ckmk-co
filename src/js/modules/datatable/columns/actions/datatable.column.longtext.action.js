@@ -90,11 +90,11 @@ class DatatableColumnLongtextAction extends DatatableColumnAction {
         super.setEvents();
         this.setEventReadMore();
         this.datatable.onAfter(
-            this.datatable.EVENT_ON_SEARCH,
+            co.datatable.EVENT_ON_SEARCH,
             [this, "resetClickMoreContent"]
         );
         this.datatable.on(
-            this.datatable.EVENT_ON_CLICK_ON_TABLE_DOM,
+            co.datatable.EVENT_ON_CLICK_ON_TABLE_DOM,
             [this, "removeMoreContent"]
         );
     }
@@ -102,11 +102,11 @@ class DatatableColumnLongtextAction extends DatatableColumnAction {
     destroy() {
         super.destroy();
         this.datatable.removeAfter(
-            this.datatable.EVENT_ON_SEARCH,
+            co.datatable.EVENT_ON_SEARCH,
             [this, "resetClickMoreContent"]
         );
         this.datatable.removeAfter(
-            this.datatable.EVENT_ON_CLICK_ON_TABLE_DOM,
+            co.datatable.EVENT_ON_CLICK_ON_TABLE_DOM,
             [this, "removeMoreContent"]
         );
     }

@@ -138,7 +138,7 @@ class DatatableActionColumns {
             .on("click", (e) => {e.stopPropagation(); this_o.toggleOpen(e);})
         ;
 
-        this.actions.datatable.on(this.actions.datatable.EVENT_ON_CLICK_ON_TABLE_DOM, [this, "close"])
+        this.actions.datatable.on(co.datatable.EVENT_ON_CLICK_ON_TABLE_DOM, [this, "close"])
     }
 
 }

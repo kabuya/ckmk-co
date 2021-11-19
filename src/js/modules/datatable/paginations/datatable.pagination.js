@@ -235,9 +235,9 @@ class DatatablePagination {
      */
     updateRows() {
         if(this.datatable.isInOrder()) {
-            this.datatable.run(this.datatable.EVENT_ON_CHANGE_ROWS_TARGET, []);
+            this.datatable.run(co.datatable.EVENT_ON_CHANGE_ROWS_TARGET, []);
         } else {
-            this.datatable.run(this.datatable.EVENT_ON_CHANGE_ROWS_TARGET, this.rowsTarget);
+            this.datatable.run(co.datatable.EVENT_ON_CHANGE_ROWS_TARGET, this.rowsTarget);
         }
         return this;
     }
@@ -260,11 +260,11 @@ class DatatablePagination {
             this_o = this
         ;
         this.datatable.on(
-            this.datatable.EVENT_ON_CHANGE_COUNT_LINE,
+            co.datatable.EVENT_ON_CHANGE_COUNT_LINE,
             [this,"changeTarget"]
         );
         this.datatable.onAfter(
-            this.datatable.EVENT_ON_CHANGE_ROWS_TARGET,
+            co.datatable.EVENT_ON_CHANGE_ROWS_TARGET,
             [this,"changeTargetByFilter"]
         );
         this.dom.find(".datatable-pagination-page-prev")

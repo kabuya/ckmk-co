@@ -100,7 +100,7 @@ class DatatableActionSearch {
         this.resultCount = 0;
         if(co.isBool(method)) {
             this.actions.datatable.run(
-                this.actions.datatable.EVENT_ON_SEARCH,
+                co.datatable.EVENT_ON_SEARCH,
                 values,
                 hasValue
             );
@@ -174,32 +174,32 @@ class DatatableActionSearch {
 
     setEvents() {
         this.actions.datatable.on(
-            this.actions.datatable.EVENT_ON_SEARCH_RESULT_COUNT,
+            co.datatable.EVENT_ON_SEARCH_RESULT_COUNT,
             [this, "addResultCount"]
         );
 
         this.actions.datatable.onAfter(
-            this.actions.datatable.EVENT_ON_SEARCH,
+            co.datatable.EVENT_ON_SEARCH,
             [this, "removeResultCount"]
         );
 
         this.actions.datatable.onAfter(
-            this.actions.datatable.EVENT_ON_AFTER_ADDING_ITEM,
+            co.datatable.EVENT_ON_AFTER_ADDING_ITEM,
             [this, "buildSearchAgain"]
         );
 
         this.actions.datatable.onAfter(
-            this.actions.datatable.EVENT_ON_AFTER_REMOVING_ITEM,
+            co.datatable.EVENT_ON_AFTER_REMOVING_ITEM,
             [this, "removeSearchIfDatatableHasNotRows"]
         );
 
         this.actions.datatable.onAfter(
-            this.actions.datatable.EVENT_ON_TOGGLE_COLUMN_DISPLAY,
+            co.datatable.EVENT_ON_TOGGLE_COLUMN_DISPLAY,
             [this, "buildSearch"]
         );
 
         this.actions.datatable.onAfter(
-            this.actions.datatable.EVENT_ON_TOGGLE_ACTIVE_ALL_COLUMN,
+            co.datatable.EVENT_ON_TOGGLE_ACTIVE_ALL_COLUMN,
             [this, "buildSearchAgain"]
         );
     }

@@ -29,27 +29,27 @@ class DatatableActions {
         /** @type {jQuery|HTMLElement} dom */
         this.dom = datatable.dom.find(".datatable-actions");
 
-        if(datatable.isVisible(datatable.VISIBILITY_ADDABLE_TOP)) {
+        if(datatable.isVisible(co.datatable.VISIBILITY_ADDABLE_TOP)) {
             if(!enable) enable = true;
             /** @type {DatatableActionAddable} addable */
             this.addable = new DatatableActionAddable(this);
         }
-        if(datatable.isVisible(datatable.VISIBILITY_DELETABLE_TOP)) {
+        if(datatable.isVisible(co.datatable.VISIBILITY_DELETABLE_TOP)) {
             if(!enable) enable = true;
             /** @type {DatatableActionDeletable} deletable */
             this.deletable = new DatatableActionDeletable(this);
         }
-        if(datatable.isVisible(datatable.VISIBILITY_LINES_TOP)) {
+        if(datatable.isVisible(co.datatable.VISIBILITY_LINES_TOP)) {
             if(!enable) enable = true;
             /** @type {DatatableActionLines} lines */
             this.lines = new DatatableActionLines(this);
         }
-        if(datatable.isVisible(datatable.VISIBILITY_TYPES_TOP)) {
+        if(datatable.isVisible(co.datatable.VISIBILITY_TYPES_TOP)) {
             if(!enable) enable = true;
             /** @type {DatatableActionTypes} types */
             this.types = new DatatableActionTypes(this);
         }
-        if(datatable.isVisible(datatable.VISIBILITY_COLUMNS_TOP)) {
+        if(datatable.isVisible(co.datatable.VISIBILITY_COLUMNS_TOP)) {
             if(!enable) enable = true;
             /** @type {DatatableActionColumns} columns */
             this.columns = new DatatableActionColumns(this);

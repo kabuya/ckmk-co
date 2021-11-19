@@ -16,7 +16,7 @@ class DatatableSelectedColumns extends DatatableSelected {
 
         this.datatable = datatable;
         /** @type {jQuery|HTMLElement} dom */
-        this.dom = $(datatable.HTML_SELECTE_DOM)
+        this.dom = $(co.datatable.HTML_SELECTE_DOM)
             .addClass("datatable-header-column")
         ;
         /** @type {jQuery|HTMLElement} dom */

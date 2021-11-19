@@ -33,7 +33,7 @@ class DatatableActionAddable {
         let
             data = {datatable: this.actions.datatable.name}
         ;
-        data[this.actions.datatable.ROW_MODEL_KEY] = this.actions.datatable.modelRow;
+        data[co.datatable.ROW_MODEL_KEY] = this.actions.datatable.modelRow;
         this.popup
             .load(this.route.getAbsolutePath(), data, this.route.getDefaultMethod())
             .open()
@@ -43,10 +43,10 @@ class DatatableActionAddable {
     updateRowAfterAdd(response) {
         if(response.success) {
             this.actions.datatable.alert.success(response.messages);
-            DatatableRow.createFromData(this.actions.datatable, response[this.actions.datatable.ROW_MODEL_KEY]);
+            DatatableRow.createFromData(this.actions.datatable, response[co.datatable.ROW_MODEL_KEY]);
         }
         this.actions.datatable.run(
-            this.actions.datatable.EVENT_ON_AFTER_ADDING_ITEM,
+            co.datatable.EVENT_ON_AFTER_ADDING_ITEM,
             response.success
         );
     }

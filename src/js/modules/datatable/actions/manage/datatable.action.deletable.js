@@ -116,7 +116,7 @@ class DatatableActionDeletable {
             );
             this.actions.datatable.removeRow(rows);
         }
-        this.actions.datatable.run(this.actions.datatable.EVENT_ON_AFTER_REMOVING_ITEM, response.success);
+        this.actions.datatable.run(co.datatable.EVENT_ON_AFTER_REMOVING_ITEM, response.success);
     }
 
     appendAllSelected() {
@@ -272,20 +272,20 @@ class DatatableActionDeletable {
             });
 
             this.actions.datatable.on(
-                this.actions.datatable.EVENT_ON_SELECTED_ROW_ADD,
+                co.datatable.EVENT_ON_SELECTED_ROW_ADD,
                 [this, "addRow"]
             );
             this.actions.datatable.on(
-                this.actions.datatable.EVENT_ON_SELECTED_ROW_REMOVE,
+                co.datatable.EVENT_ON_SELECTED_ROW_REMOVE,
                 [this, "removeRow"]
             );
             this.actions.datatable.on(
-                this.actions.datatable.EVENT_ON_AFTER_ADDING_ITEM,
+                co.datatable.EVENT_ON_AFTER_ADDING_ITEM,
                 [this, "openCheckboxAgain"]
             );
 
             this.actions.datatable.onAfter(
-                this.actions.datatable.EVENT_ON_AFTER_REMOVING_ITEM,
+                co.datatable.EVENT_ON_AFTER_REMOVING_ITEM,
                 [this, "abortEvent"]
             );
         }

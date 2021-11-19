@@ -26,9 +26,9 @@ class DatatableActionAllColumn extends DatatableActionItemCore {
     toggleActive(e) {
         super.toggleActive(e);
         if(this.isActive()) {
-            this.datatable().run(this.datatable().EVENT_ON_TOGGLE_COLUMN_DISPLAY, true);
+            this.datatable().run(co.datatable.EVENT_ON_TOGGLE_COLUMN_DISPLAY, true);
         } else {
-            this.datatable().run(this.datatable().EVENT_ON_TOGGLE_COLUMN_DISPLAY, false);
+            this.datatable().run(co.datatable.EVENT_ON_TOGGLE_COLUMN_DISPLAY, false);
         }
     }
 
@@ -56,7 +56,7 @@ class DatatableActionAllColumn extends DatatableActionItemCore {
 
     setEvents() {
         super.setEvents();
-        this.datatable().on(this.datatable().EVENT_ON_TOGGLE_ACTIVE_ALL_COLUMN, [this, "toggleActiveByColumnDisplay"])
+        this.datatable().on(co.datatable.EVENT_ON_TOGGLE_ACTIVE_ALL_COLUMN, [this, "toggleActiveByColumnDisplay"])
     }
 
 }

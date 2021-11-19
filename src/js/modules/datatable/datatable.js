@@ -111,6 +111,32 @@ let
  */
 class Datatable extends EventTypes {
 
+    static EVENT_ON_SEARCH = EVENT_ON_SEARCH;
+    static EVENT_ON_SEARCH_RESULT_COUNT = EVENT_ON_SEARCH_RESULT_COUNT;
+    static EVENT_ON_TOGGLE_COLUMN_DISPLAY = EVENT_ON_TOGGLE_COLUMN_DISPLAY;
+    static EVENT_ON_TOGGLE_ACTIVE_ALL_COLUMN = EVENT_ON_TOGGLE_ACTIVE_ALL_COLUMN;
+    static EVENT_ON_CLICK_ON_TABLE_DOM = EVENT_ON_CLICK_ON_TABLE_DOM;
+    static EVENT_ON_CHANGE_COUNT_LINE = EVENT_ON_CHANGE_COUNT_LINE;
+    static EVENT_ON_CHANGE_ROWS_TARGET = EVENT_ON_CHANGE_ROWS_TARGET;
+    static EVENT_ON_SELECTED_ROW_ADD = EVENT_ON_SELECTED_ROW_ADD;
+    static EVENT_ON_SELECTED_ROW_REMOVE = EVENT_ON_SELECTED_ROW_REMOVE;
+    static EVENT_ON_COLUMN_REORDER_ROWS = EVENT_ON_COLUMN_REORDER_ROWS;
+    static EVENT_ON_AFTER_ADDING_ITEM = EVENT_ON_AFTER_ADDING_ITEM;
+    static EVENT_ON_AFTER_REMOVING_ITEM = EVENT_ON_AFTER_REMOVING_ITEM;
+    static EVENTS = EVENTS;
+    static VISIBILITY_CONTENT_STYLE = VISIBILITY_CONTENT_STYLE;
+    static VISIBILITY_ADDABLE_TOP = VISIBILITY_ADDABLE_TOP;
+    static VISIBILITY_DELETABLE_TOP = VISIBILITY_DELETABLE_TOP;
+    static VISIBILITY_LINES_TOP = VISIBILITY_LINES_TOP;
+    static VISIBILITY_TYPES_TOP = VISIBILITY_TYPES_TOP;
+    static VISIBILITY_COLUMNS_TOP = VISIBILITY_COLUMNS_TOP;
+    static VISIBILITY_SEARCH_TOP = VISIBILITY_SEARCH_TOP;
+    static VISIBILITY_PAGINATION_TOP = VISIBILITY_PAGINATION_TOP;
+    static VISIBILITY_PAGINATION_DOWN = VISIBILITY_PAGINATION_DOWN;
+    static VISIBILITIES_KEYS = VISIBILITIES_KEYS;
+    static HTML_SELECTE_DOM = HTML_SELECTE_DOM;
+    static ROW_MODEL_KEY = ROW_MODEL_KEY;
+
     /**
      * @param {jQuery|HTMLElement} dom
      */
@@ -173,13 +199,13 @@ class Datatable extends EventTypes {
         if(this.order.length) this.order[0] = this.getColumn(this.order[0]);
         /** @type {DatatableActions} actions */
         this.actions = new DatatableActions(this);
-        if(this.isVisible(this.VISIBILITY_PAGINATION_TOP) || this.isVisible(this.VISIBILITY_PAGINATION_DOWN)) {
+        if(this.isVisible(Datatable.VISIBILITY_PAGINATION_TOP) || this.isVisible(Datatable.VISIBILITY_PAGINATION_DOWN)) {
             /** @type DatatablePagination pagination */
             this.pagination = new DatatablePagination(this);
         }
         /** @type DatatableAlert alert */
         this.alert = new DatatableAlert(this);
-        if(this.isVisible(this.VISIBILITY_DELETABLE_TOP)) {
+        if(this.isVisible(Datatable.VISIBILITY_DELETABLE_TOP)) {
             /** @type DatatableSelectedColumns selected */
             this.selected = new DatatableSelectedColumns(this);
         }
@@ -497,19 +523,19 @@ class Datatable extends EventTypes {
             this_o = this
         ;
         this.dom.on("click", (e) => {
-            this_o.run(this_o.EVENT_ON_CLICK_ON_TABLE_DOM, e);
+            this_o.run(Datatable.EVENT_ON_CLICK_ON_TABLE_DOM, e);
         });
 
-        if(this.isVisible(this.VISIBILITY_LINES_TOP)) {
-            this.on(this.EVENT_ON_CHANGE_COUNT_LINE, [this,"changeCountLine"]);
+        if(this.isVisible(Datatable.VISIBILITY_LINES_TOP)) {
+            this.on(Datatable.EVENT_ON_CHANGE_COUNT_LINE, [this,"changeCountLine"]);
         }
 
         if(this.isManagingItems()) {
-            this.onBefore(this.EVENT_ON_AFTER_ADDING_ITEM, [this, "removeEmptyRow"]);
+            this.onBefore(Datatable.EVENT_ON_AFTER_ADDING_ITEM, [this, "removeEmptyRow"]);
         }
 
         if(this.isDeletableItems()) {
-            this.onAfter(this.EVENT_ON_AFTER_REMOVING_ITEM, [this, "addEmptyRow"]);
+            this.onAfter(Datatable.EVENT_ON_AFTER_REMOVING_ITEM, [this, "addEmptyRow"]);
         }
     }
 
@@ -608,30 +634,5 @@ class Datatable extends EventTypes {
     }
 
 }
-
-Datatable.prototype.EVENT_ON_SEARCH = EVENT_ON_SEARCH;
-Datatable.prototype.EVENT_ON_SEARCH_RESULT_COUNT = EVENT_ON_SEARCH_RESULT_COUNT;
-Datatable.prototype.EVENT_ON_TOGGLE_COLUMN_DISPLAY = EVENT_ON_TOGGLE_COLUMN_DISPLAY;
-Datatable.prototype.EVENT_ON_TOGGLE_ACTIVE_ALL_COLUMN = EVENT_ON_TOGGLE_ACTIVE_ALL_COLUMN;
-Datatable.prototype.EVENT_ON_CLICK_ON_TABLE_DOM = EVENT_ON_CLICK_ON_TABLE_DOM;
-Datatable.prototype.EVENT_ON_CHANGE_COUNT_LINE = EVENT_ON_CHANGE_COUNT_LINE;
-Datatable.prototype.EVENT_ON_CHANGE_ROWS_TARGET = EVENT_ON_CHANGE_ROWS_TARGET;
-Datatable.prototype.EVENT_ON_SELECTED_ROW_ADD = EVENT_ON_SELECTED_ROW_ADD;
-Datatable.prototype.EVENT_ON_SELECTED_ROW_REMOVE = EVENT_ON_SELECTED_ROW_REMOVE;
-Datatable.prototype.EVENT_ON_COLUMN_REORDER_ROWS = EVENT_ON_COLUMN_REORDER_ROWS;
-Datatable.prototype.EVENT_ON_AFTER_ADDING_ITEM = EVENT_ON_AFTER_ADDING_ITEM;
-Datatable.prototype.EVENT_ON_AFTER_REMOVING_ITEM = EVENT_ON_AFTER_REMOVING_ITEM;
-Datatable.prototype.VISIBILITY_CONTENT_STYLE = VISIBILITY_CONTENT_STYLE;
-Datatable.prototype.VISIBILITY_ADDABLE_TOP = VISIBILITY_ADDABLE_TOP;
-Datatable.prototype.VISIBILITY_DELETABLE_TOP = VISIBILITY_DELETABLE_TOP;
-Datatable.prototype.VISIBILITY_LINES_TOP = VISIBILITY_LINES_TOP;
-Datatable.prototype.VISIBILITY_TYPES_TOP = VISIBILITY_TYPES_TOP;
-Datatable.prototype.VISIBILITY_COLUMNS_TOP = VISIBILITY_COLUMNS_TOP;
-Datatable.prototype.VISIBILITY_SEARCH_TOP = VISIBILITY_SEARCH_TOP;
-Datatable.prototype.VISIBILITY_PAGINATION_TOP = VISIBILITY_PAGINATION_TOP;
-Datatable.prototype.VISIBILITY_PAGINATION_DOWN = VISIBILITY_PAGINATION_DOWN;
-Datatable.prototype.VISIBILITIES_KEYS = VISIBILITIES_KEYS;
-Datatable.prototype.HTML_SELECTE_DOM = HTML_SELECTE_DOM;
-Datatable.prototype.ROW_MODEL_KEY = ROW_MODEL_KEY;
 
 module.exports = Datatable;

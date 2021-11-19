@@ -192,13 +192,13 @@ class DatatableColumnActionsAction extends DatatableColumnAction {
             );
             this.column.column.datatable.removeRow([this.column.row]);
         }
-        this.column.column.datatable.run(this.column.column.datatable.EVENT_ON_AFTER_REMOVING_ITEM, response.success);
+        this.column.column.datatable.run(co.datatable.EVENT_ON_AFTER_REMOVING_ITEM, response.success);
     }
 
     updateRowAfterEdit(response) {
         if(response.success) {
             this.column.column.datatable.alert.success(response.messages);
-            this.column.row.updateColumns(response[this.datatable.ROW_MODEL_KEY]);
+            this.column.row.updateColumns(response[co.datatable.ROW_MODEL_KEY]);
         }
     }
 
@@ -206,12 +206,12 @@ class DatatableColumnActionsAction extends DatatableColumnAction {
         if(response.success) {
             this.column.column.datatable.alert.success(response.messages);
             let
-                data = response[this.column.row.datatable.ROW_MODEL_KEY]
+                data = response[co.datatable.ROW_MODEL_KEY]
             ;
             DatatableRow.createFromData(this.column.row.datatable, data);
         }
         this.column.row.datatable.on(
-            this.column.row.datatable.EVENT_ON_AFTER_ADDING_ITEM,
+            co.datatable.EVENT_ON_AFTER_ADDING_ITEM,
             response.success
         );
     }

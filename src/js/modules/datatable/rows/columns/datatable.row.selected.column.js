@@ -15,7 +15,7 @@ class DatatableRowSelectedColumn extends DatatableSelected {
 
         this.row = row;
         /** @type {jQuery|HTMLElement} dom */
-        this.dom = $(row.datatable.HTML_SELECTE_DOM);
+        this.dom = $(co.datatable.HTML_SELECTE_DOM);
         /** @type {boolean} */
         this.appended = false;
         if(!this.isDisplayAble()) this.dom.html("");
@@ -54,7 +54,7 @@ class DatatableRowSelectedColumn extends DatatableSelected {
         if(!this.isDisplayAble()) return false;
         if(super.check()) {
             this.row.datatable.run(
-                this.row.datatable.EVENT_ON_SELECTED_ROW_ADD,
+                co.datatable.EVENT_ON_SELECTED_ROW_ADD,
                 this.row
             );
             return true;
@@ -66,7 +66,7 @@ class DatatableRowSelectedColumn extends DatatableSelected {
         if(!this.isDisplayAble()) return false;
         if(super.uncheck()) {
             this.row.datatable.run(
-                this.row.datatable.EVENT_ON_SELECTED_ROW_REMOVE,
+                co.datatable.EVENT_ON_SELECTED_ROW_REMOVE,
                 this.row
             );
             return true;

@@ -122,7 +122,7 @@ class DatatableActionLines {
             this.currentValue = value;
             currentDom.text(value).attr("title", value);
             this.actions.datatable
-                .run(this.actions.datatable.EVENT_ON_CHANGE_COUNT_LINE, value)
+                .run(co.datatable.EVENT_ON_CHANGE_COUNT_LINE, value)
             ;
         }
         this.close();
@@ -160,7 +160,7 @@ class DatatableActionLines {
             .on("click", (e) => {e.stopPropagation(); this_o.toggleOpen(e);})
         ;
 
-        this.actions.datatable.on(this.actions.datatable.EVENT_ON_CLICK_ON_TABLE_DOM, [this, "close"])
+        this.actions.datatable.on(co.datatable.EVENT_ON_CLICK_ON_TABLE_DOM, [this, "close"])
     }
 
 

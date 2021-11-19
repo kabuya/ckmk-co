@@ -129,7 +129,7 @@ class DatatableRow {
                 .removeClass(HTML_CLASS_SEARCH_FAILED)
                 .addClass(HTML_CLASS_SEARCH_SUCCESS)
             ;
-            this.datatable.run(this.datatable.EVENT_ON_SEARCH_RESULT_COUNT, 1);
+            this.datatable.run(co.datatable.EVENT_ON_SEARCH_RESULT_COUNT, 1);
         } else {
             if(_hasValue) {
                 this.dom
@@ -142,7 +142,7 @@ class DatatableRow {
                     .removeClass(HTML_CLASS_SEARCH_FAILED)
                 ;
             }
-            this.datatable.run(this.datatable.EVENT_ON_SEARCH_RESULT_COUNT, 0);
+            this.datatable.run(co.datatable.EVENT_ON_SEARCH_RESULT_COUNT, 0);
         }
     }
 
@@ -239,8 +239,8 @@ class DatatableRow {
         this.columns.forEach((_column) => {
             _column.destroy();
         });
-        this.datatable.remove(this.datatable.EVENT_ON_SEARCH, [this, "toggleShow"]);
-        this.datatable.remove(this.datatable.EVENT_ON_CHANGE_ROWS_TARGET, [this, "toggleDisplayByTargetLines"]);
+        this.datatable.remove(co.datatable.EVENT_ON_SEARCH, [this, "toggleShow"]);
+        this.datatable.remove(co.datatable.EVENT_ON_CHANGE_ROWS_TARGET, [this, "toggleDisplayByTargetLines"]);
         this.dom.remove();
         return true;
     }
@@ -257,8 +257,8 @@ class DatatableRow {
     }
 
     setEvents() {
-        this.datatable.on(this.datatable.EVENT_ON_SEARCH, [this, "toggleShow"]);
-        this.datatable.on(this.datatable.EVENT_ON_CHANGE_ROWS_TARGET, [this, "toggleDisplayByTargetLines"]);
+        this.datatable.on(co.datatable.EVENT_ON_SEARCH, [this, "toggleShow"]);
+        this.datatable.on(co.datatable.EVENT_ON_CHANGE_ROWS_TARGET, [this, "toggleDisplayByTargetLines"]);
     }
 
     /**
