@@ -156,20 +156,6 @@
     }
   }
 
-  .datatable-columns-visibility-list-item-checkbox {
-    border-color: $datatableCheckboxVisibilityColumnBorderColor;
-
-    span {
-      border-bottom-color: white;
-      border-left-color: white;
-    }
-
-    &.column-checked {
-      border-color: $datatableCheckboxActiveColor;
-      background-color: $datatableCheckboxActiveColor;
-    }
-  }
-
   .datatable-columns-visibility-list
   , .datatable-count-lines-list {
     background-color: white;
@@ -299,6 +285,35 @@
       }
     }
 
+  }
+
+
+  .datatable-columns-visibility-list-item
+  , .datatable-columns-group-visibility-item {
+
+    &:hover {
+      background-color: $tableBodyTrBgHover;
+    }
+  }
+
+
+  .datatable-columns-visibility-list-item-checkbox {
+    border-color: $datatableCheckboxVisibilityColumnBorderColor;
+
+    span {
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+    }
+
+    &.column-checked {
+      border-color: $datatableCheckboxActiveColor;
+      background-color: $datatableCheckboxActiveColor;
+
+      span {
+        border-bottom-color: white;
+        border-left-color: white;
+      }
+    }
   }
 
 }

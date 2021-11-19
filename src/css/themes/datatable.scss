@@ -271,14 +271,23 @@
   .datatable-columns-visibility-list-item
   , .datatable-columns-group-visibility-item {
     cursor: pointer;
-    padding: 2px 10px;
+    padding: 0 10px {
+      top: 3px;
+    };
+    margin: 0 5px {
+      bottom: 2.5px;
+    };
+    border-radius: 3px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     .datatable-columns-visibility-list-item-title {
       position: relative;
       top: -2px;
       transform: translateY(2px);
     }
-
 
     .datatable-columns-visibility-list-item-checkbox {
       display: inline-block;
