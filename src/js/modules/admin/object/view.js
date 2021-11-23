@@ -5,7 +5,7 @@ const VIEW_TIMEOUT_RENDER = 0;
 const CLASS_DYNAMIC = "5754dfdDSDs6fds6qsFD66dsDQMGdaV3";
 
 /**
- * @property {Admin} Admin
+ * @property {Admin} admin
  * @property {ViewStorage} storage
  * @property {jQuery|HTMLElement} dom
  * @property {jQuery|HTMLElement} domTitle
@@ -14,6 +14,7 @@ const CLASS_DYNAMIC = "5754dfdDSDs6fds6qsFD66dsDQMGdaV3";
  * @property {object} data
  * @property {Route} baseRoute
  * @property {Route|undefined} currentRoute
+ * @property {ViewContent|undefined} currentView
  * @property {string|undefined} title
  * @property {RotateCircleLoad} loader
  * @property {number} displayTimeOut
@@ -22,10 +23,10 @@ const CLASS_DYNAMIC = "5754dfdDSDs6fds6qsFD66dsDQMGdaV3";
 class View {
 
     /**
-     * @param {Admin} Admin
+     * @param {Admin} admin
      */
-    constructor(Admin) {
-        this.Admin = Admin;
+    constructor(admin) {
+        this.admin = admin;
         this.storage = new ViewStorage(this);
         this.dom = $(".admin-content-view-core");
         this.domTitle = $(".admin-title-view");
@@ -71,7 +72,7 @@ class View {
      * @param {object} settings
      */
     loading(xhr, settings) {
-        this.Admin.run(this.Admin.EVENT_VIEW_LOAD_START);
+        this.admin.run(this.admin.EVENT_VIEW_LOAD_START);
         this.dom.html("");
         this.loader.show();
         this.domTitle.find("h1").html("...");
@@ -87,16 +88,40 @@ class View {
             this_o.domTitle.find("h1").html(this_o.title);
             this_o.loader.remove();
             this_o.dom.html(this_o.parseResponseView(response));
-            co.form.init(this_o.dom.find("form"), true);
-            co.datatable.init(this_o.dom.find(".datatable-content"), true);
-            this_o.Admin.run(this.Admin.EVENT_VIEW_LOAD_DISPLAY, new ViewContent(
+            this_o.#runViewContent(
                 this_o.title,
                 this_o.dom,
                 this_o.domTitle,
                 window.location.href,
                 this_o.currentRoute
-            ));
+            );
         }, VIEW_TIMEOUT_RENDER);
+    }
+
+    /**
+     * @param {string|undefined} title
+     * @param {jQuery|HTMLElement} dom
+     * @param {jQuery|HTMLElement} domTitle
+     * @param {string} path
+     * @param {Route} currentRoute
+     */
+    #runViewContent(
+        title,
+        dom,
+        domTitle,
+        path,
+        currentRoute
+    ) {
+        co.form.init(this.dom.find("form"), true);
+        co.datatable.init(this.dom.find(".datatable-content"), true);
+        this.currentView = new ViewContent(
+            title,
+            dom,
+            domTitle,
+            path,
+            currentRoute
+        );
+        this.admin.run(this.admin.EVENT_VIEW_LOAD_DISPLAY, this.currentView);
     }
 
     /**
@@ -115,9 +140,9 @@ class View {
             if(!this.requestReloadViewContent) {
                 this.current = window.location.href;
                 this.storage.setPath(this.current);
-                this.Admin.run(this.Admin.EVENT_VIEW_CHANGE_START, this.current);
+                this.admin.run(this.admin.EVENT_VIEW_CHANGE_START, this.current);
             } else {
-                this.Admin.run(this.Admin.EVENT_VIEW_RELOAD_START, this.current);
+                this.admin.run(this.admin.EVENT_VIEW_RELOAD_START, this.current);
             }
             if(this.request) {
                 this.request.abort();
@@ -152,6 +177,13 @@ class View {
             return true;
         }
         this.current = window.location.href;
+        this.#runViewContent(
+            this.domTitle.find("h1").text().trim(),
+            this.dom,
+            this.domTitle,
+            this.current,
+            (this.currentRoute || co.router.getCurrentRoute())
+        );
         return false;
     }
 
@@ -163,7 +195,7 @@ class View {
             let
                 html = this.dom.parent().parent().parent().parent().parent(),
                 body = html.find("body"),
-                head = body.parent().find("head"),
+                head = html.find("head"),
                 titleDom = head.find("title"),
                 responseDOM = $(co.concat("<div>", response, "</div>"))
             ;
@@ -234,8 +266,8 @@ class View {
     }
 
     setEvents() {
-        this.Admin.on(this.Admin.EVENT_VIEW_CHANGE_REQUEST, [this, "changeViewRequest"]);
-        this.Admin.on(this.Admin.EVENT_VIEW_RELOAD_REQUEST, [this, "reloadViewRequest"]);
+        this.admin.on(this.admin.EVENT_VIEW_CHANGE_REQUEST, [this, "changeViewRequest"]);
+        this.admin.on(this.admin.EVENT_VIEW_RELOAD_REQUEST, [this, "reloadViewRequest"]);
     }
 
 }

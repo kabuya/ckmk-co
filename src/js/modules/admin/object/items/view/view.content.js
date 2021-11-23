@@ -24,15 +24,25 @@ class ViewContent {
         link,
         route = undefined
     ) {
+        this.title = title;
         this.dom = $(dom);
         this.domTitle = domTitle;
-        this.title = title;
         this.link = link;
         this.route = route;
-        this.forms = co.form.getForms();
-        this.tables = co.datatable.getDatatables();
+        this.forms = co.form.getFormsByDom(this.dom);
+        this.tables = co.datatable.getDatatablesByDom(this.dom);
     }
 
+    /**
+     * @param {string} route
+     * @return {boolean}
+     */
+    callByRoute(route) {
+        if(this.route) {
+            return this.route.isRoute(route);
+        }
+        return false;
+    }
 
     reload() {
         co.admin.run(co.admin.EVENT_VIEW_RELOAD_REQUEST, this.link);

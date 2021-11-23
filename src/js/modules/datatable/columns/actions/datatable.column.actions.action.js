@@ -133,7 +133,7 @@ class DatatableColumnActionsAction extends DatatableColumnAction {
                 row: this.column.row.position,
             }
         ;
-        data[this.column.row.datatable.ROW_MODEL_KEY] = this.column.row.modelRow;
+        data[co.datatable.ROW_MODEL_KEY] = this.column.row.modelRow;
         this.type.popups.manage
             .setCb(cb)
             .setTitle(title)

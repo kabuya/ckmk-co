@@ -16,11 +16,10 @@ class DefaultViewsHandler {
         this.dom = view.dom;
         this.views = views.filter((item) => {
             item.setParent(this_o);
-            item.setEvents(view);
+            item.setEvents();
+            item.handleView(view.currentView);
             return item;
         });
-
-        co.log(this);
     }
 
 

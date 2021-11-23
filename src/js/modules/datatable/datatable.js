@@ -610,6 +610,23 @@ class Datatable extends EventTypes {
     }
 
     /**
+     * @param {jQuery|HTMLElement} dom
+     * @return {Datatable[]}
+     */
+    static getDatatablesByDom(dom) {
+        let
+            __datatables = []
+        ;
+        if(co.isElementDom(dom)) {
+            if(co.isHtmlDom(dom)) dom = $(dom);
+            datatables.forEach((d) => {
+                if(dom.find(co.concat("#", d.ID)).length) __datatables.push(d);
+            });
+        }
+        return __datatables;
+    }
+
+    /**
      * @param {string|Datatable} datatable
      * @return {Datatable|undefined}
      */

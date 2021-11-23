@@ -10,21 +10,12 @@ class DefaultViewHandler {
 
     }
 
-    /**
-     * @param {View} view
-     */
-    setEvents(view) {
-        this.parent.admin.on(this.parent.admin.EVENT_VIEW_LOAD_DISPLAY, [this, "handleView"]);
-        this.setEventByMatchedRoute(view.storage.route);
-    }
-
 
     /**
      * @param {ViewContent} view
      */
     handleView(view) {
         this.view = view;
-        this.setEventByMatchedRoute(view.route);
     }
 
     /**
@@ -43,13 +34,12 @@ class DefaultViewHandler {
         return this.view
             ? this.view.dom
             : this.parent.dom
-            ;
+        ;
     }
 
-    /**
-     * @param {Route|undefined} route
-     */
-    setEventByMatchedRoute(route) {}
+    setEvents() {
+        if(this.parent) this.parent.admin.on(this.parent.admin.EVENT_VIEW_LOAD_DISPLAY, [this, "handleView"]);
+    }
 
 }
 

@@ -1,18 +1,19 @@
 const DefaultViewHandler = require("../default.view.handler");
 
+/**
+ * @property {DefaultViewsHandler} parent
+ * @property {ViewContent} view
+ */
 class DefaultViewTypeTextsHandler extends DefaultViewHandler {
 
 
     constructor() {
         super();
-
     }
 
-    /**
-     * @param {Route|undefined} route
-     */
-    setEventByMatchedRoute(route) {
-        if(route && route.isRoute('admin:translator:index')) {
+    handleView(view) {
+        super.handleView(view);
+        if(this.view.callByRoute('admin:translator:index')) {
             let
                 this_o = this,
                 coreDom = this.getCoreDom()

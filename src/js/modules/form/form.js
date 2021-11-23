@@ -69,7 +69,7 @@ let
     /**
      * @type {Form[]}
      */
-    formsList = [],
+    forms = [],
     initialized = false
 ;
 
@@ -438,7 +438,7 @@ class Form extends EventTypes {
                 if(!Form.hasForm(formID) || force) {
                     let _oldFrom = Form.getForm(formID);
                     if(_oldFrom) Form.destroyForm(_oldFrom);
-                    formsList.push(new Form(form));
+                    forms.push(new Form(form));
                 }
             }
         });
@@ -448,7 +448,24 @@ class Form extends EventTypes {
      * @return {Form[]}
      */
     static getForms() {
-        return formsList;
+        return forms;
+    }
+
+    /**
+     * @param {jQuery|HTMLElement} dom
+     * @return {Form[]}
+     */
+    static getFormsByDom(dom) {
+        let
+            __forms = []
+        ;
+        if(co.isElementDom(dom)) {
+            if(co.isHtmlDom(dom)) dom = $(dom);
+            forms.forEach((f) => {
+                if(dom.find(co.concat("#", f.ID).length)) __forms.push(f);
+            });
+        }
+        return __forms;
     }
 
     /**
@@ -456,7 +473,7 @@ class Form extends EventTypes {
      * @return {Form|undefined}
      */
     static getForm(form) {
-        return formsList.filter((_form) => {
+        return forms.filter((_form) => {
             return (form === _form || form === _form.ID);
         })[0];
     }
@@ -466,15 +483,15 @@ class Form extends EventTypes {
      * @return {boolean}
      */
     static destroyForm(form) {
-        let newForm = formsList.filter((_form) => {
+        let newForm = forms.filter((_form) => {
             if(!(form !== _form && form !== _form.ID)) {
                 _form.destroy();
                 return false;
             }
             return true;
         });
-        if(newForm.length !== formsList.length) {
-            formsList = newForm;
+        if(newForm.length !== forms.length) {
+            forms = newForm;
             return true;
         }
         return false;

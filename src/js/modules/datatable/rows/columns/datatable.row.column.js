@@ -184,10 +184,10 @@ class DatatableRowColumn {
      * @param {object} dataResponse
      */
     shareDataResponse(dataResponse) {
-        if(dataResponse[this.column.datatable.ROW_MODEL_KEY]) {
+        if(dataResponse[co.datatable.ROW_MODEL_KEY]) {
             let
                 this_o = this,
-                data = dataResponse[this.column.datatable.ROW_MODEL_KEY]
+                data = dataResponse[co.datatable.ROW_MODEL_KEY]
             ;
             this.updateValue(data[this.getName()]);
             $.each(data, (_name, _value) => {

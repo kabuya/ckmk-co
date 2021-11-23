@@ -151,7 +151,6 @@ let
 class CO_JAVASCRIPT_PROJECT_INSTANCE {
 
     constructor() {
-        _thisCo = this;
     }
 
     toString() {
@@ -947,8 +946,8 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
         CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.texts = require("./modules/translator/texts");
         CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.popup = require("./modules/popup/popup");
         CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.form = require("./modules/form/form");
-        CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.loader = require("./modules/loading/loader");
         CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.datatable = require("./modules/datatable/datatable");
+        CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.loader = require("./modules/loading/loader");
         CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.admin = require("./modules/admin/admin");
         _thisCo.form.init($("form"));
         _thisCo.datatable.init($(".datatable-content"));
@@ -959,4 +958,5 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
 
 document.addEventListener('DOMContentLoaded', CO_JAVASCRIPT_PROJECT_INSTANCE.initialization);
 
-module.exports = new CO_JAVASCRIPT_PROJECT_INSTANCE();
+
+module.exports = _thisCo = new CO_JAVASCRIPT_PROJECT_INSTANCE();

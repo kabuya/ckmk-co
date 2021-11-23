@@ -22,6 +22,7 @@
 
   .datatable-column-force-min-size {
     width: 20px;
+    text-align: center;
   }
 
   &.datatable-content-empty {
@@ -210,7 +211,7 @@
     }
     &:last-child {
       .datatable-header-column {
-        border: none;
+        border-top: none;
       }
     }
   }
@@ -447,6 +448,7 @@
 
   .datatable-header-column-group {
     text-align: center;
+    border-bottom: none;
   }
 
   .datatable-pagination {
@@ -454,8 +456,6 @@
       top: 10px;
     };
     position: relative;
-
-
   }
 
   .datatable-pagination-item {
@@ -686,6 +686,13 @@
       border-left: solid 3px;
       border-bottom: solid 3px;
       transform: rotate(-50deg) translate(-1px, 2px);
+    }
+  }
+
+  .datatable-header-row-filter {
+    .datatable-header-column {
+      border: none;
+      cursor: context-menu;
     }
   }
 
