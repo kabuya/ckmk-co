@@ -953,8 +953,9 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
         _thisCo.datatable.init($(".datatable-content"));
         _thisCo.infos();
     }
-
 }
+
+CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.document = require("./modules/documents/document-html");
 
 document.addEventListener('DOMContentLoaded', CO_JAVASCRIPT_PROJECT_INSTANCE.initialization);
 
