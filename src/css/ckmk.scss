@@ -50,6 +50,15 @@ img {
   display: none !important;
 }
 
+.info-card {
+  font-size: 12px;
+  padding: 6px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: solid 1px #e6e6e6;
+  background-color: #f6f6f6;
+}
+
 pre.sf-dump, pre.sf-dump .sf-dump-default {
   z-index: 5 !important;
 }

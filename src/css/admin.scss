@@ -117,6 +117,55 @@
   }
   /******* LOGIN ********/
 
+  /****** FORM ROLE *********/
+    .grants-container {
+      .grants-title {
+        //background-color: $formEmpty;
+        border: solid 1px $borderColor;
+        border-bottom: none;
+        padding: 7px;
+        font-weight: bold;
+        font-size: 15px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+
+      .grants-core {
+        padding: 10px;
+        border: solid 1px $borderColor;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+
+      .info-card {
+        margin-bottom: 15px;
+        display: inline-flex;
+        width: 100%;
+
+        > i, > div {
+          display: block;
+          vertical-align: bottom;
+        }
+
+        > i {
+          transform: translateY(4px);
+        }
+
+        > div {
+          width: 100%;
+          margin-left: 5px;
+        }
+      }
+
+      p {
+        margin-bottom: 5px;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  /****** FORM ROLE *********/
+
   &.theme-base {
 
     background-color: $contentBg;

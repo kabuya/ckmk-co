@@ -393,6 +393,9 @@ class Form extends EventTypes {
         this.dom.on("submit", function (e) {
             return this_o.formOnSubmit(e);
         });
+        this.dom.find(".button-no-action").on("click", (e) => {
+            return false;
+        });
         this.fields.forEach(function (fieldO) {
             fieldO.setEvents();
         });

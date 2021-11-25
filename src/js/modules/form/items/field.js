@@ -148,7 +148,15 @@ class Field extends EventTypes {
      * @return {boolean}
      */
     isDisable() {
-        return (this.dom.find(".field-disabled").length > 0);
+        return (
+            (this.dom.find(".field-disabled").length > 0)
+            ||
+            this.dom.hasClass("field-un-editable")
+            ||
+            this.dom.hasClass("field-fixed-content")
+            ||
+            this.dom.hasClass("field-no-editable")
+        );
     }
 
     /**

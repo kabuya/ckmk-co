@@ -289,6 +289,10 @@ class Datatable extends EventTypes {
         this.dom.find("tr.datatable-body-row").each((k, rowDom) => {
             this_o.rows.push(new DatatableRow(this_o, rowDom));
         });
+
+        this.columns.sort((a, b) => {
+            return co.ascendingResult(a.position, b.position);
+        });
     }
 
     /**

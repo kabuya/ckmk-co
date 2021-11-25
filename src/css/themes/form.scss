@@ -93,6 +93,16 @@ form.form-container {
     text-align: center;
     border-radius: $formRadius;
     transition: .3s;
+    font-size: 17px;
+    font-weight: bold;
+  }
+
+  .button-no-action {
+    overflow: hidden;
+    height: 0;
+    padding: 0;
+    border: none;
+    display: block;
   }
 
   .form-security-token-field {
@@ -108,6 +118,10 @@ form.form-container {
     select, input, textarea, .fr-element, .fr-command {
       pointer-events: none;
     }
+
+    .button-no-action {
+      display: none;
+    }
   }
 
   .field-fixed-content {
@@ -115,12 +129,20 @@ form.form-container {
     select, input, textarea, .fr-element, .fr-command {
       pointer-events: none;
     }
+
+    .button-no-action {
+      display: none;
+    }
   }
 
   .field-no-editable {
     cursor: no-drop;
     select, input, textarea, .fr-element, .fr-command {
       pointer-events: none;
+    }
+
+    .button-no-action {
+      display: none;
     }
   }
 
@@ -239,6 +261,75 @@ form.form-container {
 
     }
 
+    &.type-checkbox,
+    &.type-radio,
+    &.type-datetime-local,
+    &.type-date,
+    &.type-time,
+    &.type-select,
+    //&.type-number,
+    &.type-schedule,
+    &.type-files,
+    &.type-file,
+    &.textarea-wysiwyg
+    {
+      label {
+        right: initial;
+        bottom: initial;
+        display: inline-block;
+        font-size: 10px;
+        padding: 4px 8px;
+      }
+    }
+
+    &.type-select {
+      select {
+        display: none;
+      }
+    }
+
+    &.type-checkbox, &.type-radio {
+      .field-item {
+        padding: 0;
+        border: none;
+        overflow: initial;
+
+        label {
+          position: relative;
+          padding: 0;
+          font-size: 15px;
+        }
+      }
+
+      .field-checkbox, .field-radio {
+        width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+        //padding: 5px;
+
+        label {
+          position: initial;
+          width: 100%;
+          font-size: 14px;
+          border-radius: $formRadius;
+          cursor: pointer;
+          padding: 13px {
+            left: 10px;
+          };
+          border: solid 1px;
+        }
+
+        input {
+          margin: 0;
+          display: none;
+        }
+      }
+    }
+
     .field-confirm {
       margin-top: 8px;
       &.active, &.error {
@@ -284,33 +375,6 @@ form.form-container {
       }
     }
 
-    &.type-checkbox,
-    &.type-radio,
-    &.type-datetime-local,
-    &.type-date,
-    &.type-time,
-    &.type-select,
-    //&.type-number,
-    &.type-schedule,
-    &.type-files,
-    &.type-file,
-    &.textarea-wysiwyg
-    {
-      label {
-        right: initial;
-        bottom: initial;
-        display: inline-block;
-        font-size: 10px;
-        padding: 4px 8px;
-      }
-    }
-
-    &.type-select {
-      select {
-        display: none;
-      }
-    }
-
   }
 
   .field-hidden {
@@ -325,30 +389,8 @@ form.form-container {
     transition: .3s;
 
     .field-checkboxes, .field-radios, .field-schedules {
-      margin-top: 20px;
+      //margin-top: 20px;
     }
-
-    .field-checkbox, .field-radio {
-      width: 100%;
-      height: auto;
-      padding: 5px;
-
-      label {
-        position: initial;
-        width: 100%;
-        font-size: 14px;
-        border-radius: $formRadius;
-        cursor: pointer;
-        padding-left: 10px;
-      }
-
-      input {
-        margin: 0;
-        display: none;
-      }
-    }
-
-
   }
 
   .field-schedules {
@@ -850,7 +892,7 @@ form.form-container {
 
     .form-tab-arrow {
       width: 20px;
-      height: 46px;
+      height: 56px;
       background-color: white;
       position: absolute;
       top: 0;
@@ -910,7 +952,7 @@ form.form-container {
       padding: 5px 10px;
       border-radius: $formRadius;
       cursor: pointer;
-      margin: 5px;
+      margin: 10px;
       font-weight: bold;
 
     }

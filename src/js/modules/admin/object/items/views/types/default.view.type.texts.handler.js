@@ -13,7 +13,7 @@ class DefaultViewTypeTextsHandler extends DefaultViewHandler {
 
     handleView(view) {
         super.handleView(view);
-        if(this.view.callByRoute('admin:translator:index')) {
+        if(this.isViewOfRoute('admin:translator:index')) {
             let
                 this_o = this,
                 coreDom = this.getCoreDom()

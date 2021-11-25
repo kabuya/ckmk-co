@@ -53,6 +53,13 @@ class TextField extends Translator {
      * @return {boolean}
      */
     checkValue() {
+        return this.checkPatternOrDataList() && super.checkValue();
+    }
+
+    /**
+     * @return {boolean}
+     */
+    checkPatternOrDataList() {
         if(this.pattern || this.dataList) {
             let
                 input = this.dom.find("input"),
@@ -71,12 +78,10 @@ class TextField extends Translator {
                     errors.push(this.getErrorMessage(TextField.ERROR_PATTERN_INVALID));
                 }
             }
-            if(errors.length) {
-                this.setError({message:errors});
-            }
+            if(errors.length) this.setError({message:errors});
             return (errors.length === 0);
         }
-        return super.checkValue();
+        return true;
     }
 
     fieldOnFocusIn(e) {
@@ -101,7 +106,7 @@ class TextField extends Translator {
                     this_o = this
                 ;
                 this.dom.find("input").on("keyup", (e) => {
-                    this_o.checkValue();
+                    this_o.checkPatternOrDataList();
                 });
             }
         }
