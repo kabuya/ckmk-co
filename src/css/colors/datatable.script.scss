@@ -90,8 +90,9 @@
         background-color: $_info;
       }
 
-      &:hover {
+      &:hover, &:focus {
         background-color: $successDark;
+        outline: none;
 
         &.datatable-action-deletable {
           background-color: $dangerDark;
@@ -179,24 +180,44 @@
     cursor: pointer;
     transition: .3s;
 
-    &:hover {
+    &:hover, &:focus {
       background-color: $bgBaseDark;
+      outline: none;
     }
 
     &.datatable-global-delete {
       background-color: $_danger;
 
-      &:hover {
+      &:hover, &:focus {
         background-color: $dangerDark;
       }
     }
   }
 
+
+  .datatable-columns-visibility
+  , .datatable-count-lines {
+
+    color: $contentColor;
+
+    &:hover, &:focus {
+      .datatable-count-lines-result {
+        background-color: $dropdownBgHover;
+      }
+
+    }
+
+  }
+
   .datatable-count-lines-result {
     border-color: $searchInputBorderColor;
+    background-color: white;
 
-    &:hover, &.item-active {
-      background-color: $dropdownBgHover;
+    &:hover, &.item-active, &:focus {
+      &:not(.active) {
+        background-color: $dropdownBgHover;
+      }
+      outline: none;
     }
   }
 
@@ -206,6 +227,7 @@
 
   .datatable-types-item {
     @extend .datatable-count-lines-result;
+    color: $contentColor;
 
     &.active {
       background-color: $bgBase;
@@ -257,13 +279,19 @@
 
   .datatable-pagination-page-prev
   , .datatable-pagination-page-next {
-    &:hover {
+    background-color: transparent;
+
+    &:hover, &:focus {
       color: $bgBase;
+      outline: none;
     }
   }
 
   .datatable-body-column-longtext-more-content {
     background-color: white;
+    color: $contentColor;
+    border-color: $contentColor;
+
     .datatable-body-column-longtext-more-close {
       background-color: white;
     }
@@ -287,6 +315,15 @@
 
   }
 
+  .datatable-order-icon {
+    background-color: transparent;
+    color: $contentColor;
+
+    &:hover, &:focus {
+      color: $successColor;
+      outline: none;
+    }
+  }
 
   .datatable-columns-visibility-list-item
   , .datatable-columns-group-visibility-item {

@@ -140,6 +140,17 @@ class DatatableActionLines {
         }
     }
 
+    /**
+     * @param {jQuery.Event} e
+     */
+    toggleOpenByKey(e) {
+        if(e.originalEvent && (e.originalEvent.code.in("space", "enter") || e.originalEvent.key.in("enter"))) {
+            this.toggleOpen(e);
+            return true;
+        }
+        return false;
+    }
+
     setItems() {
         let
             this_o = this
@@ -156,11 +167,18 @@ class DatatableActionLines {
         let
             this_o = this
         ;
-        this.dom.find(".datatable-count-lines-result")
-            .on("click", (e) => {e.stopPropagation(); this_o.toggleOpen(e);})
-        ;
 
-        this.actions.datatable.on(co.datatable.EVENT_ON_CLICK_ON_TABLE_DOM, [this, "close"])
+        this.dom.on("keyup", (e) => {
+            return this_o.toggleOpenByKey(e);
+        });
+
+        this.dom.on("focusout", (e) => {
+            return this_o.close();
+        });
+
+        this.dom.find(".datatable-count-lines-result")
+            .on("click", (e) => {return this_o.toggleOpen(e);})
+        ;
     }
 
 

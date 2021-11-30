@@ -89,7 +89,8 @@
         label {
           color: $formText;
           background-color: $formEmpty;
-          border-color: $borderColor;
+          border-color: $formEmpty;
+          //border-color: $borderColor;
           &.checked {
             background-color: $formSuccess;
             color: $formSuccessText;

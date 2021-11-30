@@ -383,7 +383,7 @@ class DatatableRowColumn {
      * @return {jQuery|HTMLElement}
      */
     static setIconAction(route) {
-        return $("<i></i>")
+        return $("<button></button>")
             .addClass("fa datatable-column-action-icon")
             .attr("data-route", route.name)
             .attr("data-route-method", route.getDefaultMethod())

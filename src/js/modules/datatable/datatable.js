@@ -523,12 +523,6 @@ class Datatable extends EventTypes {
     }
 
     setEvents() {
-        let
-            this_o = this
-        ;
-        this.dom.on("click", (e) => {
-            this_o.run(Datatable.EVENT_ON_CLICK_ON_TABLE_DOM, e);
-        });
 
         if(this.isVisible(Datatable.VISIBILITY_LINES_TOP)) {
             this.on(Datatable.EVENT_ON_CHANGE_COUNT_LINE, [this,"changeCountLine"]);

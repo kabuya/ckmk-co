@@ -1,9 +1,9 @@
 const DatatableColumnAction = require("./datatable.column.action");
 
 const HTML_DOM_MORE_CONTENT = [
-    "<div class='datatable-body-column-longtext-more-content'>",
+    "<button class='datatable-body-column-longtext-more-content'>",
         "<i class='fa fa-close datatable-body-column-longtext-more-close'></i>",
-    "</div>"
+    "</button>"
 ].join("");
 
 /**
@@ -58,9 +58,10 @@ class DatatableColumnLongtextAction extends DatatableColumnAction {
         if(!this.column.dom.find(".datatable-body-column-longtext-more-content").length) {
             this.column.dom.append(this.moreContent);
             let this_o = this;
-            this.moreContent.on("click", (e) => {e.stopPropagation();});
+            this.moreContent.focus();
+            this.moreContent.on("focusout", (e) => {return this_o.removeMoreContent();});
             this.moreContent.find(".datatable-body-column-longtext-more-close")
-                .on("click", (e) => {e.stopPropagation(); return this_o.removeMoreContent();})
+                .on("click", (e) => {return this_o.removeMoreContent();})
             ;
         }
     }
@@ -93,10 +94,6 @@ class DatatableColumnLongtextAction extends DatatableColumnAction {
             co.datatable.EVENT_ON_SEARCH,
             [this, "resetClickMoreContent"]
         );
-        this.datatable.on(
-            co.datatable.EVENT_ON_CLICK_ON_TABLE_DOM,
-            [this, "removeMoreContent"]
-        );
     }
 
     destroy() {
@@ -104,10 +101,6 @@ class DatatableColumnLongtextAction extends DatatableColumnAction {
         this.datatable.removeAfter(
             co.datatable.EVENT_ON_SEARCH,
             [this, "resetClickMoreContent"]
-        );
-        this.datatable.removeAfter(
-            co.datatable.EVENT_ON_CLICK_ON_TABLE_DOM,
-            [this, "removeMoreContent"]
         );
     }
 
