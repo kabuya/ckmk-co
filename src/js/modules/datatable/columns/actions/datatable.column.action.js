@@ -75,15 +75,15 @@ class DatatableColumnAction {
         return co.concat(
             "Edit value ",
             "<b class='three-point' style='max-width: 300px;'>",
-            this.column.value,
+                this.column.value,
             "</b>",
             " off column ",
             "<b>",
-            this.column.column.title,
+                this.column.column.title,
             "</b>",
             " at row ",
             "<b>",
-            this.column.row.position,
+                this.column.row.position,
             "</b>"
         );
     }
@@ -94,11 +94,11 @@ class DatatableColumnAction {
 
     setEvents() {
         if(!this.type.isVoid()) {
-            if(this.type.editable && this.datatable.grants.isUpdate() && this.column.row.isVisible(this.column.row.VISIBILITY_COLUMN_EDITABLE)) {
+            if(this.type.editable && this.datatable.grants.isUpdate() && this.column.grantEditable) {
                 let
                     this_o = this
                 ;
-                this.column.dom.on("dblclick", (e) => {e.stopPropagation(); this_o.setEditPopUp(e);});
+                this.column.dom.on("dblclick", (e) => {this_o.setEditPopUp(e);});
             }
         }
     }

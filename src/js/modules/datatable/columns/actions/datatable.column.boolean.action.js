@@ -77,12 +77,15 @@ class DatatableColumnBooleanAction extends DatatableColumnAction {
         let
             route = this.column.column.type.editable,
             data = {
-                datatable: this.column.column.datatable.name,
                 id: this.column.row.ID,
+                datatable: this.column.column.datatable.name,
                 row: this.column.row.position,
+                column: this.column.column.name,
+                column_position: this.column.position,
+                old_value: this.column.rawValue,
             }
         ;
-        data["value"] = value;
+        data.value = value;
         data[this.column.column.name] = value;
         this.dom.addClass(HTML_CLASS_LOADING);
         this.onRequest = true;

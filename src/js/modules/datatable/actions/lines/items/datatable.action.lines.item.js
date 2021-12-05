@@ -56,7 +56,7 @@ class DatatableActionLinesItem {
         let
             this_o = this
         ;
-        this.dom.on("click", (e) => {e.stopPropagation(); this_o.change(e);})
+        this.dom.on("click", (e) => {this_o.change(e);})
     }
 
 }

@@ -2,7 +2,8 @@ let
     /** @type {{callback:(Function), targetRoutes:(string|string[])}[]} callbacks */
     callbacks = [],
     domLoaded = false,
-    routerDefine = false
+    routerDefine = false,
+    step = 0
 ;
 class DocumentHtml {
 
@@ -38,8 +39,10 @@ class DocumentHtml {
     }
 
     #executeSaveCallback() {
+        if(step === 10) return;
         if(!window.co || !window.co.router) {
             let this_o = this;
+            step++;
             setTimeout(() => {
                 this_o.#executeSaveCallback();
             }, 100);

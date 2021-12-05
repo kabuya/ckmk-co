@@ -69,7 +69,7 @@ class DatatableActionItemCore {
         let
             this_o = this
         ;
-        this.dom.on("click", (e) => {e.stopPropagation(); this_o.toggleActive(e);});
+        this.dom.on("click", (e) => {this_o.toggleActive(e);});
     }
 
 

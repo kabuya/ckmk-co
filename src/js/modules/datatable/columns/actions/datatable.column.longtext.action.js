@@ -74,7 +74,6 @@ class DatatableColumnLongtextAction extends DatatableColumnAction {
      * @param {Event} e
      */
     showMoreOnClick(e) {
-        e.stopPropagation();
         this.showMore(e);
     }
 

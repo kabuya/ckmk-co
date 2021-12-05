@@ -56,7 +56,6 @@ class DatatableActionAddable {
             this_o = this
         ;
         this.dom.on("click", (e) => {
-            //e.stopPropagation();
             this_o.addNewItem(e);
         });
     }

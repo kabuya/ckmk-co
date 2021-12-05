@@ -9,6 +9,7 @@ const HTML_CLASS_HIDDEN = "datatable-item-hidden";
  * @property {string|number} value
  * @property {string|number} rawValue
  * @property {string|number} compareValue
+ * @property {boolean} grantEditable
  * @property {
  *      DatatableColumnBooleanAction
  *      |DatatableColumnDateAction
@@ -44,6 +45,8 @@ class DatatableRowColumn {
         this.rawValue = co.data(this.dom, "raw-value");
         /** @type {string|number} compareValue */
         this.compareValue = co.data(this.dom, "compare-value");
+        /** @type {boolean} grantEditable */
+        this.grantEditable = co.data(this.dom, "grant-editable");
         /** @type {string|undefined} formTemplate */
         this.formTemplate = this.getFormTemplate();
         if(this.column) {
@@ -320,6 +323,7 @@ class DatatableRowColumn {
                     .attr("data-value", _value)
                     .attr("data-raw-value", column.type.getRawValue(value))
                     .attr("data-compare-value", column.type.getCompareValue(_value, value))
+                    .attr("data-grant-editable", true)
             ;
             if(!column.isVisible()) columnTd.addClass(column.HTML_CLASS_HIDDEN);
             return columnTd;
