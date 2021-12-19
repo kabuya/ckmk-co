@@ -1,6 +1,17 @@
 @mixin bgCover {
-  background: no-repeat center fixed !important;
-  background-size: cover !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+@mixin fullScreen($position:fixed, $z_index:1000) {
+  position: $position;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: $z_index;
 }
 
 @mixin scrollY {
@@ -91,18 +102,42 @@
   animation: rotate 1s infinite ease-in-out;
 }
 
-@mixin respond($breakpoint) {
+@mixin respond($breakpoint: "", $width: 0) {
   @if $breakpoint == mobile {
     @content
   } @else if $breakpoint == tablet {
-    @media only screen and (min-width: 620px) {
+    @if $width == 0 {
+      $width: 768px;
+    }
+    @media only screen and (min-width: $width) {
       @content
     }
-  } @else {
-    @media only screen and (min-width: 998px) {
+  } @else if $breakpoint == computer {
+    @if $width == 0 {
+      $width: 998px;
+    }
+    @media only screen and (min-width: $width) {
       @content
     }
   }
+}
+
+@mixin mobileView() {
+  @include respond(mobile) {
+    @content;
+  };
+}
+
+@mixin tableView($width: 768px) {
+  @include respond(tablet, $width) {
+    @content;
+  };
+}
+
+@mixin computerView($width: 998px) {
+  @include respond(computer, $width) {
+    @content;
+  };
 }
 
 @mixin inputFormColor(
@@ -185,4 +220,8 @@
     border-radius: $radius;
     cursor: pointer;
   }
+}
+
+@mixin googleFont($family) {
+  @import url("https://fonts.googleapis.com/css2?family=#{$family}&display=swap");
 }

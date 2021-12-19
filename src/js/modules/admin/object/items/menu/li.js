@@ -43,7 +43,7 @@ class Li {
         this.children = [];
         this.setChildren();
         this.setEvents();
-        // co.log(this);
+        //co.log(this);
     }
 
     /**
@@ -227,7 +227,7 @@ class Li {
         this.Admin.on(this.Admin.EVENT_VIEW_LOAD_DISPLAY, [this, "changeTitle"]);
         if(!this.Nav && co.isFunction(this.clickLiCb)) {
             let this_o = this;
-            this.dom.on("click", function (e) {
+            this.dom.find("> .menu-title-content").on("click", function (e) {
                 this_o.toggleShowChildren();
                 return co.runCb(this_o.clickLiCb, e, this_o);
             });

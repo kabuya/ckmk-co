@@ -52,12 +52,7 @@ class DatatableActionAddable {
     }
 
     setEvents() {
-        let
-            this_o = this
-        ;
-        this.dom.on("click", (e) => {
-            this_o.addNewItem(e);
-        });
+        this.dom.on("click", this.addNewItem.bind(this));
     }
 
 
