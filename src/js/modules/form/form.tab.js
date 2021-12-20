@@ -70,12 +70,7 @@ class FormTab {
     }
 
     setEvents() {
-        let
-            this_o = this
-        ;
-        this.dom.find(".form-tab-arrow").on("click", (e) => {
-            this_o.moveByArrow(e);
-        });
+        this.dom.find(".form-tab-arrow").on("click", this.moveByArrow.bind(this));
         this.tabs.forEach((tab) => {
             tab.setEvents();
         });

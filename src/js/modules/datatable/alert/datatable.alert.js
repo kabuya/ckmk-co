@@ -159,11 +159,8 @@ class DatatableAlert {
     }
 
     setEvents() {
-        let
-            this_o = this
-        ;
         this.dom.find(".datatable-alert-message-close")
-            .on("click", (e) => {this_o.closeMessage(e);})
+            .on("click", this.closeMessage.bind(this))
         ;
     }
 

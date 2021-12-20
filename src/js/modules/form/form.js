@@ -387,12 +387,7 @@ class Form extends EventTypes {
     }
 
     setEvents() {
-        let
-            this_o = this
-        ;
-        this.dom.on("submit", function (e) {
-            return this_o.formOnSubmit(e);
-        });
+        this.dom.on("submit", this.formOnSubmit.bind(this));
         this.dom.find(".button-no-action").on("click", (e) => {
             return false;
         });

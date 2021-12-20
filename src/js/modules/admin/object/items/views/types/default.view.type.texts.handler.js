@@ -15,12 +15,9 @@ class DefaultViewTypeTextsHandler extends DefaultViewHandler {
         super.handleView(view);
         if(this.isViewOfRoute('admin:translator:index')) {
             let
-                this_o = this,
                 coreDom = this.getCoreDom()
             ;
-            coreDom.find(".dt-btn").on("click", (e) => {
-                this_o.changeTranslatorDatatableView(e);
-            });
+            coreDom.find(".dt-btn").on("click", this.changeTranslatorDatatableView.bind(this));
         }
     }
 

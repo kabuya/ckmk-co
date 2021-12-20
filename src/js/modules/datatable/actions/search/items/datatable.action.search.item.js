@@ -193,15 +193,14 @@ class DatatableActionSearchItem {
 
     setEvents() {
         let
-            this_o = this,
             input = this.dom.find("input"),
             close = this.dom.find("i.fa-close")
         ;
-        this.dom.on("click", (e) => {return this_o.checkDisable(e);});
-        input.on("keyup", (e) => {this_o.editValue(e);});
-        input.on("change", (e) => {this_o.editValue(e);});
-        input.on("focusout", (e) => {this_o.toggleActive(e);});
-        close.on("click", (e) => {this_o.resetValue(e);});
+        this.dom.on("click", this.checkDisable.bind(this));
+        input.on("keyup", this.editValue.bind(this));
+        input.on("change", this.editValue.bind(this));
+        input.on("focusout", this.toggleActive.bind(this));
+        close.on("click", this.resetValue.bind(this));
     }
 
 }

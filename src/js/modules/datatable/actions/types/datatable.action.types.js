@@ -65,17 +65,8 @@ class DatatableActionTypes {
     }
 
     setEvents() {
-        let
-            this_o = this
-        ;
-
-        this.row.on("click", (e) => {
-            return this_o.setRowType(e);
-        });
-
-        this.grid.on("click", (e) => {
-            return this_o.setGridType(e);
-        });
+        this.row.on("click", this.setRowType.bind(this));
+        this.grid.on("click", this.setGridType.bind(this));
     }
 
 

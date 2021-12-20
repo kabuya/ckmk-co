@@ -45,12 +45,7 @@ class HeaderReload {
 
 
     setEvents() {
-        let
-            this_o = this
-        ;
-        this.dom.on("click", function (e) {
-            this_o.reloadPage(e);
-        });
+        this.dom.on("click", this.reloadPage.bind(this));
         this.Admin.on(this.Admin.EVENT_VIEW_LOAD_DISPLAY, [this,"stopRotation"]);
     }
 

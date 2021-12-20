@@ -64,12 +64,7 @@ class BurgerMenu {
 
 
     setEvents() {
-        let
-            this_o = this
-        ;
-        this.dom.on("click", function (e) {
-            this_o.toggleOpenMenu(e);
-        });
+        this.dom.on("click", this.toggleOpenMenu.bind(this));
     }
 
 }

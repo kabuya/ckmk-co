@@ -59,10 +59,7 @@ class DocumentHtml {
     }
 
     #setEvents() {
-        let this_o = this;
-        document.addEventListener('DOMContentLoaded', (e) => {
-            this_o.#executeSaveCallback(e);
-        });
+        document.addEventListener('DOMContentLoaded', this.#executeSaveCallback.bind(this));
     }
 
 }

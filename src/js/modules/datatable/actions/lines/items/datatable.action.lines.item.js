@@ -53,10 +53,7 @@ class DatatableActionLinesItem {
     }
 
     setEvents() {
-        let
-            this_o = this
-        ;
-        this.dom.on("click", (e) => {this_o.change(e);})
+        this.dom.on("click", this.change.bind(this));
     }
 
 }

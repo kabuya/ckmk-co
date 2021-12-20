@@ -398,13 +398,8 @@ class DatatableColumn {
     }
 
     setEvents() {
-        let
-            this_o = this
-        ;
         if(this.isOrdered()) {
-            this.dom.on("click", (e) => {
-                return this_o.changerOrder(e);
-            });
+            this.dom.on("click", this.changerOrder.bind(this));
             this.datatable.on(
                 co.datatable.EVENT_ON_COLUMN_REORDER_ROWS,
                 [this, "removeOrderIcon"]

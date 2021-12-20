@@ -151,16 +151,9 @@ class TranslatorField extends Field {
     setEvents() {
         super.setEvents();
         if(this.useTranslator()) {
-            let
-                this_o = this
-            ;
-            this.dom.find(".lang-list > label").on("click", function (e) {
-                return this_o.labelOnClick(e);
-            });
+            this.dom.find(".lang-list > label").on("click", this.labelOnClick.bind(this));
 
-            this.dom.find(".lang-arrow").on("click", function (e) {
-                return this_o.arrowOnClick(e);
-            });
+            this.dom.find(".lang-arrow").on("click", this.arrowOnClick.bind(this));
         }
     }
 

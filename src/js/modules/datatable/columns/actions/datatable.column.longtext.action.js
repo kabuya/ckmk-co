@@ -57,11 +57,10 @@ class DatatableColumnLongtextAction extends DatatableColumnAction {
         this.datatable.dom.find(".datatable-body-column-longtext-more-content").remove();
         if(!this.column.dom.find(".datatable-body-column-longtext-more-content").length) {
             this.column.dom.append(this.moreContent);
-            let this_o = this;
             this.moreContent.focus();
-            this.moreContent.on("focusout", (e) => {return this_o.removeMoreContent();});
+            this.moreContent.on("focusout", this.removeMoreContent.bind(this));
             this.moreContent.find(".datatable-body-column-longtext-more-close")
-                .on("click", (e) => {return this_o.removeMoreContent();})
+                .on("click", this.removeMoreContent.bind(this))
             ;
         }
     }
@@ -78,11 +77,8 @@ class DatatableColumnLongtextAction extends DatatableColumnAction {
     }
 
     resetClickMoreContent() {
-        let
-            this_o = this
-        ;
         this.column.dom.find(".datatable-body-column-longtext-more")
-            .on("click", (e) => {this_o.showMoreOnClick(e);})
+            .on("click", this.showMoreOnClick.bind(this))
         ;
     }
 
@@ -104,11 +100,8 @@ class DatatableColumnLongtextAction extends DatatableColumnAction {
     }
 
     setEventReadMore() {
-        let
-            this_o = this
-        ;
         this.column.dom.find(".datatable-body-column-longtext-more")
-            .on("click", (e) => {this_o.showMoreOnClick(e);})
+            .on("click", this.showMoreOnClick.bind(this))
         ;
     }
 

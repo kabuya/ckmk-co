@@ -217,28 +217,17 @@ class DatatableColumnActionsAction extends DatatableColumnAction {
     }
 
     setActionsEvents() {
-        let
-            this_o = this
-        ;
         if(this.visible && this.visible.length) {
-            this.visible.on("click", (e) => {
-                this_o.openVisibleCard(e);
-            });
+            this.visible.on("click", this.openVisibleCard.bind(this));
         }
         if(this.copyable && this.copyable.length) {
-            this.copyable.on("click", (e) => {
-                this_o.openCopyableCard(e);
-            });
+            this.copyable.on("click", this.openCopyableCard.bind(this));
         }
         if(this.editable && this.editable.length) {
-            this.editable.on("click", (e) => {
-                this_o.openEditableCard(e);
-            });
+            this.editable.on("click", this.openEditableCard.bind(this));
         }
         if(this.deletable && this.deletable.length) {
-            this.deletable.on("click", (e) => {
-                this_o.openDeletableCard(e);
-            });
+            this.deletable.on("click", this.openDeletableCard.bind(this));
         }
     }
 

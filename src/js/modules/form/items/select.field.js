@@ -289,38 +289,22 @@ class SelectField extends Field {
     }
 
     setEvents() {
-        let
-            this_o = this
-        ;
-
         this.setToggleAbleEvents();
 
         if(!this.isMultiple()) {
-            this.dom.find("label, .super-selected, .super-arrow").on("click", (e) => {
-                return this_o.superSelectedOnClick(e);
-            });
+            this.dom.find("label, .super-selected, .super-arrow").on("click", this.superSelectedOnClick.bind(this));
         }
 
-        this.dom.find(".search-icon").on("click", (e) => {
-            return this_o.searchIconOnClick(e);
-        });
+        this.dom.find(".search-icon").on("click", this.searchIconOnClick.bind(this));
 
-        this.dom.find(".super-remove").on("click", (e) => {
-            return this_o.searchRemoveOnClick(e);
-        });
+        this.dom.find(".super-remove").on("click", this.searchRemoveOnClick.bind(this));
 
         if(this.isSearchable()) {
-            this.dom.find(".super-input").on("keyup", (e) => {
-                return this_o.inputOnKeyUp(e);
-            });
+            this.dom.find(".super-input").on("keyup", this.inputOnKeyUp.bind(this));
 
-            this.dom.find(".super-input").on("focusin", (e) => {
-                return this_o.inputOnFocusin(e);
-            });
+            this.dom.find(".super-input").on("focusin", this.inputOnFocusin.bind(this));
 
-            this.dom.find(".super-input").on("focusout", (e) => {
-                return this_o.inputOnFocusout(e);
-            });
+            this.dom.find(".super-input").on("focusout", this.inputOnFocusout.bind(this));
         }
 
         this.getOptions().forEach((option) => {

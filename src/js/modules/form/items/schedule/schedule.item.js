@@ -93,10 +93,10 @@ class ScheduleItem {
     }
 
     /**
-     * @param {Event} e
      * @param {string} type
+     * @param {Event} e
      */
-    inputOnChange(e, type) {
+    inputOnChange(type, e) {
         if(type === TYPE_FROM) {
             if(!this.changed.from) {
                 this.changed.from = true;
@@ -143,40 +143,21 @@ class ScheduleItem {
 
     setEvents() {
         let
-            this_o = this,
             label = this.dom.find(".schedule-day"),
             fromLabel = this.dom.find(".schedule-from > div"),
             fromInput = this.dom.find(".schedule-from > input"),
             toLabel = this.dom.find(".schedule-to > div"),
             toInput = this.dom.find(".schedule-to > input")
         ;
-        label.on("click", (e) => {
-            this_o.labelOnClick(e);
-        });
-        fromLabel.on("click", (e) => {
-            this_o.fromLabelOnClick(e);
-        });
-        toLabel.on("click", (e) => {
-            this_o.toLabelOnClick(e);
-        });
-        fromInput.on("focusin", (e) => {
-            this_o.inputOnFocusin(e);
-        });
-        toInput.on("focusin", (e) => {
-            this_o.inputOnFocusin(e);
-        });
-        fromInput.on("focusout", (e) => {
-            this_o.inputOnFocusout(e);
-        });
-        toInput.on("focusout", (e) => {
-            this_o.inputOnFocusout(e);
-        });
-        fromInput.on("change", (e) => {
-            this_o.inputOnChange(e, TYPE_FROM);
-        });
-        toInput.on("change", (e) => {
-            this_o.inputOnChange(e, TYPE_TO);
-        });
+        label.on("click", this.labelOnClick.bind(this));
+        fromLabel.on("click", this.fromLabelOnClick.bind(this));
+        toLabel.on("click", this.toLabelOnClick.bind(this));
+        fromInput.on("focusin", this.inputOnFocusin.bind(this));
+        toInput.on("focusin", this.inputOnFocusin.bind(this));
+        fromInput.on("focusout", this.inputOnFocusout.bind(this));
+        toInput.on("focusout", this.inputOnFocusout.bind(this));
+        fromInput.on("change", this.inputOnChange.bind(this, TYPE_FROM));
+        toInput.on("change", this.inputOnChange.bind(this, TYPE_TO));
     }
 
 }

@@ -45,9 +45,7 @@ class DatatableSelectedColumns extends DatatableSelected {
             ;
         }
         let this_o = this;
-        this.dom.on("click", (e) => {
-            return this_o.addOnDeletingList(e);
-        });
+        this.dom.on("click", this.addOnDeletingList.bind(this));
         return true;
     }
 

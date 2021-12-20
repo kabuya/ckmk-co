@@ -479,21 +479,14 @@ class Field extends EventTypes {
 
     setEvents() {
         let
-            this_o = this,
             fieldHtml = this.dom.find(".field-item").find("input, textarea, select")
         ;
 
-        fieldHtml.on("change", function (e) {
-            return this_o.fieldOnChange(e);
-        });
+        fieldHtml.on("change", this.fieldOnChange.bind(this));
 
-        fieldHtml.on("focusin", function (e) {
-            return this_o.fieldOnFocusIn(e);
-        });
+        fieldHtml.on("focusin", this.fieldOnFocusIn.bind(this));
 
-        fieldHtml.on("focusout", function (e) {
-            return this_o.fieldOnFocusOut(e);
-        });
+        fieldHtml.on("focusout", this.fieldOnFocusOut.bind(this));
 
         this.form.on(FORM_EVENT_BEFORE_SUBMIT, [this, "onBeforeSubmit"]);
         this.form.on(FORM_EVENT_AFTER_SUBMIT, [this, "onAfterSubmit"]);

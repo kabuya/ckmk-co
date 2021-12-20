@@ -262,13 +262,9 @@ class DatatableActionDeletable {
             let
                 this_o = this
             ;
-            this.dom.on("click", (e) => {
-                this_o.openDeleteCheckbox(e);
-            });
+            this.dom.on("click", this.openDeleteCheckbox.bind(this));
             this.actions.datatable.dom.find(".datatable-body").on("pointerdown", (e) => {
-                this_o.initSelectRows(e, (e) => {
-                    this_o.selectRows(e);
-                });
+                this_o.initSelectRows(e, this_o.selectRows.bind(this_o));
             });
 
             this.actions.datatable.on(

@@ -92,15 +92,8 @@ class UserMenu extends MenuBase {
     }
 
     setEvents() {
-        let
-            this_o = this
-        ;
-        this.dom.on("click", (e) => {
-            this_o.open(e);
-        });
-        this.menu.on("click", (e) => {
-            this_o.close(e);
-        });
+        this.dom.on("click", this.open.bind(this));
+        this.menu.on("click", this.close.bind(this));
         this.menu.find("> ul.menu-container").on("click", (e) => {
             e.stopPropagation();
         });

@@ -163,22 +163,9 @@ class DatatableActionLines {
     }
 
     setEvents() {
-
-        let
-            this_o = this
-        ;
-
-        this.dom.on("keyup", (e) => {
-            return this_o.toggleOpenByKey(e);
-        });
-
-        this.dom.on("focusout", (e) => {
-            return this_o.close();
-        });
-
-        this.dom.find(".datatable-count-lines-result")
-            .on("click", (e) => {return this_o.toggleOpen(e);})
-        ;
+        this.dom.on("keyup", this.toggleOpenByKey.bind(this));
+        this.dom.on("focusout", this.close.bind(this));
+        this.dom.find(".datatable-count-lines-result").on("click", this.toggleOpen.bind(this));
     }
 
 

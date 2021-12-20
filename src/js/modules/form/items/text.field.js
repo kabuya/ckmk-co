@@ -102,12 +102,7 @@ class TextField extends Translator {
         super.setEvents();
         if(!this.useTranslator()) {
             if(this.pattern || this.dataList) {
-                let
-                    this_o = this
-                ;
-                this.dom.find("input").on("keyup", (e) => {
-                    this_o.checkPatternOrDataList();
-                });
+                this.dom.find("input").on("keyup", this.checkPatternOrDataList.bind(this));
             }
         }
     }

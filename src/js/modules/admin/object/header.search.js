@@ -55,7 +55,7 @@ class HeaderSearch {
             elem = $(e.currentTarget)
         ;
         this.abortRequest();
-        if(this.isValueChanged(elem)) {
+        if(this.isValueChanged(elem, e)) {
             this.request = co.ajax.build()
                 .setUrl(this.route.getAbsolutePath())
                 .setType(co.ajax.METHOD_POST)
@@ -71,12 +71,14 @@ class HeaderSearch {
 
     /**
      * @param {jQuery|HTMLElement} elem
+     * @param {Event} e
      * @return {boolean}
      */
-    isValueChanged(elem) {
+    isValueChanged(elem, e) {
         let
             value = elem.val()
         ;
+        if(value && e.type.in("focusin")) return true;
         if(!value || (co.isString(value) && value.match(/^[ ]+$/))) {
             elem.val("");
             return false;
@@ -212,16 +214,12 @@ class HeaderSearch {
             this_o = this
         ;
         this.input
-            .on("keyup", function (e) {
-                this_o.search(e);
-            })
+            .on("keyup", this.search.bind(this))
             .on("focusin", function (e) {
                 this_o.focusin(e);
                 this_o.search(e);
             })
-            .on("focusout", function (e) {
-                this_o.focusout(e);
-            })
+            .on("focusout", this.focusout.bind(this))
         ;
     }
 

@@ -32,10 +32,7 @@ class DatatableRowSelectedColumn extends DatatableSelected {
             .addClass("datatable-body-row")
         ;
         if(this.isDisplayAble()) {
-            let this_o = this;
-            this.dom.on("click", (e) => {
-                return this_o.toggleCheck(e);
-            });
+            this.dom.on("click", this.toggleCheck.bind(this));
         }
         return true;
     }

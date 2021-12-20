@@ -78,12 +78,9 @@ class SearchResultItem {
 
     setEvents() {
         let
-            this_o = this,
             link = this.dom.find("a")
         ;
-        link.on("click", function (e) {
-            return this_o.displayResult(e);
-        });
+        link.on("click", this.displayResult.bind(this));
     }
 
 

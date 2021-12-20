@@ -95,12 +95,7 @@ class TextDatalistItem {
 
     setEvents() {
         if(this.container.isChoiceControl()) {
-            let
-                this_o = this
-            ;
-            this.dom.on("click", (e) => {
-                this_o.setChoice(e);
-            });
+            this.dom.on("click", this.setChoice.bind(this));
         }
     }
 

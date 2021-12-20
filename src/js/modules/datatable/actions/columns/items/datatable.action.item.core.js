@@ -66,10 +66,7 @@ class DatatableActionItemCore {
     }
 
     setEvents() {
-        let
-            this_o = this
-        ;
-        this.dom.on("click", (e) => {this_o.toggleActive(e);});
+        this.dom.on("click", this.toggleActive.bind(this));
     }
 
 

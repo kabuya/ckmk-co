@@ -256,9 +256,6 @@ class DatatablePagination {
     }
 
     setEvents() {
-        let
-            this_o = this
-        ;
         this.datatable.on(
             co.datatable.EVENT_ON_CHANGE_COUNT_LINE,
             [this,"changeTarget"]
@@ -268,13 +265,13 @@ class DatatablePagination {
             [this,"changeTargetByFilter"]
         );
         this.dom.find(".datatable-pagination-page-prev")
-            .on("click", (e) => {return this_o.goToPrev(e);})
+            .on("click", this.goToPrev.bind(this))
         ;
         this.dom.find(".datatable-pagination-page-next")
-            .on("click", (e) => {return this_o.goToNext(e);})
+            .on("click", this.goToNext.bind(this))
         ;
         this.dom.find(".datatable-pagination-page-input")
-            .on("keyup", (e) => {return this_o.changeCurrentByKeyUp(e);})
+            .on("keyup", this.changeCurrentByKeyUp.bind(this))
         ;
     }
 

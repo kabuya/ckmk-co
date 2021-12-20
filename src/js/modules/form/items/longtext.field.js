@@ -77,6 +77,16 @@ class LongtextField extends Translator {
         countChar.find(".textarea-count-char-value").text(textVal.length);
     }
 
+    fieldOnFocusIn(e) {
+        co.setCaretToEnd(e.currentTarget);
+        super.fieldOnFocusIn(e);
+    }
+
+    fieldOnFocusOut(e) {
+        e.currentTarget = $(e.currentTarget).parent().parent().next().get(0);
+        super.fieldOnFocusOut(e);
+    }
+
     /**
      * @param {Event} e
      */
@@ -98,7 +108,6 @@ class LongtextField extends Translator {
      */
     initializedWysiwygDOM(textarea) {
         let
-            this_o = this,
             wysiwygDOM = textarea.prev()
         ;
 
@@ -108,31 +117,19 @@ class LongtextField extends Translator {
 
         wysiwygDOM.find("#fr-logo").remove();
 
-        wysiwygDOM.find(".fr-element").on("change", (e) => {
-            this_o.rewriteTextareaValue(e);
-        });
+        wysiwygDOM.find(".fr-element").on("change", this.rewriteTextareaValue.bind(this));
 
-        wysiwygDOM.find(".fr-element").on("keyup", (e) => {
-            this_o.rewriteTextareaValue(e);
-        });
+        wysiwygDOM.find(".fr-element").on("keyup", this.rewriteTextareaValue.bind(this));
 
-        wysiwygDOM.find(".fr-element").on("focusin", (e) => {
-            co.setCaretToEnd(e.currentTarget);
-            this_o.fieldOnFocusIn(e);
-        });
+        wysiwygDOM.find(".fr-element").on("focusin", this.fieldOnFocusIn.bind(this));
 
-        wysiwygDOM.find(".fr-element").on("focusout", (e) => {
-            e.currentTarget = $(e.currentTarget).parent().parent().next().get(0);
-            this_o.fieldOnFocusOut(e);
-        });
+        wysiwygDOM.find(".fr-element").on("focusout", this.fieldOnFocusOut.bind(this));
 
         wysiwygDOM.find(".fr-second-toolbar").prepend(
             $("<span class='wysiwyg-save-plain-text'></span>")
                 .attr("title", "Save plain text")
                 .append("<span></span>")
-        ).find(".wysiwyg-save-plain-text").on("click", (e) => {
-            return this_o.setSavePlaintext(e);
-        });
+        ).find(".wysiwyg-save-plain-text").on("click", this.setSavePlaintext.bind(this));
     }
 
     checkValue() {
@@ -194,13 +191,7 @@ class LongtextField extends Translator {
     setEvents() {
         super.setEvents();
 
-        let
-            this_o = this
-        ;
-
-        this.dom.find("textarea").on("keyup", (e) => {
-            this_o.textareaOnKeyup(e);
-        });
+        this.dom.find("textarea").on("keyup", this.textareaOnKeyup.bind(this));
     }
 
 }

@@ -170,17 +170,10 @@ class SelectOption {
     }
 
     setEvents() {
-        let
-            this_o = this
-        ;
         if(this.select.isMultiple()) {
-            this.dom.on("click", (e) => {
-                return this_o.domOnClickMultiple(e);
-            });
+            this.dom.on("click", this.domOnClickMultiple.bind(this));
         } else {
-            this.dom.on("click", (e) => {
-                return this_o.domOnClickSingle(e);
-            });
+            this.dom.on("click", this.domOnClickSingle.bind(this));
         }
     }
 

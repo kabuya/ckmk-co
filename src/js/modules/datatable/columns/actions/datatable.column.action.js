@@ -95,10 +95,7 @@ class DatatableColumnAction {
     setEvents() {
         if(!this.type.isVoid()) {
             if(this.type.editable && this.datatable.grants.isUpdate() && this.column.grantEditable) {
-                let
-                    this_o = this
-                ;
-                this.column.dom.on("dblclick", (e) => {this_o.setEditPopUp(e);});
+                this.column.dom.on("dblclick", this.setEditPopUp.bind(this));
             }
         }
     }

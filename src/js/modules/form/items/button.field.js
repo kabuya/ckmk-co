@@ -78,18 +78,13 @@ class ButtonField extends Field {
         super.setEvents();
         if(!this.isDisable()) {
             let
-                this_o = this,
                 btn = this.dom.find(".button-no-action")
             ;
             btn.on("click", (e) => {
                 $(e.currentTarget).next().click();
             });
-            btn.on("focusin", (e) => {
-                this_o.addFocusOnLabel(e);
-            });
-            btn.on("focusout", (e) => {
-                this_o.removeFocusOnLabel(e);
-            });
+            btn.on("focusin", this.addFocusOnLabel.bind(this));
+            btn.on("focusout", this.removeFocusOnLabel.bind(this));
         }
     }
 
