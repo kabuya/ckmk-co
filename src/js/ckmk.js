@@ -873,9 +873,14 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
     }
 
     /**
+     * Callback jQuery Selector
+     * @callback searchCallback
+     * @param {string} value
+     */
+    /**
      * @param {*} regexp
      * @param {string} value
-     * @param {Function|Array|undefined} cb
+     * @param {searchCallback|Array|undefined} cb
      * @return {string|undefined}
      */
     search(regexp, value, cb = undefined) {
@@ -906,6 +911,31 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
                 });
             }
         }
+    }
+
+    /**
+     * Callback jQuery Selector
+     * @callback querySelectorFromJQuery
+     * @param {jQuery|HTMLElement} item
+     * @param {number} key
+     * @param {string} querySelector
+     */
+    /**
+     * @param {string} querySelector
+     * @param {querySelectorFromJQuery} callback
+     * @return {boolean}
+     */
+    $(querySelector, callback) {
+        if(window.$ && this.isFunction(callback)) {
+            let items = document.querySelectorAll(querySelector);
+            if(items.length) {
+                items.forEach((item, k) => {
+                    callback(window.$(item), k, querySelector);
+                });
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
