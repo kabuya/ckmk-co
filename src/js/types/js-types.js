@@ -260,6 +260,10 @@ Object.assign(String.prototype, {
         return found;
     },
 
+    slug() {
+        return this.noAccent().trim().replace(/[ ]+/gi, "-");
+    },
+
     noAccent() {
         return this.replace(new RegExp(SPECIAL_CHARS.join("|"), "g"), function (str) {
             return REPLACE_CHARS[SPECIAL_CHARS.indexOf(str)];

@@ -61,11 +61,22 @@ $popupCardBorder : #b0b0b0;
     font-weight: bold;
   }
 
-  .popup-close {
+  .popup-header-buttons {
     position: absolute;
     top: 7px;
     right: 11px;
     cursor: pointer;
+  }
+
+  .popup-header-button {
+    display: inline-block;
+    background-color: red;
+    padding: 1px 4px;
+    margin-right: 5px;
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
 
   .popup-content {

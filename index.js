@@ -12,6 +12,7 @@ const $ = window.$ = window.jQuery = ((window.$) ? window.$ : require('jquery'))
  */
 const FroalaEditor = window.FroalaEditor = ((window.FroalaEditor) ? window.FroalaEditor : require('froala-editor/js/froala_editor.pkgd.min'));
 
+
 /**
  * Types prototype method
  */
