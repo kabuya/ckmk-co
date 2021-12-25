@@ -120,6 +120,7 @@ class PopUp {
         if(!appended) {
             appended = true;
             container.prepend(dom);
+            container.addClass("body-overflow-lock");
         }
         return false;
     }
@@ -142,6 +143,7 @@ class PopUp {
     hide() {
         if(this.canClose()) {
             dom.remove();
+            container.removeClass("body-overflow-lock");
             return true;
         }
         return false;

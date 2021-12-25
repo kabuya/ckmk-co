@@ -12,8 +12,26 @@
       8px
   );
 
-  .popup-close {
+  .popup-header-button-screen-control {
+    color: $popupSuccess;
+
+    &:hover, &:active, &:focus {
+      background-color: $popupSuccess;
+      color: white;
+      outline: none;
+      text-decoration: none;
+    }
+  }
+
+  .popup-header-button-close {
     color: $popupDanger;
+
+    &:hover, &:active, &:focus {
+      background-color: $popupDanger;
+      color: white;
+      outline: none;
+      text-decoration: none;
+    }
   }
 
   .popup-button {

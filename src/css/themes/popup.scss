@@ -9,6 +9,11 @@ $popupDanger : #fb5656;
 $popupDangerDark : #b33939;
 $popupCardBorder : #b0b0b0;
 
+
+.body-overflow-lock {
+  overflow: hidden !important;
+}
+
 .popup-container {
 
   ::-webkit-scrollbar {
@@ -17,7 +22,7 @@ $popupCardBorder : #b0b0b0;
   }
 
   position: fixed;
-  z-index: 10000;
+  z-index: 12000;
   top: 0;
   left: 0;
   right: 0;
@@ -42,6 +47,22 @@ $popupCardBorder : #b0b0b0;
     &.popup-type-form {
       min-width: 50%;
     }
+
+    &.popup-screen-full-content {
+      $__fullScreenPosition: 0;
+
+      top: $__fullScreenPosition;
+      left: $__fullScreenPosition;
+      right: $__fullScreenPosition;
+      bottom: $__fullScreenPosition;
+      transform: translate(0, 0);
+      min-width: auto;
+      max-width: initial;
+
+      .popup-content {
+        max-height: 100vh;
+      }
+    }
   }
 
   .popup-header {
@@ -52,13 +73,17 @@ $popupCardBorder : #b0b0b0;
 
   .popup-title {
     padding: 13px {
-      right: 30px;
+      right: 70px;
     };
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 20px;
     font-weight: bold;
+
+    &:first-letter {
+      text-transform: capitalize;
+    }
   }
 
   .popup-header-buttons {
@@ -70,9 +95,11 @@ $popupCardBorder : #b0b0b0;
 
   .popup-header-button {
     display: inline-block;
-    background-color: red;
-    padding: 1px 4px;
+    background-color: transparent;
+    padding: 3px 5px;
     margin-right: 5px;
+    border-radius: 2px;
+    text-decoration: none;
 
     &:last-child {
       margin-right: 0;
@@ -147,6 +174,8 @@ $popupCardBorder : #b0b0b0;
       max-height: 800vh;
     }
   }
+
+
 
   iframe {
     width: 100%;

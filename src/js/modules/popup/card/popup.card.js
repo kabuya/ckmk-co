@@ -9,6 +9,9 @@ const TYPE_IFRAME = "iframe";
 const HIDDEN_DIRECTION_TOP = "popup-top";
 const HIDDEN_DIRECTION_DOWN = "popup-bottom";
 const HIDDEN_DIRECTION_VISIBILITY = "popup-hide";
+const FULL_SCREEN_CLASS_HTML = "popup-screen-full-content";
+const EXPAND_SCREEN_CLASS_HTML = "fa-expand";
+const COMPRESS_SCREEN_CLASS_HTML = "fa-compress";
 
 const HIDDEN_DIRECTIONS = [
     HIDDEN_DIRECTION_TOP,
@@ -33,8 +36,8 @@ const HTML_DOM = [
         "<div class='popup-header'>",
             "<div class='popup-title'></div>",
             "<div class='popup-header-buttons'>",
-                "<i class='fa fa-expand popup-header-button popup-header-button-screen-control'></i>",
-                "<i class='fa fa-close popup-header-button popup-header-button-close'></i>",
+                "<a href='#' class='fa fa-expand popup-header-button popup-header-button-screen-control'></a>",
+                "<a href='#' class='fa fa-close popup-header-button popup-header-button-close'></a>",
             "</div>",
         "</div>",
         "<div class='popup-content'></div>",
@@ -45,6 +48,7 @@ const HTML_DOM = [
 let
     destroy,
     request = {},
+    callbacks = {},
     pcXhr
 ;
 
@@ -258,8 +262,12 @@ class PopUpCard extends EventTypes {
      */
     setTitle(title) {
         /** @type {string} title */
+        let
+            titleDom = this.dom.find(".popup-title")
+        ;
         this.title = title;
-        this.dom.find(".popup-title").html(title);
+        titleDom.html(title);
+        titleDom.attr("title", title);
         return this;
     }
 
@@ -347,14 +355,94 @@ class PopUpCard extends EventTypes {
         }, this.timeOut());
     }
 
+    /**
+     * @param {Event} e
+     */
+    toggleScreenView(e) {
+        e.preventDefault();
+        if(this.isFullScreen()) {
+            this.doCenterScreen();
+        } else {
+            this.doFullScreen();
+        }
+        return true;
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isFullScreen() {
+        return this.dom.hasClass(FULL_SCREEN_CLASS_HTML);
+    }
+
+    /**
+     *
+     * @return {boolean}
+     */
+    doFullScreen() {
+        if(this.isFullScreen()) return false;
+        this.dom.addClass(FULL_SCREEN_CLASS_HTML);
+        this.dom.find(".popup-header-button-screen-control")
+            .removeClass(EXPAND_SCREEN_CLASS_HTML)
+            .addClass(COMPRESS_SCREEN_CLASS_HTML)
+        ;
+        this.resizeCore();
+        callbacks[this.ID] = this.resizeCore.bind(this);
+        $(window).on("resize", callbacks[this.ID]);
+        return true;
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isCenterScreen() {
+        return !this.isFullScreen();
+    }
+
+    /**
+     *
+     * @return {boolean}
+     */
+    doCenterScreen() {
+        if(this.isCenterScreen()) return false;
+        this.dom.removeClass(FULL_SCREEN_CLASS_HTML);
+        this.dom.find(".popup-header-button-screen-control")
+            .addClass(EXPAND_SCREEN_CLASS_HTML)
+            .removeClass(COMPRESS_SCREEN_CLASS_HTML)
+        ;
+        this.resizeCore();
+        $(window).unbind("resize", callbacks[this.ID]);
+        delete callbacks[this.ID];
+        return true;
+    }
+
+    resizeCore() {
+        if(this.isFullScreen()) {
+            let
+                windowDom = $(window),
+                header = this.dom.find(".popup-header"),
+                footer = this.dom.find(".popup-footer"),
+                windowDomHeight = windowDom.outerHeight(),
+                headerHeight = header.outerHeight(),
+                footerHeight = footer.outerHeight(),
+                coreHeight = windowDomHeight - (headerHeight + footerHeight)
+            ;
+            this.core.css({height:coreHeight});
+        } else {
+            this.core.removeAttr("style");
+        }
+    }
+
     setButtonEvent() {
         if(!destroy) {
             let
                 this_o = this
             ;
-            this.dom.find(".popup-close").on("click", function (e) {
+            this.dom.find(".popup-header-button-close").on("click", function (e) {
+                e.preventDefault();
                 this_o.close();
             });
+            this.dom.find(".popup-header-button-screen-control").on("click", this.toggleScreenView.bind(this));
             $.each(this.dom.find(".popup-button"), function (btnKey, btn) {
                 btn = $(btn);
                 btn.on("click", function (e) {
