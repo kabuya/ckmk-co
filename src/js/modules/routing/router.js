@@ -78,6 +78,26 @@ class Router {
     }
 
     /**
+     * @param {string|Route} routes
+     * @return {boolean}
+     */
+    isCurrentRoute(...routes) {
+        let
+            currentRoute = this.getCurrentRoute()
+        ;
+        if(currentRoute) {
+            let
+                routesFound = routes.filter((route) => {
+                    if(co.isString(route)) return currentRoute.name === route;
+                    return currentRoute === route;
+                })
+            ;
+            return !!routesFound.length;
+        }
+        return false;
+    }
+
+    /**
      * @return {Route[]}
      */
     getRoutes() {

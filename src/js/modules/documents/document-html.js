@@ -1,6 +1,7 @@
 let
     /** @type {{callback:(Function), targetRoutes:(string|string[])}[]} callbacks */
     callbacks = [],
+    executedCallbacks = [],
     domLoaded = false,
     routerDefine = false,
     step = 0
@@ -52,8 +53,10 @@ class DocumentHtml {
         if(callbacks.length) {
             let this_o = this;
             callbacks.forEach((item, k) => {
-                this_o.loaded(item.callback, item.targetRoutes);
-                callbacks.splice(k, 1);
+                if(!executedCallbacks.contains(item)) {
+                    this_o.loaded(item.callback, item.targetRoutes);
+                    executedCallbacks.push(item);
+                }
             });
         }
     }

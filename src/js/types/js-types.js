@@ -128,6 +128,10 @@ Object.assign(Array.prototype, {
 
     first() {
         return this[0];
+    },
+
+    contains(element) {
+        return this.indexOf(element) > -1;
     }
 });
 // Type Array

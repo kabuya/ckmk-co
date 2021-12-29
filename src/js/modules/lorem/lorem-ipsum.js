@@ -18,6 +18,52 @@ class CoLoremIpsum extends LoremIpsum {
         super((options || DEFAULT_OPTIONS), format, suffix);
     }
 
+    /**
+     * @return {string}
+     */
+    getLineEnding() {
+        return super.getLineEnding();
+    }
+
+    /**
+     * @param {string} str
+     * @return {`<p>${string}</p>`|string}
+     */
+    formatString(str) {
+        return super.formatString(str);
+    }
+
+    /**
+     * @param {string[]} strings
+     * @return {(`<p>${string}</p>`|string)[]}
+     */
+    formatStrings(strings) {
+        return super.formatStrings(strings);
+    }
+
+    /**
+     * @param {number|undefined} num
+     * @return {string}
+     */
+    generateWords(num = undefined) {
+        return super.generateWords(num);
+    }
+
+    /**
+     * @param {number|undefined} num
+     * @return {string}
+     */
+    generateSentences(num = undefined) {
+        return super.generateSentences(num);
+    }
+
+    /**
+     * @param {number} num
+     * @return {string}
+     */
+    generateParagraphs(num) {
+        return super.generateParagraphs(num);
+    }
 
     /**
      * @param {number|string} max

@@ -400,7 +400,7 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
      * @return {boolean}
      */
     isJQueryDom(element) {
-        return this.instanceOf(element, jQuery.fn.init);
+        return (this.instanceOf(element, jQuery.fn.init) && element.length);
     }
 
     /**
