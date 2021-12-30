@@ -135,7 +135,7 @@ class DatatableColumnActionsAction extends DatatableColumnAction {
         ;
         data[co.datatable.ROW_MODEL_KEY] = this.column.row.modelRow;
         this.type.popups.manage
-            .setCb(cb)
+            .onSuccess(cb)
             .setTitle(title)
             .load(
                 route.getAbsolutePath(),

@@ -397,6 +397,23 @@ class DatatableColumn {
         return value;
     }
 
+    /**
+     * @param {string} oldToken
+     * @param {string} newToken
+     * @param {Form} form
+     * @param {DatatableRowColumn} targetColumn
+     */
+    updateAllSecurityTokenForm(oldToken, newToken, form, targetColumn) {
+        if(oldToken && newToken) {
+            if(oldToken !== newToken) {
+                this.formTemplate = this.formTemplate.replace(oldToken, newToken);
+                this.columns.forEach((column) => {
+                    if(targetColumn !== column) column.updateFormTemplate();
+                });
+            }
+        }
+    }
+
     setEvents() {
         if(this.isOrdered()) {
             this.dom.on("click", this.changerOrder.bind(this));

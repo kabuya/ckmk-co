@@ -54,7 +54,8 @@ class DatatableColumnAction {
         if(!this.popup) {
             this.popup = co.popup
                 .form(title, content)
-                .setCb([this.column, "parseResponse"])
+                .onSuccess([this.column, "parseResponse"])
+                .onSecurityTokenUpdate([this.column, "updateSecurityTokenForm"])
             ;
         } else {
             this.popup

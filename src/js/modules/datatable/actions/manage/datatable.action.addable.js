@@ -20,7 +20,7 @@ class DatatableActionAddable {
         this.route = co.router.get(co.data(this.dom, "route"), co.ajax.METHOD_POST);
         this.popup = co.popup
             .form("Add new item")
-            .setCb([this, "updateRowAfterAdd"])
+            .onSuccess([this, "updateRowAfterAdd"])
         ;
         this.setEvents();
         // co.log(this);

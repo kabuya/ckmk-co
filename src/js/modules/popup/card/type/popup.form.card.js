@@ -11,9 +11,11 @@ const PopupCard = require("../popup.card");
  * @property {number} position
  * @property {boolean} appended
  * @property {number|undefined} waiting
+ * @property {Form|undefined} currentForm
  * @property {string} hiddenDirection
  * @property {boolean} useFormClass
- * @property {Function} cb
+ * @property {Function} successCallback
+ * @property {Function} securityTokenUpdateCallback
  * @property {boolean} formInit
  */
 class PopupFormCard extends PopupCard {
@@ -65,6 +67,9 @@ class PopupFormCard extends PopupCard {
         if(form.length) {
             co.form.init(form, true);
             this.currentForm = co.form.getForm(form.attr("id"));
+            if(this.securityTokenUpdateCallback) {
+                this.currentForm.on(co.form.EVENT_SECURITY_TOKEN_UPDATE, this.securityTokenUpdateCallback);
+            }
             this.currentForm.on(co.form.EVENT_REQUEST_SUCCESS, [this, "checkResponse"]);
         }
     }
@@ -77,19 +82,28 @@ class PopupFormCard extends PopupCard {
      */
     checkResponse(response, status, xhr, form) {
         if(!form.hasErrors()) {
-            if(co.isFunction(this.cb)) {
-                co.runCb(this.cb, response, status, xhr);
+            if(co.isFunction(this.successCallback)) {
+                co.runCb(this.successCallback, response, status, xhr);
             }
             this.close();
         }
     }
 
     /**
-     * @param {Function|Array} cb
-     * @return {PopupCard}
+     * @param {Function|Array} successCallback
+     * @return {PopupFormCard}
      */
-    setCb(cb) {
-        this.cb = cb;
+    onSuccess(successCallback) {
+        this.successCallback = successCallback;
+        return this;
+    }
+
+    /**
+     * @param {Function|Array} securityTokenUpdateCallback
+     * @return {PopupFormCard}
+     */
+    onSecurityTokenUpdate(securityTokenUpdateCallback) {
+        this.securityTokenUpdateCallback = securityTokenUpdateCallback;
         return this;
     }
 

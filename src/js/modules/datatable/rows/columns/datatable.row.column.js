@@ -184,6 +184,15 @@ class DatatableRowColumn {
     }
 
     /**
+     * @param {string} oldToken
+     * @param {string} newToken
+     * @param {Form} form
+     */
+    updateSecurityTokenForm(oldToken, newToken, form) {
+        this.column.updateAllSecurityTokenForm(oldToken, newToken, form, this);
+    }
+
+    /**
      * @param {object} dataResponse
      */
     shareDataResponse(dataResponse) {
@@ -223,6 +232,10 @@ class DatatableRowColumn {
                 }
             }
         }
+    }
+
+    updateFormTemplate() {
+        this.formTemplate = this.getFormTemplate();
     }
 
     /**

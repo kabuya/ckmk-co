@@ -50,6 +50,7 @@ const EVENT_REQUEST_SUCCESS = "request.success";
 const EVENT_REQUEST_ERROR = "request.error";
 const EVENT_DISABLED = "disabled";
 const EVENT_ENABLED = "enabled";
+const EVENT_SECURITY_TOKEN_UPDATE = "security.token.update";
 
 const EVENTS = [
     EVENT_BEFORE_SUBMIT,
@@ -57,7 +58,8 @@ const EVENTS = [
     EVENT_REQUEST_SUCCESS,
     EVENT_REQUEST_ERROR,
     EVENT_DISABLED,
-    EVENT_ENABLED
+    EVENT_ENABLED,
+    EVENT_SECURITY_TOKEN_UPDATE,
 ];
 
 const SECURITY_TOKEN_NAME = "__token";
@@ -105,6 +107,7 @@ class Form extends EventTypes {
     static EVENT_REQUEST_ERROR = EVENT_REQUEST_ERROR;
     static EVENT_DISABLED = EVENT_DISABLED;
     static EVENT_ENABLED = EVENT_ENABLED;
+    static EVENT_SECURITY_TOKEN_UPDATE = EVENT_SECURITY_TOKEN_UPDATE;
 
     static EVENTS = EVENTS;
 
@@ -230,8 +233,8 @@ class Form extends EventTypes {
                     .setSuccess((response, status, xhr) => {
                         if(!response.success) {
                             this_o.setErrors(response.messages || this_o.getDefaultsErrorsMessages());
-                            this_o.changeTokenValueFromRequestFailed(response[SECURITY_TOKEN_NAME]);
                         }
+                        this_o.changeTokenValueFromRequestFailed(response[SECURITY_TOKEN_NAME]);
                         this_o.requested = false;
                         load.destroy();
                         this_o.run(EVENT_ENABLED, this_o);
@@ -375,13 +378,17 @@ class Form extends EventTypes {
                     SECURITY_TOKEN_NAME,
                     "]"
                 ),
-                fieldToken = this.dom.find("input[name='"+ fieldName +"']")
+                fieldToken = this.dom.find("input[name='"+ fieldName +"']"),
+                oldToken = fieldToken.val()
             ;
-            if(fieldToken.val() !== token) {
+            if(oldToken !== token) {
                 fieldToken
                     .attr("value", token)
                     .val(token)
                 ;
+                if(this.events.hasEvent(EVENT_SECURITY_TOKEN_UPDATE)) {
+                    this.run(EVENT_SECURITY_TOKEN_UPDATE, oldToken, token, this);
+                }
             }
         }
     }
