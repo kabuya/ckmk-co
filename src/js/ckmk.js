@@ -23,7 +23,6 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE extends BaseCO {
         CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.datatable = require("./modules/datatable/datatable");
         CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.loader = require("./modules/loading/loader");
         CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.admin = require("./modules/admin/admin");
-        CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.lorem = require("./modules/lorem/lorem-ipsum");
         _thisCo.form.init($("form"));
         _thisCo.datatable.init($(".datatable-content"));
         _thisCo.infos();

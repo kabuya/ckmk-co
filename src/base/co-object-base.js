@@ -973,6 +973,7 @@ class BaseCO {
                 delete jsData.currentRoute;
             }
         }
+        BaseCO.prototype.lorem = require("./modules/lorem/lorem-ipsum");
         return true;
     }
 
