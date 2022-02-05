@@ -99,7 +99,6 @@
     padding: 8px 12px;
     position: relative;
     cursor: context-menu;
-    white-space: nowrap;
 
     > * {
       margin: 0;
@@ -108,6 +107,10 @@
     .form-template {
       display: none !important;
     }
+  }
+
+  th {
+    white-space: nowrap;
   }
 
   ul {
@@ -125,6 +128,7 @@
 
   .datatable-column-ordered {
     cursor: pointer;
+    padding-right: 30px;
   }
 
   .datatable-item-hidden,
@@ -235,6 +239,7 @@
     cursor: pointer;
     transition: .3s;
     opacity: 0;
+    white-space: nowrap;
 
     &:hover {
       opacity: 1;
@@ -501,6 +506,11 @@
 
   .datatable-order-icon {
     border: none;
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
   }
 
   .datatable-boolean {

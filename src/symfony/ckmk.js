@@ -145,7 +145,7 @@ let
     initialized = false,
     /** @type {CO_JAVASCRIPT_PROJECT_INSTANCE} _thisCo */
     _thisCo,
-    outputString, environment, version, projectName
+    outputString, environment, version, projectName, currentRoute
 ;
 
 class CO_JAVASCRIPT_PROJECT_INSTANCE {
@@ -175,16 +175,16 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
                 "++",
                 "=================================================",
                 "",
-                    "=======================================================================================================================",
-                    "++    ____   _____   _     _   ____   ____   ____   ____      ____  __      __     ____    _   __  _     _   _   __  ++",
-                    "++   |    | |  _  | | | _ | | |  __| |    | |  __| |  _ *    |    * * * () / /   / ___ *  | | / / | *   / | | | / /  ++",
-                    "++   | [] | | | | | | |/ *| | | |_   | [] | | |_   | | * *   | [] /  * *  / /   | /   |_| | |/ /  |  * /  | | |/ /   ++",
-                    "++   |  __| | | | | |   _   | |  _|  |   _| |  _|  | |  | |  |    *   * */ /    | |    _  |   /   |   V   | |   /    ++",
-                    "++   | |    | |_| | |  / *  | | |__  |   *  | |__  | |__| |  | [ ] |   |  |     | |___| | | |* *  | |*_/| | | |* *   ++",
-                    "++   |_|    |_____| |_/   *_| |____| |_|*_* |____| |______|  |_____|   |__|      *_____/  |_| *_* |_|   |_| |_| *_*  ++",
-                    "++                                                                                                                   ++",
-                    "=======================================================================================================================",
-                ].join("\r\n").replace(/\*/g, "\\")
+                "=======================================================================================================================",
+                "++    ____   _____   _     _   ____   ____   ____   ____      ____  __      __     ____    _   __  _     _   _   __  ++",
+                "++   |    | |  _  | | | _ | | |  __| |    | |  __| |  _ *    |    * * * () / /   / ___ *  | | / / | *   / | | | / /  ++",
+                "++   | [] | | | | | | |/ *| | | |_   | [] | | |_   | | * *   | [] /  * *  / /   | /   |_| | |/ /  |  * /  | | |/ /   ++",
+                "++   |  __| | | | | |   _   | |  _|  |   _| |  _|  | |  | |  |    *   * */ /    | |    _  |   /   |   V   | |   /    ++",
+                "++   | |    | |_| | |  / *  | | |__  |   *  | |__  | |__| |  | [ ] |   |  |     | |___| | | |* *  | |*_/| | | |* *   ++",
+                "++   |_|    |_____| |_/   *_| |____| |_|*_* |____| |______|  |_____|   |__|      *_____/  |_| *_* |_|   |_| |_| *_*  ++",
+                "++                                                                                                                   ++",
+                "=======================================================================================================================",
+            ].join("\r\n").replace(/\*/g, "\\")
             ;
         }
         console.info(outputString);
@@ -675,7 +675,7 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
                 .replace(new RegExp(BACKSPACE_VALUE_SIMPLE, "g"), BACKSPACE_HASH)
                 // Parse Backspace
                 .replace(new RegExp(BACKSPACE_VALUE, "g"), BACKSPACE_HASH)
-            ;
+                ;
         }
     }
 
@@ -692,7 +692,7 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
                 .replace(new RegExp(SPACE_HASH, "g"), SPACE_VALUE)
                 // Parse Backspace
                 .replace(new RegExp(BACKSPACE_HASH, "g"), BACKSPACE_VALUE)
-            ;
+                ;
         }
         return string;
     }
@@ -932,13 +932,24 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
     }
 
     /**
+     * @return {boolean}
+     */
+    routingExist() {
+        return !!window.Routing && !this.isEmpty(Routing.routes_) && this.getCurrentRoute();
+    }
+
+    getCurrentRoute() {
+        return currentRoute;
+    }
+
+    /**
      * @param {string} _str
      * @return {string}
      */
     static setDefaultSearchFoundValue(_str) {
         return [
             "<span class='search-found-item'>",
-                _str,
+            _str,
             "</span>",
         ].join("");
     }
@@ -962,26 +973,17 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE {
                 projectName = jsData.projectName;
                 delete jsData.projectName;
             }
+            if(window.jsData.currentRoute) {
+                currentRoute = jsData.currentRoute;
+                delete jsData.currentRoute;
+            }
         }
-        CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.router = require("./modules/routing/router");
-        CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.ajax = require("./modules/request/ajax");
-        CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.event = require("./modules/events/event.handler");
-        CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.texts = require("./modules/translator/texts");
-        CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.popup = require("./modules/popup/popup");
-        CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.form = require("./modules/form/form");
-        CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.datatable = require("./modules/datatable/datatable");
-        CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.loader = require("./modules/loading/loader");
-        CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.admin = require("./modules/admin/admin");
-        CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.lorem = require("./modules/lorem/lorem-ipsum");
-        _thisCo.form.init($("form"));
-        _thisCo.datatable.init($(".datatable-content"));
-        _thisCo.infos();
+        co.infos();
     }
 }
 
-CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.document = require("./modules/documents/document-html");
+CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.document = require("./document");
 
 document.addEventListener('DOMContentLoaded', CO_JAVASCRIPT_PROJECT_INSTANCE.initialization);
 
-
-module.exports = _thisCo = new CO_JAVASCRIPT_PROJECT_INSTANCE();
+const co = window.co = new CO_JAVASCRIPT_PROJECT_INSTANCE();

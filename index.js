@@ -3,14 +3,18 @@
  *
  * @type {function(*=): jQuery.fn.init|jQuery}
  */
-const $ = window.$ = window.jQuery = ((window.$) ? window.$ : require('jquery'));
+if(!window.$) {
+    const $ = window.$ = window.jQuery = ((window.$) ? window.$ : require('jquery'));
+}
 
 /**
  * Require FroalaEditor
  *
  * @type {FroalaEditor|{}}
  */
-const FroalaEditor = window.FroalaEditor = ((window.FroalaEditor) ? window.FroalaEditor : require('froala-editor/js/froala_editor.pkgd.min'));
+if(!window.FroalaEditor) {
+    const FroalaEditor = window.FroalaEditor = ((window.FroalaEditor) ? window.FroalaEditor : require('froala-editor/js/froala_editor.pkgd.min'));
+}
 
 
 /**
