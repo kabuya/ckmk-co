@@ -40,4 +40,6 @@ class CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE extends BaseCO {
 
 CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE.prototype.document = require("./document");
 
+document.addEventListener('DOMContentLoaded', CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE.initialization);
+
 module.exports = _thisCo = new CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE();

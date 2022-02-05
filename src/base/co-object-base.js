@@ -978,6 +978,4 @@ class BaseCO {
 
 }
 
-document.addEventListener('DOMContentLoaded', BaseCO.initialization);
-
 module.exports = BaseCO;
