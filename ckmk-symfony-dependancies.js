@@ -1,2 +1,6 @@
 require('./src/js/types/js-types');
-require('./src/symfony/ckmk');
+/**
+ * Export CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE
+ * @type {CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE}
+ */
+module.exports = require('./src/symfony/ckmk');

@@ -16,18 +16,14 @@ if(!window.FroalaEditor) {
     const FroalaEditor = window.FroalaEditor = ((window.FroalaEditor) ? window.FroalaEditor : require('froala-editor/js/froala_editor.pkgd.min'));
 }
 
-
 /**
  * Types prototype method
  */
 require('./src/js/types/js-types');
 
 /**
- * Require CO
+ * Export CO_JAVASCRIPT_PROJECT_INSTANCE
  *
  * @type {CO_JAVASCRIPT_PROJECT_INSTANCE}
  */
-const co = window.co = require('./src/js/ckmk');
-
-// Exports CO
-module.exports = co;
+module.exports = require('./src/js/ckmk');
