@@ -80,11 +80,11 @@ class DatatablesConstructor {
     /**
      * @param {string} url
      * @param {object} data
-     * @param {function} success
-     * @param {function} error
+     * @param {function} successCB
+     * @param {function} errorCB
      * @return {boolean}
      */
-    loadData(url, data, success, error) {
+    loadData(url, data, successCB, errorCB) {
         if(!this.datatables) return false;
         if(this.request) {
             this.request.abort();
@@ -107,10 +107,10 @@ class DatatablesConstructor {
                         dt.row.add(response.data);
                     }
                 }
-                if(success) success(response, status, xhr);
+                if(successCB) successCB(response, status, xhr);
             },
             error: (response, status, error) => {
-                if(error) error(response, status, error);
+                if(errorCB) errorCB(response, status, error);
             },
         });
         return true;
