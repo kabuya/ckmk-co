@@ -102,9 +102,9 @@ class DatatablesConstructor {
             success: (response, status, xhr) => {
                 if(response.data) {
                     if(co.isArray(response.data)) {
-                        dt.rows.add(response.data);
+                        dt.rows.add(response.data).draw(false);
                     } else if(co.isObject(response.data)) {
-                        dt.row.add(response.data);
+                        dt.row.add(response.data).draw(false);
                     }
                 }
                 if(successCB) successCB(response, status, xhr);
