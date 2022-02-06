@@ -15,7 +15,6 @@ class CO_JAVASCRIPT_PROJECT_INSTANCE extends BaseCO {
         if(BaseCO.isInitialized()) return false;
         BaseCO.initialization(e);
         CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.router = require("./modules/routing/router");
-        CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.ajax = require("./modules/request/ajax");
         CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.event = require("./modules/events/event.handler");
         CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.texts = require("./modules/translator/texts");
         CO_JAVASCRIPT_PROJECT_INSTANCE.prototype.popup = require("./modules/popup/popup");

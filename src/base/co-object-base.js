@@ -1,3 +1,5 @@
+const DatatablesConstructor = require("../framework/datatables/datatables-constructor");
+
 const SPACE_HASH = "@@space@@";
 const SPACE_VALUE = " ";
 const BACKSPACE_HASH = "@@backspace@@";
@@ -931,6 +933,14 @@ class BaseCO {
     }
 
     /**
+     * @param queryString
+     * @return {DatatablesConstructor}
+     */
+    initDatatable(queryString) {
+        return new DatatablesConstructor(queryString);
+    }
+
+    /**
      * @param {string} _str
      * @return {string}
      */
@@ -973,6 +983,7 @@ class BaseCO {
                 delete jsData.currentRoute;
             }
         }
+        BaseCO.prototype.ajax = require("../js/modules/request/ajax");
         BaseCO.prototype.lorem = require("../js/modules/lorem/lorem-ipsum");
         return true;
     }
