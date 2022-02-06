@@ -100,11 +100,11 @@ class DatatablesConstructor {
             contentType: false,
             processData: false,
             success: (response, status, xhr) => {
-                if(response.columns) {
-                    if(co.isArray(response.columns)) {
-                        dt.rows.add(response.columns);
-                    } else if(co.isObject(response.columns)) {
-                        dt.row.add(response.columns);
+                if(response.data) {
+                    if(co.isArray(response.data)) {
+                        dt.rows.add(response.data);
+                    } else if(co.isObject(response.data)) {
+                        dt.row.add(response.data);
                     }
                 }
                 if(success) success(response, status, xhr);
