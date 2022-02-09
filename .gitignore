@@ -3,6 +3,7 @@ package-lock.json
 
 #Remove folder
 /node_modules/
+/vendor/
 /.idea/
 /.vscode/
 

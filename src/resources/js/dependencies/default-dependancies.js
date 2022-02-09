@@ -24,6 +24,25 @@ if(!window.Datatable) {
 }
 
 /**
+ * Popper JS est utilisé par Bootstrap JS
+ *
+ * Popper JS is used by Bootstrap JS
+ */
+require('popper.js');
+
+/**
+ * Bootstrap JS
+ */
+require('bootstrap');
+
+/**
+ * Add font awesome JS
+ */
+require('@fortawesome/fontawesome-free/js/brands');
+require('@fortawesome/fontawesome-free/js/solid');
+require('@fortawesome/fontawesome-free/js/fontawesome');
+
+/**
  * Types prototype method
  */
 require('../types/js-types');
