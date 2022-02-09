@@ -1,4 +1,4 @@
-const BaseCO = require("../base/co-object-base");
+const BaseCO = require("./base/co-object-base");
 
 let
     /** @type {CO_JAVASCRIPT_PROJECT_INSTANCE} _thisCo */

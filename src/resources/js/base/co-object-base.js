@@ -983,8 +983,8 @@ class BaseCO {
                 delete jsData.currentRoute;
             }
         }
-        BaseCO.prototype.ajax = require("../js/modules/request/ajax");
-        BaseCO.prototype.lorem = require("../js/modules/lorem/lorem-ipsum");
+        BaseCO.prototype.ajax = require("../modules/request/ajax");
+        BaseCO.prototype.lorem = require("../modules/lorem/lorem-ipsum");
         return true;
     }
 
