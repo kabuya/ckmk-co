@@ -687,6 +687,8 @@ class BaseCO {
     unHashSpecChar(string) {
         if(this.isString(string) && !this.isNumber(string)) {
             return string
+                // Parse back slash and double quote
+                .replace(/\\"/g, '"')
                 // Parse Double Quote
                 .replace(new RegExp(DOUBLE_QUOTE_HASH, "g"), DOUBLE_QUOTE_VALUE)
                 // Parse Space
