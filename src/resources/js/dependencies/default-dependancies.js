@@ -23,6 +23,8 @@ if(!window.Datatable) {
     const Datatable = window.Datatable = require('datatables.net');
 }
 
+require('datatables.net-buttons')(window, $);
+
 /**
  * Popper JS est utilisé par Bootstrap JS
  *

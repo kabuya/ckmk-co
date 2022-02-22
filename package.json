@@ -1,6 +1,6 @@
 {
   "name": "@ckmk/ckmk",
-  "version": "1.20.0",
+  "version": "1.20.5",
   "description": "L'objet CO_JAVASCRIPT_PROJECT_INSTANCE est l'objet de base pour un projet CKMK, utilisé ainsi que tous les sous objet.",
   "main": "src/resources/main/index.js",
   "scripts": {
@@ -24,7 +24,8 @@
     "lorem-ipsum": "^2.0.4",
     "popper.js": "^1.16.1",
     "datatables.net": "^1.11.4",
-    "datatables.net-dt": "^1.11.4"
+    "datatables.net-dt": "^1.11.4",
+    "datatables.net-buttons": "^2.2.2"
   },
   "bugs": {
     "url": "https://github.com/kabuya/ckmk-co/issues"
