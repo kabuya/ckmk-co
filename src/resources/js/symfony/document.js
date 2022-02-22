@@ -24,10 +24,7 @@ class DocumentHtml {
                 ;
                 if(co.isString(targetRoutes)) targetRoutes = [targetRoutes];
                 if(co.isArray(targetRoutes)) {
-                    let
-                        currentRoute = co.getCurrentRoute()
-                    ;
-                    if(currentRoute) canRun = (targetRoutes.indexOf(currentRoute) > -1);
+                    canRun = co.routing.isCurrentIn(...targetRoutes);
                 }
                 if(canRun) co.runCb(callback);
             }
@@ -41,7 +38,7 @@ class DocumentHtml {
 
     #executeSaveCallback() {
         if(step === 10) return;
-        if(!window.co || !window.co.routingExist()) {
+        if(!window.co || !window.co.routing || !window.co.routing.isInitialized()) {
             let this_o = this;
             step++;
             setTimeout(() => {

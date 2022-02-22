@@ -25,13 +25,9 @@ class CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE extends BaseCO {
 
     static initialization(e) {
         if(BaseCO.isInitialized()) return false;
-        if(window.jsData) {
-            if(window.jsData.currentRoute) {
-                currentRoute = jsData.currentRoute;
-                delete jsData.currentRoute;
-            }
-        }
         BaseCO.initialization(e);
+        _thisCo.routing.initJsData();
+        _thisCo.translation.initJsData();
         _thisCo.infos();
         return true;
     }
@@ -39,6 +35,8 @@ class CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE extends BaseCO {
 }
 
 CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE.prototype.document = require("./document");
+CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE.prototype.translation = require("./translation");
+CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE.prototype.routing = require("./routing");
 
 document.addEventListener('DOMContentLoaded', CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE.initialization);
 

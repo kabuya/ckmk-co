@@ -17,15 +17,6 @@ if(!window.FroalaEditor) {
 }
 
 /**
- * Import Datatables
- */
-if(!window.Datatable) {
-    const Datatable = window.Datatable = require('datatables.net');
-}
-require('datatables.net-buttons')();
-require('datatables.net-buttons/js/buttons.colVis')();
-
-/**
  * Popper JS est utilisé par Bootstrap JS
  *
  * Popper JS is used by Bootstrap JS
