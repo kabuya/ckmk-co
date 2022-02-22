@@ -146,7 +146,7 @@ const FROALA_EDITOR_DEFAULT_OPTIONS = {
 
 let
     initialized = false,
-    outputString, environment, version, projectName, currentRoute
+    outputString, environment, version, projectName
 ;
 
 class BaseCO {
@@ -979,10 +979,6 @@ class BaseCO {
             if(window.jsData.projectName) {
                 projectName = jsData.projectName;
                 delete jsData.projectName;
-            }
-            if(window.jsData.currentRoute) {
-                currentRoute = jsData.currentRoute;
-                delete jsData.currentRoute;
             }
         }
         BaseCO.prototype.ajax = require("../modules/request/ajax");
