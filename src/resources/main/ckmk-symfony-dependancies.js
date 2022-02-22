@@ -1,8 +1,3 @@
-const
-    dtBundlesJsPath = './vendor/omines/datatables-bundle/src/Resources/public/js/datatables.js',
-    routingPath = './vendor/friendsofsymfony/jsrouting-bundle/Resources/js/router'
-;
-
 /**
  * Load dependencies
  */
@@ -12,7 +7,7 @@ require("../js/dependencies/default-dependancies");
  * Import Routing
  */
 if(!window.Routing) {
-    const Routing = window.Routing = require(routingPath).Routing;
+    const Routing = window.Routing = require("@RoutingBundle").Routing;
 }
 
 /**
@@ -26,7 +21,7 @@ require('datatables.net-buttons/js/buttons.colVis')();
 /**
  * Add Datatables Bundle JS
  */
-require(dtBundlesJsPath);
+require("@DatatablesBundle");
 
 
 /**

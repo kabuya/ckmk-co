@@ -37,6 +37,7 @@ class CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE extends BaseCO {
 CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE.prototype.document = require("./document");
 CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE.prototype.translation = require("./translation");
 CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE.prototype.routing = require("./routing");
+CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE.prototype.datatables = require("./datatables");
 
 document.addEventListener('DOMContentLoaded', CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE.initialization);
 
