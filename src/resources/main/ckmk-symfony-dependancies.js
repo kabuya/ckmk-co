@@ -1,7 +1,6 @@
 const
-    path = require('path'),
-    dtBundlesJsPath = path.resolve("./vendor/omines/datatables-bundle/src/Resources/public/js/datatables.js"),
-    routingPath = path.resolve('./vendor/friendsofsymfony/jsrouting-bundle/Resources/js/router')
+    dtBundlesJsPath = './vendor/omines/datatables-bundle/src/Resources/public/js/datatables.js',
+    routingPath = './vendor/friendsofsymfony/jsrouting-bundle/Resources/js/router'
 ;
 
 /**
