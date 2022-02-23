@@ -51,18 +51,18 @@ class Datatables {
      * @param options
      * @return {*&{action: action, text}}
      */
-    button(text, route, options) {
+    button(text, route, options = {}) {
         if(co.isString(route)) {
             route = co.routing.generate(route);
         } else if(co.isArray(route)) {
             route = co.routing.generate(route[0], route[1], route[2]);
         } else if(co.isObject(route)) {
-            route = co.routing.generate(route.name, route.opt_params, route.absolute);
+            route = co.routing.generate(route.name, route.opt_params, (route.absolute || true));
         }
         const action = options.action;
         delete options.action;
         return {
-            text: text,
+            text: co.translation.trans(text),
             action: (e, dt, node, config) => {
                 co.log(route);
                 action(e, dt, node, config, route);
