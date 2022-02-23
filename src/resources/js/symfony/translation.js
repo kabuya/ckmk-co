@@ -34,6 +34,7 @@ class Translation {
            }
            return text;
         }
+        return id;
     }
 
 }

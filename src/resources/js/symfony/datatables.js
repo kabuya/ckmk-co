@@ -1,5 +1,6 @@
 const DEFAULT_OPTIONS = {
-    scrollX: true,
+    scrollX: false,
+    scrollY: false,
 };
 
 class Datatables {
