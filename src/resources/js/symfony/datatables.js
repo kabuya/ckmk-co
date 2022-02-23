@@ -47,17 +47,17 @@ class Datatables {
 
     /**
      * @param {string} text
-     * @param {string|{name:string,opt_params:{},absolute:boolean}|Array} route
+     * @param {string|{name:string,opt_params:({}|undefined),absolute:(boolean|undefined)}|Array} route
      * @param options
      * @return {*&{action: action, text}}
      */
     button(text, route, options = {}) {
         if(co.isString(route)) {
-            route = co.routing.generate(route);
+            route = co.routing.generate(route, {}, true);
         } else if(co.isArray(route)) {
-            route = co.routing.generate(route[0], route[1], route[2]);
+            route = co.routing.generate(route[0], (route[1] || {}), (route[2] || true));
         } else if(co.isObject(route)) {
-            route = co.routing.generate(route.name, route.opt_params, (route.absolute || true));
+            route = co.routing.generate(route.name, (route.opt_params || {}), (route.absolute || true));
         }
         const action = options.action;
         delete options.action;
@@ -65,7 +65,7 @@ class Datatables {
             text: co.translation.trans(text),
             action: (e, dt, node, config) => {
                 co.log(route);
-                action(e, dt, node, config, route);
+                if(co.isCallable(action)) action(e, dt, node, config, route);
             },
             ...options
         };
