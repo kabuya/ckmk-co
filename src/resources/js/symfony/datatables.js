@@ -19,7 +19,7 @@ class Datatables {
         const settings = co.parseJSONFromPHPDataProperty(co.data(elem, "datatables-settings"));
         const colvis = {
             extend: 'colvis',
-            text: co.translation.trans('columns:visibility'),
+            text: co.concat(co.translation.trans('columns:visibility'), ' ', '<i class="fa-solid fa-list-check"></i>'),
         };
         options = (options || {});
         if(options.buttons) {
