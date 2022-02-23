@@ -1,23 +1,47 @@
-/**
- * @property {string} local
- * @property {string[]} locals
- * @property {string[]} texts
- */
+let
+    /** @type {string} */
+    local,
+    /** @type {string[]} */
+    locals,
+    /** @type {string[]} */
+    texts
+;
+
 class Translation {
 
 
     constructor() {
-        this.local = "";
-        this.locals = this.texts = [];
+
     }
 
     initJsData() {
         if(window.jsData && window.jsData.translation) {
-            this.local = window.jsData.translation.local;
-            this.locals = window.jsData.translation.locals;
-            this.texts = window.jsData.translation.texts;
+            local = window.jsData.translation.local;
+            locals = window.jsData.translation.locals;
+            texts = window.jsData.translation.texts;
             delete window.jsData.translation;
         }
+    }
+
+    /**
+     * @return {string}
+     */
+    local() {
+        return local;
+    }
+
+    /**
+     * @return {string[]}
+     */
+    locals() {
+        return locals;
+    }
+
+    /**
+     * @return {string[]}
+     */
+    texts() {
+        return texts;
     }
 
     /**
@@ -25,7 +49,7 @@ class Translation {
      * @param {{}|null} parameters
      */
     trans(id, parameters = {}) {
-        let text = this.texts[id];
+        let text = texts[id];
         parameters = parameters || {};
         if(co.isString(text)) {
            for(const _key in parameters) {

@@ -1,24 +1,24 @@
-/**
- * @property {string} current
- */
+let
+    /** @type {string} */
+    current
+;
 class Routing {
 
     constructor() {
-        this.current = "";
     }
 
     /**
      * @return {boolean}
      */
     isInitialized() {
-        return !!window.Routing && !co.isEmpty(window.Routing.routes_) && this.getCurrent();
+        return !!window.Routing && !co.isEmpty(window.Routing.routes_) && this.current();
     }
 
     /**
      * @return {string}
      */
-    getCurrent() {
-        return this.current;
+    current() {
+        return current;
     }
 
     /**
@@ -26,7 +26,7 @@ class Routing {
      * @return {boolean}
      */
     isCurrentIn(...routes) {
-        return (routes.indexOf(this.getCurrent()) > -1);
+        return (routes.indexOf(this.current()) > -1);
     }
 
     /**
@@ -49,7 +49,7 @@ class Routing {
 
     initJsData() {
         if(window.jsData && window.jsData.currentRoute) {
-            this.current = window.jsData.currentRoute;
+            current = window.jsData.currentRoute;
             delete window.jsData.currentRoute;
         }
     }
