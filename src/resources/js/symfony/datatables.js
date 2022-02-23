@@ -10,13 +10,14 @@ class Datatables {
 
     /**
      * @param {string} selector
-     * @param {{}} settings
      * @param {{}} options
      * @return {Promise<any>}
      */
-    build(selector, settings, options) {
-        return $(selector).initDatatables(
-            co.parseJSONFromPHPDataProperty(settings),
+    build(selector, options) {
+        const elem = $(selector);
+        const settings = co.parseJSONFromPHPDataProperty(co.data(elem, "datatables-settings"));
+        return elem.initDataTables(
+            settings,
             Object.assign(DEFAULT_OPTIONS, (options || {}))
         );
     }
