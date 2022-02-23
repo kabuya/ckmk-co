@@ -24,7 +24,7 @@ class Translation {
      * @param {string} id
      * @param {{}|null} parameters
      */
-    trans(id, parameters) {
+    trans(id, parameters = {}) {
         let text = this.texts[id];
         parameters = parameters || {};
         if(co.isString(text)) {

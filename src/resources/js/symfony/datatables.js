@@ -17,9 +17,31 @@ class Datatables {
     build(selector, options) {
         const elem = $(selector);
         const settings = co.parseJSONFromPHPDataProperty(co.data(elem, "datatables-settings"));
+        const colvis = {
+            extend: 'colvis',
+            text: co.translation.trans('columns:visibility'),
+        };
+        options = (options || {});
+        if(options.buttons) {
+            let
+                colvisIndex = -1
+            ;
+            for(const _key in options.buttons) {
+                const btn = options.buttons[_key];
+                if(btn.extend === 'colvis') colvisIndex = _key;
+                if(colvisIndex > -1) break;
+            }
+            if(colvisIndex > -1) {
+                options.buttons[colvisIndex].text = colvis.text;
+            } else {
+                options.buttons.push(colvis);
+            }
+        } else {
+            options.buttons = [colvis];
+        }
         return elem.initDataTables(
             settings,
-            Object.assign(DEFAULT_OPTIONS, (options || {}))
+            Object.assign(DEFAULT_OPTIONS, options)
         );
     }
 
