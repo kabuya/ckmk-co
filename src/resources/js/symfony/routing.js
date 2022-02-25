@@ -35,7 +35,7 @@ class Routing {
      * @param {boolean} absolute
      * @return {null|string}
      */
-    generate(name, opt_params, absolute) {
+    generate(name, opt_params = {}, absolute = true) {
         if(!this.isInitialized()) return null;
         return window.Routing.generate(name, opt_params, absolute);
     }
