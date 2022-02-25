@@ -71,6 +71,25 @@ class Datatables {
         };
     }
 
+    /**
+     * @param {string} label
+     * @param {string|{name:string,opt_params:({}|undefined),absolute:(boolean|undefined)}|Array} route
+     * @param options
+     * @return {*}
+     */
+    buttonActionAdd(label, route, options = {}) {
+        if(options.className) {
+            options.className = co.concat(options.className, ' ', 'action-add');
+        } else {
+            options.className = 'action-add';
+        }
+        return this.button(
+            label,
+            route,
+            options
+        );
+    }
+
 }
 
 module.exports = new Datatables;
