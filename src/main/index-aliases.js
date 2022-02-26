@@ -1,5 +1,3 @@
-const {CKMKBundle, DatatablesBundle, CKMKBundleLocal, RoutingBundle} = require("../resources/js/symfony/aliasses");
-
 /**
  * This is the aliasses for Webpack
  * @type {{
@@ -15,24 +13,24 @@ module.exports = {
      * This is the base of CKMK Bundle script from vendor
      * @type {string}
      */
-    CKMK: CKMKBundle,
+    CKMK: './vendor/@ckmk/CKMKBundle/Resources/public',
 
     /**
      * This is the base of CKMK Bundle script from local
      * @type {string}
      */
-    CKMKLocal: CKMKBundleLocal,
+    CKMKLocal: './lib/CKMKBundle/Resources/public',
 
     /**
      * This is the base of Datatables Bundle script from vendor
      * @type {string}
      */
-    Datatables: DatatablesBundle,
+    Datatables: './vendor/omines/datatables-bundle/src/Resources/public',
 
     /**
      * This is the base of Routing Bundle script from vendor
      * @type {string}
      */
-    Routing: RoutingBundle,
+    Routing: './vendor/friendsofsymfony/jsrouting-bundle/Resources',
 
 };
