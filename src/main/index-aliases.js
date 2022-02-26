@@ -9,6 +9,7 @@
  */
 module.exports = {
 
+
     /**
      * This is the base of CKMK Bundle script from vendor
      * @type {string}
@@ -32,5 +33,6 @@ module.exports = {
      * @type {string}
      */
     Routing: './vendor/friendsofsymfony/jsrouting-bundle/Resources',
+
 
 };
