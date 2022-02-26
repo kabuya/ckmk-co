@@ -24,6 +24,7 @@ require('datatables.net-buttons/js/buttons.colVis')();
 require("@DatatablesBundle/js/datatables");
 
 
+
 /**
  * Export CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE
  * @type {CO_SYMFONY_JAVASCRIPT_PROJECT_INSTANCE}
