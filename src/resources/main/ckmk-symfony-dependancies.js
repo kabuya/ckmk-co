@@ -7,7 +7,7 @@ require("../js/dependencies/default-dependancies");
  * Import Routing
  */
 if(!window.Routing) {
-    const Routing = window.Routing = require("@RoutingBundle/js/router").Routing;
+    const Routing = window.Routing = require("@RoutingBundle/js/router");
 }
 
 /**
