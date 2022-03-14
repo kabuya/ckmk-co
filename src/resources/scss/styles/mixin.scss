@@ -190,7 +190,7 @@
 @mixin selectionText(
   $bg, $color : white
 ) {
-  ::selection {
+  &::selection {
     background-color: $bg;
     color: $color;
   }
@@ -204,18 +204,18 @@
   $radius: 50px
 ) {
 
-  ::-webkit-scrollbar {
+  &::-webkit-scrollbar {
     width: $width;
     height: $height;
   }
 
-  ::-webkit-scrollbar-thumb {
+  &::-webkit-scrollbar-thumb {
     background-color: $scrollScrollbarThumb;
     border-radius: $radius;
     cursor: pointer;
   }
 
-  ::-webkit-scrollbar-track {
+  &::-webkit-scrollbar-track {
     background-color: $scrollScrollbarTrack;
     border-radius: $radius;
     cursor: pointer;
@@ -224,4 +224,63 @@
 
 @mixin googleFont($family) {
   @import url("https://fonts.googleapis.com/css2?family=#{$family}&display=swap");
+}
+
+@mixin active($hover:true, $focus:true, $active:true) {
+  @if $active {
+    &:active {
+      @content
+    }
+  }
+  @if $hover {
+    &:hover {
+      @content
+    }
+  }
+  @if $focus {
+    &:focus {
+      @content
+    }
+  }
+}
+
+@mixin flexDisposition {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: start;
+  @content
+}
+
+@mixin button($color: #2762af, $colorHover: #204f8d, $colorText: white) {
+  color: $colorText;
+  background-color: $color;
+  border-color: $color;
+
+  @include active {
+    color: $colorText;
+    background-color: $colorHover;
+    border-color: $colorHover;
+  }
+}
+
+@mixin icon($i:true, $svg:true) {
+  @if $i {
+    i {
+      @content
+    }
+  }
+
+  @if $svg {
+    svg {
+      @content
+    }
+  }
+}
+
+@mixin to_parent_element($name) {
+  @at-root #{$name} & {
+    @content
+  }
 }
