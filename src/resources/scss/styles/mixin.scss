@@ -151,20 +151,20 @@
   }
 }
 
-@mixin mobileView() {
-  @include respond(mobile) {
+@mixin mobileView($max_width: 0) {
+  @include respond(mobile, 0, $max_width) {
     @content;
   };
 }
 
-@mixin tableView($width: 768px) {
-  @include respond(tablet, $width) {
+@mixin tableView($min_width: 768px, $max_width: 0) {
+  @include respond(tablet, $min_width, $max_width) {
     @content;
   };
 }
 
-@mixin computerView($width: 998px) {
-  @include respond(computer, $width) {
+@mixin computerView($min_width: 998px) {
+  @include respond(computer, $min_width) {
     @content;
   };
 }
