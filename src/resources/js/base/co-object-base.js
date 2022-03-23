@@ -930,7 +930,7 @@ class BaseCO {
                         callback(window.$(item), k, querySelector);
                     });
                 }
-            } else {
+            } else if(this.isString(querySelector)) {
                 let items = document.querySelectorAll(querySelector);
                 if(items.length) {
                     items.forEach((item, k) => {
