@@ -917,18 +917,27 @@ class BaseCO {
     }
 
     /**
-     * @param {string} querySelector
-     * @param {function(jQuery, number, string)} callback
+     * @param {string|JQuery|HTMLElement} querySelector
+     * @param {function(jQuery, number, string|JQuery)} callback
      * @return {boolean}
      */
     $(querySelector, callback) {
         if(window.$ && this.isFunction(callback)) {
-            let items = document.querySelectorAll(querySelector);
-            if(items.length) {
-                items.forEach((item, k) => {
-                    callback(window.$(item), k, querySelector);
-                });
-                return true;
+            if(this.isElementDom(querySelector)) {
+                if(this.isHtmlDom(querySelector)) querySelector = $(querySelector);
+                if(querySelector.length) {
+                    querySelector.each((k, item) => {
+                        callback(window.$(item), k, querySelector);
+                    });
+                }
+            } else {
+                let items = document.querySelectorAll(querySelector);
+                if(items.length) {
+                    items.forEach((item, k) => {
+                        callback(window.$(item), k, querySelector);
+                    });
+                    return true;
+                }
             }
         }
         return false;
