@@ -1,5 +1,15 @@
 const DatatablesConstructor = require("../framework/datatables/datatables-constructor");
 
+const OCTET = "o";
+const KILO_OCTET = "ko";
+const MEGA_OCTET = "mo";
+const GIGA_OCTET = "go";
+
+const OCTET_INT = 1;
+const KILO_OCTET_INT = 1024;
+const MEGA_OCTET_INT = (KILO_OCTET_INT * KILO_OCTET_INT);
+const GIGA_OCTET_INT = (KILO_OCTET_INT * KILO_OCTET_INT * KILO_OCTET_INT);
+
 const SPACE_HASH = "@@space@@";
 const SPACE_VALUE = " ";
 const BACKSPACE_HASH = "@@backspace@@";
@@ -941,6 +951,93 @@ class BaseCO {
             }
         }
         return false;
+    }
+
+    /**
+     * @param {number|any} decimal
+     * @param {number} countDecimal
+     * @return {string|any}
+     */
+    round(decimal, countDecimal = 2) {
+        return (this.isFloat(decimal) && this.isInt(countDecimal) && countDecimal > -1)
+            ? decimal.toFixed(countDecimal)
+            : decimal
+        ;
+    }
+
+    /**
+     * @param {number} size
+     * @param {string} format
+     * @param {boolean} toString
+     * @return {string|number}
+     */
+    parseFileSize(size, format = MEGA_OCTET, toString = false) {
+        if(this.isInt(size) && size > 0) {
+            let sizeValue;
+            switch (format) {
+                case OCTET:
+                    sizeValue = this.round((size / OCTET_INT));
+                    return toString
+                        ? this.concat(sizeValue, " ", OCTET.toUpperCase())
+                        : parseFloat(sizeValue)
+                    ;
+                case KILO_OCTET:
+                    sizeValue = this.round((size / KILO_OCTET_INT));
+                    return toString
+                        ? this.concat(sizeValue, " ", KILO_OCTET.toUpperCase())
+                        : parseFloat(sizeValue)
+                    ;
+                case MEGA_OCTET:
+                    sizeValue = this.round((size / MEGA_OCTET_INT));
+                    return toString
+                        ? this.concat(sizeValue, " ", MEGA_OCTET.toUpperCase())
+                        : parseFloat(sizeValue)
+                    ;
+                case GIGA_OCTET:
+                    sizeValue = this.round((size / GIGA_OCTET_INT));
+                    return toString
+                        ? this.concat(sizeValue, " ", GIGA_OCTET.toUpperCase())
+                        : parseFloat(sizeValue)
+                    ;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * @param {number} size
+     * @param {boolean} toString
+     * @return {string|number}
+     */
+    toOctet(size, toString = false) {
+        return this.parseFileSize(size, OCTET, toString);
+    }
+
+    /**
+     * @param {number} size
+     * @param {boolean} toString
+     * @return {string|number}
+     */
+    toKiloOctet(size, toString = false) {
+        return this.parseFileSize(size, KILO_OCTET, toString);
+    }
+
+    /**
+     * @param {number} size
+     * @param {boolean} toString
+     * @return {string|number}
+     */
+    toMegaOctet(size, toString = false) {
+        return this.parseFileSize(size, MEGA_OCTET, toString);
+    }
+
+    /**
+     * @param {number} size
+     * @param {boolean} toString
+     * @return {string|number}
+     */
+    toGigaOctet(size, toString = false) {
+        return this.parseFileSize(size, GIGA_OCTET, toString);
     }
 
     /**
