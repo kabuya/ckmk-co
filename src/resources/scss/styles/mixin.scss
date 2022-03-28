@@ -3,6 +3,7 @@
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
+  @content;
 }
 
 @mixin fullScreen($position:fixed, $z_index:1000) {
@@ -12,20 +13,24 @@
   right: 0;
   bottom: 0;
   z-index: $z_index;
+  @content;
 }
 
 @mixin scrollY {
   overflow-x: hidden;
   overflow-y: auto;
+  @content;
 }
 
 @mixin scrollX {
   overflow-x: auto;
   overflow-y: hidden;
+  @content;
 }
 
 @mixin scroll {
   overflow: auto;
+  @content;
 }
 
 @mixin threePoint {
@@ -36,6 +41,7 @@
   text-overflow: ellipsis;
   display: inline-block;
   vertical-align: bottom;
+  @content;
 }
 
 @mixin inputForm {
