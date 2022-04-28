@@ -1,6 +1,6 @@
 {
   "name": "@ckmk/ckmk",
-  "version": "1.50.10",
+  "version": "1.50.15",
   "description": "L'objet CO_JAVASCRIPT_PROJECT_INSTANCE est l'objet de base pour un projet CKMK, utilisé ainsi que tous les sous objet.",
   "main": "src/main/index.js",
   "scripts": {
