@@ -186,9 +186,8 @@ class AjaxRequest {
     }
 
     static buildData = function (data) {
-        if(co.isFunction(data.addEventListener) || data.jquery) {
-            return new FormData($(data).get(0));
-        }
+        if(co.instanceOf(data, FormData)) return data;
+        else if(co.isElementDom(data)) return new FormData($(data).get(0));
         return AjaxRequest.buildFormDataFromObject(new FormData(), data);
     }
 
