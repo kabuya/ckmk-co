@@ -1155,12 +1155,8 @@ class BaseCO {
     }
 
 }
-
 const onUserInteract = (e) => {
-    for (let i in userInteractEventsListener) {
-        const listener = userInteractEventsListener[i];
-        listener(e);
-    }
+    userInteractEventsListener.forEach(listener => listener(e));
 };
 const userInteractEventsListener = [];
 document.addEventListener('mousemove', onUserInteract);
