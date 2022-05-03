@@ -22,9 +22,9 @@ const METHODS = [
  * @property {boolean} contentType
  * @property {boolean} processData
  * @property {object} data
- * @property {Function} success
- * @property {Function} error
- * @property {Function} beforeSend
+ * @property {((response: any, status: string, xhr: any) => any)|[object, string]} success
+ * @property {((response: any, status: string, error: any) => any)|[object, string]} error
+ * @property {((xhr: any, settings: any) => any)|[object, string]} beforeSend
  */
 class AjaxRequest {
 
@@ -98,7 +98,7 @@ class AjaxRequest {
     }
 
     /**
-     * @param {Function|array} func
+     * @param {((response: any, status: string, xhr: any) => any)|[object, string]} func
      * @return {AjaxRequest}
      */
     setSuccess(func) {
@@ -113,7 +113,7 @@ class AjaxRequest {
     }
 
     /**
-     * @param {Function|array} func
+     * @param {((response: any, status: string, error: any) => any)|[object, string]} func
      * @return {AjaxRequest}
      */
     setError(func) {
@@ -126,7 +126,7 @@ class AjaxRequest {
     }
 
     /**
-     * @param {Function|array} func
+     * @param {((xhr: any, settings: any) => any)|[object, string]} func
      * @return {AjaxRequest}
      */
     setBeforeSend(func) {

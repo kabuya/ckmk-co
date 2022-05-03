@@ -334,7 +334,7 @@ class BaseCO {
     }
 
     /**
-     * @param {function|[object,string]|*} functions
+     * @param {(() => any)|[object, string]} functions
      * @return {boolean}
      */
     isFunction(...functions) {
@@ -345,7 +345,7 @@ class BaseCO {
     }
 
     /**
-     * @param {function|[object,string]|*} callbacks
+     * @param {(() => any)|[object, string]} callbacks
      * @return {boolean}
      */
     isCallable(...callbacks) {
@@ -784,7 +784,7 @@ class BaseCO {
     }
 
     /**
-     * @param {Function|array} cb
+     * @param {(() => any)|[object, string]} cb
      * @param args
      */
     runCb(cb, ...args) {
@@ -1068,6 +1068,16 @@ class BaseCO {
             }, {});
     }
 
+    /**
+     * @param {(() => any)|[object, string]} callback
+     */
+    onUserInteract(callback) {
+        if(this.isCallable(callback)) {
+            if(this.isArray(callback)) callback = callback[0][callback[1]].bind(callback[0]);
+            userInteractEventsListener.push(callback);
+        }
+    }
+
     #updateValueForSerialization(data, keys, value) {
         if (keys.length === 0) {
             // Leaf node
@@ -1145,5 +1155,18 @@ class BaseCO {
     }
 
 }
+
+const onUserInteract = (e) => {
+    for (let i in userInteractEventsListener) {
+        const listener = userInteractEventsListener[i];
+        listener(e);
+    }
+};
+const userInteractEventsListener = [];
+document.addEventListener('mousemove', onUserInteract);
+document.addEventListener('scroll', onUserInteract);
+document.addEventListener('keydown', onUserInteract);
+document.addEventListener('click', onUserInteract);
+document.addEventListener('touchstart', onUserInteract);
 
 module.exports = BaseCO;
