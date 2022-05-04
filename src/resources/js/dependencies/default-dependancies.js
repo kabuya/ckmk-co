@@ -29,13 +29,6 @@ require('popper.js');
 require('bootstrap');
 
 /**
- * Add font awesome JS
- */
-require('@fortawesome/fontawesome-free/js/brands');
-require('@fortawesome/fontawesome-free/js/solid');
-require('@fortawesome/fontawesome-free/js/fontawesome');
-
-/**
  * Types prototype method
  */
 require('../types/js-types');
