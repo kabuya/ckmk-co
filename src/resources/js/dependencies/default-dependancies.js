@@ -7,13 +7,12 @@ if(!window.$) {
     const $ = window.$ = window.jQuery = ((window.$) ? window.$ : require('jquery'));
 }
 
+
 /**
- * Require FroalaEditor
- *
- * @type {FroalaEditor|{}}
+ * @type {{readonly default: Cropper}}
  */
-if(!window.FroalaEditor) {
-    const FroalaEditor = window.FroalaEditor = ((window.FroalaEditor) ? window.FroalaEditor : require('froala-editor/js/froala_editor.pkgd.min'));
+if(!window.Cropper) {
+    const Cropper = window.Cropper = require("cropperjs");
 }
 
 /**

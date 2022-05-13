@@ -871,7 +871,7 @@ form.form-container {
     .fr-command {
       transition: none !important;
 
-      svg {
+      @include icon() {
         transition: none !important;
       }
 
