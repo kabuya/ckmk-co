@@ -789,14 +789,11 @@ class BaseCO {
      */
     runCb(cb, ...args) {
         if(this.isFunction(cb)) {
-            if(this.isArray(cb)) {
-                cb[0][cb[1]](...args);
-            } else {
-                cb(...args);
-            }
-            return true;
+            return this.isArray(cb)
+                ? cb[0][cb[1]](...args)
+                : cb(...args)
+            ;
         }
-        return false;
     }
 
     /**
