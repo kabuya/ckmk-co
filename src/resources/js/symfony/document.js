@@ -15,7 +15,7 @@ class DocumentHtml {
     }
 
     /**
-     * @param {Function} callback
+     * @param {(currentRoute: string) => any} callback
      * @param {((route: string) => boolean)|string|string[]|null} targetRoutes
      * @param {boolean} register
      */
@@ -39,22 +39,22 @@ class DocumentHtml {
     }
 
     /**
-     * @param {Function} callback
+     * @param {(currentRoute: string) => any} callback
      * @param {((route: string) => boolean)|string|string[]|null} targetRoutes
      */
     #executeCallback(callback, targetRoutes = null) {
         if(co.isCallable(callback)) {
             let canRun = true;
+            const currentRoute = co.routing.current();
             if(co.isString(targetRoutes)) targetRoutes = [targetRoutes];
             if(co.isArray(targetRoutes) && targetRoutes.length) canRun = co.routing.isCurrentIn(...targetRoutes);
-            else if(co.isCallable(targetRoutes)) canRun = !!co.runCb(targetRoutes, co.routing.current());
-            co.log(targetRoutes);
-            if(canRun) co.runCb(callback);
+            else if(co.isCallable(targetRoutes)) canRun = !!co.runCb(targetRoutes, currentRoute);
+            if(canRun) co.runCb(callback, currentRoute);
         }
     }
 
     /**
-     * @param {Function} callback
+     * @param {(currentRoute: string) => any} callback
      * @param {((route: string) => boolean)|string|string[]|null} targetRoutes
      */
     #registerCallback(callback, targetRoutes = null) {

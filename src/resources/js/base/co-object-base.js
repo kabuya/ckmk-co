@@ -353,6 +353,19 @@ class BaseCO {
     }
 
     /**
+     * @param {(() => any)|[object, string]} cb1
+     * @param {(() => any)|[object, string]} cb2
+     * @return {boolean}
+     */
+    isSameCallback(cb1, cb2) {
+        if(this.isCallable(cb1) && this.isCallable(cb2)) {
+            if(cb1 === cb2) return true;
+            else if(this.isArray(cb1) && this.isArray(cb2)) return cb1[0][cb1[1]] === cb2[0][cb2[1]];
+        }
+        return false;
+    }
+
+    /**
      * @param {string|*} strings
      * @return {boolean}
      */
