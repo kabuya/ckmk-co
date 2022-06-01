@@ -1,6 +1,8 @@
 let
-    /** @type {{callback:(Function), targetRoutes:(string|string[])}[]} callbacks */
+    /** @type {{callback:(Function), targetRoutes:(((route: string) => boolean)|string|string[])}[]} callbacks */
     callbacks = [],
+    /** @type {{callback:(Function), targetRoutes:(((route: string) => boolean)|string|string[])}[]} registeredCallback */
+    registeredCallback = [],
     executedCallbacks = [],
     domLoaded = false,
     routerDefine = false,
@@ -14,24 +16,52 @@ class DocumentHtml {
 
     /**
      * @param {Function} callback
-     * @param {string|string[]} targetRoutes
+     * @param {((route: string) => boolean)|string|string[]|null} targetRoutes
+     * @param {boolean} register
      */
-    loaded(callback, targetRoutes = null) {
+    loaded(callback, targetRoutes = null, register = false) {
+        if(register) this.#registerCallback(callback, targetRoutes);
         if(domLoaded && routerDefine) {
-            if(co.isCallable(callback)) {
-                let
-                    canRun = true
-                ;
-                if(co.isString(targetRoutes)) targetRoutes = [targetRoutes];
-                if(co.isArray(targetRoutes)) {
-                    canRun = co.routing.isCurrentIn(...targetRoutes);
-                }
-                if(canRun) co.runCb(callback);
-            }
+            this.#executeCallback(callback, targetRoutes);
         } else {
             callbacks.push({
                 callback:callback,
                 targetRoutes:targetRoutes,
+            });
+        }
+    }
+
+    executeRegister() {
+        const this_o = this;
+        registeredCallback.forEach(item => {
+            this_o.#executeCallback(item.callback, item.targetRoutes);
+        });
+    }
+
+    /**
+     * @param {Function} callback
+     * @param {((route: string) => boolean)|string|string[]|null} targetRoutes
+     */
+    #executeCallback(callback, targetRoutes = null) {
+        if(co.isCallable(callback)) {
+            let canRun = true;
+            if(co.isString(targetRoutes)) targetRoutes = [targetRoutes];
+            if(co.isArray(targetRoutes) && targetRoutes.length) canRun = co.routing.isCurrentIn(...targetRoutes);
+            else if(co.isCallable(targetRoutes)) canRun = !!co.runCb(targetRoutes, co.routing.current());
+            co.log(targetRoutes);
+            if(canRun) co.runCb(callback);
+        }
+    }
+
+    /**
+     * @param {Function} callback
+     * @param {((route: string) => boolean)|string|string[]|null} targetRoutes
+     */
+    #registerCallback(callback, targetRoutes = null) {
+        if(!registeredCallback.find(_cb => _cb.callback === callback)) {
+            registeredCallback.push({
+                callback: callback,
+                targetRoutes: targetRoutes,
             });
         }
     }

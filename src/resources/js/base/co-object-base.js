@@ -339,8 +339,8 @@ class BaseCO {
      */
     isFunction(...functions) {
         return (functions.filter((func) => {
-            if(this.isArray(func)) func = func[0][func[1]];
-            return (!$.isFunction(func));
+            if(this.isArray(func) && func.length >= 2) func = func[0][func[1]];
+            return !$.isFunction(func);
         }).length === 0);
     }
 
