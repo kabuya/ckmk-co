@@ -15,11 +15,11 @@ class Translation {
     }
 
     initJsData() {
-        if(window.jsData && window.jsData.translation) {
-            local = window.jsData.translation.local;
-            locals = window.jsData.translation.locals;
-            texts = window.jsData.translation.texts;
-            delete window.jsData.translation;
+        const translation = co.getJsData("translation");
+        if(translation) {
+            local = translation.local;
+            locals = translation.locals;
+            texts = translation.texts;
         }
     }
 

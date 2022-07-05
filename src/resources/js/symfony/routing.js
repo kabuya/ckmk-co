@@ -48,10 +48,7 @@ class Routing {
     }
 
     initJsData() {
-        if(window.jsData && window.jsData.currentRoute) {
-            current = window.jsData.currentRoute;
-            delete window.jsData.currentRoute;
-        }
+        current = co.getJsData("currentRoute");
     }
 
 }

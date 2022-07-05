@@ -1088,6 +1088,16 @@ class BaseCO {
         }
     }
 
+    /**
+     * @param {string} key
+     * @param {*} _default
+     * @param {boolean} destroy
+     * @return {*}
+     */
+    getJsData(key, _default = undefined, destroy = true) {
+        return BaseCO.__getJsData(key, _default, destroy);
+    }
+
     #updateValueForSerialization(data, keys, value) {
         if (keys.length === 0) {
             // Leaf node
@@ -1121,6 +1131,25 @@ class BaseCO {
     }
 
     /**
+     * @param {string} key
+     * @param {*} _default
+     * @param {boolean} destroy
+     * @return {*}
+     */
+    static __getJsData(key, _default = undefined, destroy = true) {
+        const {jsData} = window;
+        if(jsData) {
+            const value = jsData[key];
+            if(value) {
+                if(destroy) delete jsData[key];
+                return value;
+            }
+            return _default;
+        }
+        return undefined;
+    }
+
+    /**
      * @param {string} _str
      * @return {string}
      */
@@ -1145,20 +1174,10 @@ class BaseCO {
     static initialization(e) {
         if(initialized) return false;
         initialized = true;
-        if(window.jsData) {
-            if(window.jsData.environment) {
-                environment = jsData.environment;
-                delete jsData.environment;
-            }
-            if(window.jsData.version) {
-                version = jsData.version;
-                delete jsData.version;
-            }
-            if(window.jsData.projectName) {
-                projectName = jsData.projectName;
-                delete jsData.projectName;
-            }
-        }
+        environment = BaseCO.__getJsData("environment");
+        version = BaseCO.__getJsData("version");
+        projectName = BaseCO.__getJsData("projectName");
+
         BaseCO.prototype.ajax = require("../modules/request/ajax");
         BaseCO.prototype.lorem = require("../modules/lorem/lorem-ipsum");
         return true;
