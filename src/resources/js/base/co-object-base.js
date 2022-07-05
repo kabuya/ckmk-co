@@ -231,7 +231,7 @@ class BaseCO {
             hostname = window.location.hostname,
             regexp = new RegExp("localhost|127\\.0\\.0\\.1", "i")
         ;
-        return !!(host.match(regexp) || hostname().match(regexp));
+        return !!(host.match(regexp) || hostname.match(regexp));
     }
 
     /**
