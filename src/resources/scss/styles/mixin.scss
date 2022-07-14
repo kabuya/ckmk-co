@@ -123,23 +123,32 @@
   animation: rotate 1s infinite ease-in-out;
 }
 
-@mixin respond($breakpoint: "", $min_width: 0, $max_width: 0) {
+@mixin respond($breakpoint, $min_width: 0, $max_width: 0) {
   @if $breakpoint == mobile {
     @if $max_width == 0 {
       $max_width: 768px;
     }
-    @media only screen and (min-width: 0) and (max-width: $max_width) {
-      @content
+    @if $max_width != 0 {
+      @media only screen and (min-width: 0) and (max-width: $max_width) {
+        @content
+      }
+    } @else {
+      @media only screen and (min-width: 0) {
+        @content
+      }
     }
   } @else if $breakpoint == tablet {
     @if $min_width == 0 {
       $min_width: 768px;
     }
-    @if $max_width == 0 {
-      $max_width: 998px;
-    }
-    @media only screen and (min-width: $min_width) and (max-width: $max_width) {
-      @content
+    @if $max_width != 0 {
+      @media only screen and (min-width: $min_width) and (max-width: $max_width) {
+        @content
+      }
+    } @else {
+      @media only screen and (min-width: $min_width) {
+        @content
+      }
     }
   } @else if $breakpoint == computer {
     @if $min_width == 0 {
