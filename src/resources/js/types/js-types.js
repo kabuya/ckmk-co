@@ -265,13 +265,22 @@ Object.assign(String.prototype, {
     },
 
     slug() {
-        return this.noAccent().trim().replace(/[ ]+/gi, "-");
+        return this
+            .toLowerCase()
+            .noAccent()
+            .noSpaceChar()
+            .trim()
+            .replace(/[ ]+/gi, "-");
     },
 
     noAccent() {
         return this.replace(new RegExp(SPECIAL_CHARS.join("|"), "g"), function (str) {
             return REPLACE_CHARS[SPECIAL_CHARS.indexOf(str)];
         });
+    },
+
+    noSpaceChar() {
+        return this.match(/[a-z0-9]+/gi).join(" ");
     },
 
     removeAccent() {
