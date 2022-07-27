@@ -268,7 +268,7 @@ Object.assign(String.prototype, {
         return this
             .toLowerCase()
             .noAccent()
-            .noSpaceChar()
+            .noSpecChar()
             .trim()
             .replace(/[ ]+/gi, "-");
     },
@@ -279,8 +279,9 @@ Object.assign(String.prototype, {
         });
     },
 
-    noSpaceChar() {
-        return this.match(/[a-z0-9]+/gi).join(" ");
+    noSpecChar() {
+        const match = this.match(/[a-z0-9]+/gi);
+        return match ? match.join(" ") : this;
     },
 
     removeAccent() {
